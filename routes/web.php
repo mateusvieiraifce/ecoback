@@ -23,15 +23,15 @@ Route::get("/logout",[\App\Http\Controllers\UsuarioController::class,'logout'])-
 
 Route::get('/', function () {
     return view('dashboard');
-});
+})->middleware('auth');;
 
 Route::get('/home', function () {
     return view('dashboard');
-})->name('home');
+})->name('home')->middleware('auth');;
 
 Route::get('/users/', function () {
     return view('users/index');
-})->name('profile.edit');
+})->name('profile.edit')->middleware('auth');;
 
 Route::get('/users/index', function () {
     return view('users/index');
