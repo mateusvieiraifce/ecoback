@@ -49,7 +49,12 @@
                 <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <div class="photo">
+                            @if(auth()->user()->avatar)
+                                {!! Html::image(auth()->user()->avatar) !!}
+
+                            @else
                             <img src="/assets/img/anime3.png" alt="{{ __('Profile Photo') }}">
+                            @endif
                         </div>
                         <b class="caret d-none d-lg-block d-xl-block"></b>
                         <p class="d-lg-none">{{ __('Log out') }}</p>

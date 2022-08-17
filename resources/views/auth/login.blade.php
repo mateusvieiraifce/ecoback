@@ -40,6 +40,9 @@
                         <h6>
                             <a href="{{route('registre')}}" class="link footer-link">{{ __('Criar uma conta') }}</a>
                         </h6>
+                        <h6>
+                            <a href="{{route('google.redi')}}" class="link footer-link">{{ __('Entrar com google') }}</a>
+                        </h6>
                     </div>
                     <div class="pull-right">
                         <h6>
