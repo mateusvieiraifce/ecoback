@@ -18,6 +18,10 @@ Route::get("/registre",[\App\Http\Controllers\UsuarioController::class,'registre
 Route::post("/registre",[\App\Http\Controllers\UsuarioController::class,'registreUserDo'])->name('registre');
 Route::post("/app",[\App\Http\Controllers\UsuarioController::class,'logar'])->name('login.do');
 Route::get("/logout",[\App\Http\Controllers\UsuarioController::class,'logout'])->name('logout');
+Route::get("/recuperar",[\App\Http\Controllers\UsuarioController::class,'recover'])->name('recover');
+Route::get("/recuperar/{id?}",[\App\Http\Controllers\UsuarioController::class,'recoverID'])->name('recover.id');
+Route::post("/recuperar",[\App\Http\Controllers\UsuarioController::class,'recoverDo'])->name('recover.do');
+
 
 Route::get('/redirect', '\App\Http\Controllers\UsuarioController@redirectToProvider')->name('google.redi');
 Route::get('/callback', '\App\Http\Controllers\UsuarioController@handleProviderCallback')->name('google.callback');;

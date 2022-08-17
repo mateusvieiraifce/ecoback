@@ -46,7 +46,7 @@
                     </div>
                     <div class="pull-right">
                         <h6>
-                            <a href="#" class="link footer-link">{{ __('Esqueceu a senha?') }}</a>
+                            <a href="{{route('recover')}}" class="link footer-link">{{ __('Esqueceu a senha?') }}</a>
                         </h6>
                     </div>
                 </div>
