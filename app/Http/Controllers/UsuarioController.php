@@ -219,4 +219,28 @@ class UsuarioController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
+    public function preEdit($id=null){
+        return view('profile/edit');
+    }
+
+    public function  update(Request $request){
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+
+        try{
+            $input = $request->validate([
+                'name' => 'required|between :5,100',
+                'email' => 'required|unique:users,email,'.$request->id,
+            ]);
+
+            $usuario = User::find(intval($request->id));
+            $usuario->name = $request->name;
+            $usuario->email = $request->email;
+            $usuario->save();
+        }catch (QueryException $exp ){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+
+
+        return view('profile/edit',['msg'=>$msgret]);
+    }
 }

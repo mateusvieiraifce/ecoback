@@ -61,7 +61,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-navbar">
                         <li class="nav-link">
-                            <a href="" class="nav-item dropdown-item">{{ __('Profile') }}</a>
+                            <a href="{{route('user.preedit')}}" class="nav-item dropdown-item">{{ __('Profile') }}</a>
                         </li>
                         <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item">{{ __('Settings') }}</a>
