@@ -1,6 +1,47 @@
 @extends('layouts.app', ['class' => 'login-page', 'page' => __(''), 'contentClass' => 'login-page'])
 
 @section('content')
+
+    <style>
+        .cookie-banner {
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            right: 10%;
+            width: 80%;
+            padding: 5px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+           // background-color: #eee;
+            border-radius: 5px;
+            box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+        }
+        .close {
+            height: 20px;
+            background-color: #777;
+            border: none;
+            color: white;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+    </style>
+    <div class='cookie-banner' style=''>
+        <p>
+            Para usar nossa plataforma, você aceita nossa
+            <a href='insert-link'>Política de privacidade</a>
+        </p>
+        <button class='close' onclick="$('.cookie-banner').fadeOut();">&times;</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script>
+        if (localStorage.getItem('cookieSeen') != 'shown') {
+            $('.cookie-banner').delay(2000).fadeIn();
+            localStorage.setItem('cookieSeen','shown')
+        };
+    </script>
+
     <div class="col-md-10 text-center ml-auto mr-auto">
         <h3 class="mb-5"></h3>
     </div>
@@ -53,5 +94,6 @@
             </div>
         </form>
     </div>
+
 
 @endsection

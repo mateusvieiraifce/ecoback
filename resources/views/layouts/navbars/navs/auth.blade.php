@@ -64,7 +64,11 @@
                             <a href="{{route('user.preedit')}}" class="nav-item dropdown-item">{{ __('Profile') }}</a>
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('Settings') }}</a>
+                            <form action="{{route('user.delete')}}" id="formremove" method="post">
+                                @csrf
+                                <input type="hidden" value="{{auth()->user()->id}}" name="id">
+                            </form>
+                            <a onclick="if (confirm('Deseja realmente excluir?')){getElementById('formremove').submit()}" href="#" class="nav-item dropdown-item">{{ __('Excluir') }}</a>
                         </li>
                         <li class="dropdown-divider"></li>
                         <li class="nav-link">

@@ -243,4 +243,19 @@ class UsuarioController extends Controller
 
         return view('profile/edit',['msg'=>$msgret]);
     }
+
+    public function delete(Request $request){
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+
+        try{
+
+            $usuario = User::find($request->id);
+            $usuario->delete();
+            $this->logout($request);
+
+        }catch (QueryException $exp ){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+        return view('auth/login',['msg'=>$msgret] );
+     }
 }
