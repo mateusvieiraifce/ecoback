@@ -5,7 +5,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ __('Perfil') }}</h5>
+                    <h5 class="title">{{ __('Dados da Conta') }}</h5>
                 </div>
                 <form method="post" action="{{route('user.update')}}" autocomplete="off">
                     <div class="card-body">
@@ -30,7 +30,89 @@
                     </div>
                 </form>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">{{ __('Dados Pessoais') }}</h5>
+                </div>
+                <form method="post" action="#" autocomplete="off">
+                    <div class="card-body">
+                        @csrf
+                        @method('put')
 
+                        @include('alerts.success', ['key' => 'password_status'])
+
+                        <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
+                            <label>{{ __('Nome Completo') }}</label>
+                            <input type="text" name="nome_completo" class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Nome Completo') }}" value="" required>
+                            @include('alerts.feedback', ['field' => 'old_password'])
+                        </div>
+
+                        <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                            <label>{{ __('CPF/CNPJ') }}</label>
+                            <input type="text" name="documento" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Cpf/CNPJ') }}" value="" required>
+                            @include('alerts.feedback', ['field' => 'password'])
+                        </div>
+                        <div class="form-group">
+                            <label>{{ __('Nacionalidade') }}</label>
+                            <input type="text" name="nacionalidade" class="form-control" placeholder="{{ __('Nacionalidade') }}" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ __('Telefone') }}</label>
+                            <input type="text" name="telefone" class="form-control" placeholder="{{ __('Telefone') }}" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ __('Celular') }}</label>
+                            <input type="text" name="celular" class="form-control" placeholder="{{ __('Celular') }}" value="" required>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card card-tasks">
+                            <div class="card-header ">
+                                <h6 class="title d-inline">Endereços</h6>
+
+                            </div>
+                            <div class="card-body ">
+                                <div class="table-full-width table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" value="">
+                                                        <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="title">Update the Documentation</p>
+                                                <p class="text-muted">Dwuamish Head, Seattle, WA 8:47 AM</p>
+                                            </td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
+                                                    <i class="tim-icons icon-pencil"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
         </div>
         <div class="col-md-4">
