@@ -1,10 +1,8 @@
 @if(\Illuminate\Support\Facades\Auth::check())
-<div class="sidebar">
+@if($class!="login-page")
+    <div class="sidebar">
     <div class="sidebar-wrapper">
-        <div class="logo">
-            <a href="#" class="simple-text logo-mini">{{ __('BD') }}</a>
-            <a href="#" class="simple-text logo-normal">{{ __('Black Dashboard') }}</a>
-        </div>
+
         <ul class="nav">
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="">
@@ -12,73 +10,107 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
+
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fab fa-laravel" ></i>
-                    <span class="nav-link-text" >{{ __('Laravel Examples') }}</span>
+                    <span class="nav-link-text" >{{ __('Vendas') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse show" id="laravel-examples">
+                <div class="collapse" id="laravel-examples">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'profile') class="active " @endif>
+                        <li @if ($pageSlug == 'resumo') class="active " @endif>
                             <a href="">
-                                <i class="tim-icons icon-single-02"></i>
-                                <p>{{ __('User Profile') }}</p>
+                                <i class="tim-icons icon-components"></i>
+                                <p>{{ __('Resumo') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'users') class="active " @endif>
                             <a href="">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ __('User Management') }}</p>
+                                <i class="tim-icons icon-alert-circle-exc"></i>
+                                <p>{{ __('Novidades') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="">
+                                <i class="tim-icons icon-spaceship"></i>
+                                <p>{{ __('Anúncios') }}</p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="">
+                                <i class="tim-icons icon-chat-33"></i>
+                                <p>{{ __('Perguntas') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="">
+                                <i class="tim-icons icon-coins"></i>
+                                <p>{{ __('Vendas') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="">
+                                <i class="tim-icons icon-chart-bar-32"></i>
+                                <p>{{ __('Métricas') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="">
+                                <i class="tim-icons icon-trophy"></i>
+                                <p>{{ __('Reputação') }}</p>
                             </a>
                         </li>
                     </ul>
                 </div>
             </li>
+            <li>
+                <a data-toggle="collapse" href="#compras" aria-expanded="true">
+                    <i class="tim-icons icon-money-coins" ></i>
+                    <span class="nav-link-text" >{{ __('Compras') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse" id="compras">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug == 'compras') class="active " @endif>
+                            <a href="">
+                                <i class="tim-icons icon-components"></i>
+                                <p>{{ __('Compras') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="">
+                                <i class="tim-icons icon-alert-circle-exc"></i>
+                                <p>{{ __('Perguntas') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="">
+                                <i class="tim-icons icon-spaceship"></i>
+                                <p>{{ __('Favoritos') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
             <li @if ($pageSlug == 'icons') class="active " @endif>
                 <a href="">
-                    <i class="tim-icons icon-atom"></i>
-                    <p>{{ __('Icons') }}</p>
+                    <i class="tim-icons icon-chart-pie-36"></i>
+                    <p>{{ __('Faturamento') }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'maps') class="active " @endif>
-                <a href="">
-                    <i class="tim-icons icon-pin"></i>
-                    <p>{{ __('Maps') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'notifications') class="active " @endif>
-                <a href="">
-                    <i class="tim-icons icon-bell-55"></i>
-                    <p>{{ __('Notifications') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'tables') class="active " @endif>
-                <a href="">
-                    <i class="tim-icons icon-puzzle-10"></i>
-                    <p>{{ __('Table List') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'typography') class="active " @endif>
-                <a href="">
-                    <i class="tim-icons icon-align-center"></i>
-                    <p>{{ __('Typography') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'rtl') class="active " @endif>
-                <a href="">
-                    <i class="tim-icons icon-world"></i>
-                    <p>{{ __('RTL Support') }}</p>
-                </a>
-            </li>
-            <li class=" {{ $pageSlug == 'upgrade' ? 'active' : '' }} bg-info">
-                <a href="">
-                    <i class="tim-icons icon-spaceship"></i>
-                    <p>{{ __('Upgrade to PRO') }}</p>
+            <li @if ($pageSlug == 'profile') class="active " @endif>
+                <a href="{{route('user.preedit')}}">
+                    <i class="tim-icons icon-single-02"></i>
+                    <p>{{ __('Meu Perfil') }}</p>
                 </a>
             </li>
         </ul>
     </div>
 </div>
+@endif
 @endif

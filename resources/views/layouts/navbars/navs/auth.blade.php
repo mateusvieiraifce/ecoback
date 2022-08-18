@@ -8,7 +8,13 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
             </div>
-            <a class="navbar-brand" href="#">{{ $page ?? __('Dashboard') }}</a>
+
+            <br/>
+            <p>
+                <img src="/assets/img/Icone2t.png" style="max-width: 50px; height: auto;"/>
+                <a class="navbar-brand" href="#">{{ $page ?? __('Dashboard') }}</a>
+            </p>
+
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-bar navbar-kebab"></span>
