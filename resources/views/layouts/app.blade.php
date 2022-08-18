@@ -28,7 +28,7 @@
                     @include('layouts.navbars.navbar')
 
                     <div class="content">
-                        
+
                         @yield('content')
                     </div>
 
@@ -39,16 +39,54 @@
                 @csrf
             </form>
 
+            @if(isset($msg))
 
+                <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+
+                <script>
+                    nowuiDashboard = {
+                        misc: {
+                            navbar_menu_visible: 0
+                        },
+
+                        showNotification: function(from, align, msg, type) {
+                            color = type;
+
+                            $.notify({
+                                icon: "now-ui-icons ui-1_bell-53",
+                                message: msg
+
+                            }, {
+                                type: color,
+                                timer: 8000,
+                                placement: {
+                                    from: from,
+                                    align: align
+                                }
+                            });
+                        }
+
+
+                    };
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        nowuiDashboard.showNotification('top','right','{{$msg["valor"]}}','{{$msg["tipo"]}}');
+                    });
+                </script>
+
+            @endif
         <script src="/assets/js/core/jquery.min.js"></script>
         <script src="/assets/js/core/popper.min.js"></script>
         <script src="/assets/js/core/bootstrap.min.js"></script>
         <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
         <!--  Google Maps Plugin    -->
         <!-- Place this tag in your head or just before your close body tag. -->
-        {{-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> --}}
+
         <!-- Chart JS -->
-        <script src="/assets/js/plugins/chartjs.min.js"></script> --}}
+        <script src="/assets/js/plugins/chartjs.min.js"></script>
         <!--  Notifications Plugin    -->
         <script src="/assets/js/plugins/bootstrap-notify.js"></script>
 
@@ -155,5 +193,7 @@
             });
         </script>
         @stack('js')
+
+
     </body>
 </html>

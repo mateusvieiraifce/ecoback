@@ -25,6 +25,8 @@ class UsuarioController extends Controller
 
     function recoverDo(Request $request){
         $existe = User::where('email','=',$request->email)->first();
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+        $token = "";
         if ($existe){
             $utimoreset = PasswordResets::where('email','=',$request->email)->orderBy('created_at')->first();
             $today = \DateTime::createFromFormat('d/m/y',date('d/m/y'));
@@ -46,14 +48,45 @@ class UsuarioController extends Controller
             Helper::sendEmail("Recuperação de senha da  Plataforma Ecomoda",$msgemail,$request->email);
 
         }else{
-            $variable="Não existe";
-            $input = $request->validate(['email' => 'in:'.$variable]);
+            //$msg = ['valor'=>trans('messport.pass_conf'),'tipo'=>'primary'];
+            $msgret = ['valor'=>"Usuário não existe",'tipo'=>'danger'];
         }
-       return view('auth/passwords/email',['pageSlug'=>'','token'=>$token]);
+
+       return view('auth/passwords/email',['pageSlug'=>'','token'=>$token,'msg'=>$msgret]);
     }
 
     function recoverID($id=null){
-        return view('auth/passwords/reset',['pageSlug'=>'','token'=>'$token']);
+        $voucher = PasswordResets::where('token','=',$id)->first();
+        $msgret =null;
+        $user = null;
+        if ($voucher){
+            $user = User::where('email','=',$voucher->email)->first();
+
+        }else{
+            $msgret = ['valor'=>"Usuário não existe",'tipo'=>'danger'];
+        }
+
+        return view('auth/passwords/reset',['pageSlug'=>'','token'=>'$token','msg'=>$msgret,'usuario'=>$user]);
+    }
+
+    function recoverPassword(Request $request){
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+        $usuario = User::where("id","=",$request->id)->first();
+        try{
+            $variable=$request->password;
+            $input = $request->validate([
+                'password' => 'required|between :5,15',
+                'password_confirmation' => 'required|between :5,15|in:'.$variable,
+             ]);
+
+
+            $usuario->password = bcrypt($request->password);
+            $usuario->save();
+            $user = $usuario;
+        }catch (QueryException $exp ){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+        return view('auth/passwords/reset',['pageSlug'=>'','token'=>'$token','msg'=>$msgret,'usuario'=>$usuario]);
     }
 
     private function  createToken(Request $request,$today){
@@ -80,7 +113,7 @@ class UsuarioController extends Controller
             return redirect()->intended('home');
         } else{
 
-            $msg = ['valor'=>trans('messport.login.fail'),'tipo'=>'primary'];
+            $msg = ['valor'=>'Usuário/Senha inválido','tipo'=>'danger'];
             return view('auth/login',['msg'=>$msg] );
         }
         return view('auth/login');
@@ -153,20 +186,7 @@ class UsuarioController extends Controller
         // check if they're an existing user
         $existingUser = User::where('email', $user->email)->first();
         if($existingUser){
-
-            /*if ($existingUser->lang){
-                $lang = Language::find($existingUser->lang);
-                if ($lang) {
-                    App::setLocale($lang->locale);
-                }else{
-                    App::setLocale("pt-br");
-                }
-            }else{
-                App::setLocale("pt-br");
-            }*/
-            // log them in
             auth()->login($existingUser, true);
-
         } else {
 
             $userName = explode("@", $user->email)[0];
