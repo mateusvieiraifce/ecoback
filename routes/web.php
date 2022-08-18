@@ -24,6 +24,7 @@ Route::post("/recuperar",[\App\Http\Controllers\UsuarioController::class,'recove
 Route::post("/updatepassword",[\App\Http\Controllers\UsuarioController::class,'recoverPassword'])->name('update.password');
 Route::get("/profile/{id?}",[\App\Http\Controllers\UsuarioController::class,'preEdit'])->name('user.preedit');
 Route::post("/profile/update",[\App\Http\Controllers\UsuarioController::class,'update'])->name('user.update');
+Route::put("/profile/update",[\App\Http\Controllers\UsuarioController::class,'updateCompletar'])->name('user.update.comp');
 Route::post("/profile/delete",[\App\Http\Controllers\UsuarioController::class,'delete'])->name('user.delete');
 
 

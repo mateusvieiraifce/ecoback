@@ -220,6 +220,7 @@ class UsuarioController extends Controller
     }
 
     public function preEdit($id=null){
+
         return view('profile/edit');
     }
 
@@ -235,6 +236,58 @@ class UsuarioController extends Controller
             $usuario = User::find(intval($request->id));
             $usuario->name = $request->name;
             $usuario->email = $request->email;
+            $usuario->nomecompleto = $request->nome_completo;
+            $usuario->documento = $request->documento;
+            $usuario->nacionalidade = $request->nacionalidade;
+            $usuario->telefone = $request->telefone;
+            $usuario->celular = $request->celular;
+
+
+            $usuario->save();
+        }catch (QueryException $exp ){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+
+
+        return view('profile/edit',['msg'=>$msgret]);
+    }
+    public function  updateCompletar(Request $request){
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+
+        try{
+
+            if ($request->tipopessoa==="F"){
+            $input = $request->validate([
+                'nome_completo' => 'required|between :20,100',
+                'documento' => 'required|cpf|unique:users,documento,'.$request->id,
+                'telefone' => 'required',
+                'celular' => 'required',
+                'email_alternativo' => 'required',
+            ]);
+            } else{
+                $input = $request->validate([
+                    'nome_completo' => 'required|between :20,100',
+                    'documento' => 'required|cnpj|unique:users,documento,'.$request->id,
+                    'telefone' => 'required',
+                    'celular' => 'required',
+                    'email_alternativo' => 'required',
+                ]);
+
+            }
+
+            $usuario = User::find(intval($request->id));
+            $usuario->nomecompleto = $request->nome_completo;
+            $usuario->documento = $request->documento;
+            $usuario->nacionalidade = $request->nacionalidade;
+            $usuario->telefone = $request->telefone;
+            $usuario->celular = $request->celular;
+            $usuario->email_alternativo = $request->email_alternativo;
+            $usuario->instagram = $request->instagram;
+            $usuario->facebook = $request->facebook;
+            $usuario->twitter = $request->twitter;
+            $usuario->sexo = $request->sexo;
+            $usuario->tipopessoa= $request->tipopessoa;
+
             $usuario->save();
         }catch (QueryException $exp ){
             $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
