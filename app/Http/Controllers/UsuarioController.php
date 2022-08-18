@@ -83,6 +83,7 @@ class UsuarioController extends Controller
             $usuario->password = bcrypt($request->password);
             $usuario->save();
             $user = $usuario;
+            return view('auth/login',['msg'=>$msgret] );
         }catch (QueryException $exp ){
             $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
         }
