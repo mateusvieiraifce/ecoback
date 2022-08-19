@@ -33,10 +33,10 @@ function limpa_formulário_cep() {
 function meu_callback(conteudo) {
     if (!("erro" in conteudo)) {
         //Atualiza os campos com os valores.
-        document.getElementById('rua').value=(conteudo.logradouro)+", " + (conteudo.bairro);
-      //  document.getElementById('bairro').value=(conteudo.bairro);
-        document.getElementById('cidade').value=(conteudo.localidade) +", " +(conteudo.uf);
-       // document.getElementById('uf').value=(conteudo.uf);
+        document.getElementById('rua').value=(conteudo.logradouro);
+        document.getElementById('bairro').value=(conteudo.bairro);
+        document.getElementById('cidade').value=(conteudo.localidade);
+        document.getElementById('uf').value=(conteudo.uf);
     } //end if.
     else {
         //CEP não Encontrado.
@@ -48,7 +48,7 @@ function meu_callback(conteudo) {
 function pesquisacep(valor) {
 
     //Nova variável "cep" somente com dígitos.
-    var cep = valor.replace(/\D/g, '');
+    var cep = valor.replace('-', '');
 
     //Verifica se campo cep possui valor informado.
     if (cep != "") {
@@ -65,9 +65,9 @@ function pesquisacep(valor) {
 
             //Preenche os campos com "..." enquanto consulta webservice.
             document.getElementById('rua').value="...";
-         //   document.getElementById('bairro').value="...";
+            document.getElementById('bairro').value="...";
             document.getElementById('cidade').value="...";
-           // document.getElementById('uf').value="...";
+            document.getElementById('uf').value="...";
 
             //Cria um elemento javascript.
             var script = document.createElement('script');

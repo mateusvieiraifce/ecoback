@@ -122,36 +122,65 @@
                                         <i class="tim-icons icon-settings-gear-63"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#pablo">Tornar Principal</a>
-                                        <a class="dropdown-item" href="#pablo">Excluir</a>
+                                        <a class="dropdown-item" href="{{route('user.update.add')}}">Adicionar</a>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="card-body ">
                                 <div class="table-full-width table-responsive">
                                     <table class="table">
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <span class="form-check-sign">
+                                        @php
+                                        $enderecos = auth()->user()->Enderecos()->get();
+                                        @endphp
+                                        @foreach($enderecos as $ende)
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input" type="checkbox" disabled
+                                                            @if($ende->princial)
+                                                                checked
+                                                                @endif
+                                                            >
+                                                            <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="title">Update the Documentation</p>
-                                                <p class="text-muted">Dwuamish Head, Seattle, WA 8:47 AM</p>
-                                            </td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
-                                                    <i class="tim-icons icon-pencil"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="title">{{$ende->recebedor}}</p>
+                                                    <p class="text-muted">{{$ende->rua}}, {{$ende->bairro}},{{$ende->numero}}, {{$ende->cidade}}-{{$ende->estado}}</p>
+                                                </td>
+
+                                                <td class="td-actions text-right">
+                                                    <a href="{{route('user.add.update',$ende->id)}}">
+                                                    <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
+                                                        <i class="tim-icons icon-pencil"></i>
+                                                    </button>
+                                                    </a>
+                                                </td>
+                                                <td class="td-actions text-right">
+                                                    <a onclick="return confirm('Deseja realmente excluir?') " href="{{route('user.update.del.do',$ende->id)}}">
+                                                    <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
+                                                        <i class="tim-icons icon-simple-remove"></i>
+                                                    </button>
+                                                    </a>
+                                                </td>
+
+                                                <td class="td-actions text-right">
+                                                    <a href="{{route('user.update.end.pri',$ende->id)}}">
+                                                    <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
+                                                        <i class="tim-icons icon-heart-2"></i>
+                                                    </button>
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -204,9 +233,6 @@
         </div>
     </div>
     <script src="/assets/js/functions.js"></script>
-
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>

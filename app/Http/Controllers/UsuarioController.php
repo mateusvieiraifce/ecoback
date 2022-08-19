@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
+use App\Models\Endereco;
 use App\Models\Language;
 use App\Models\PasswordResets;
 use App\Models\User;
@@ -10,6 +11,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
@@ -220,7 +222,6 @@ class UsuarioController extends Controller
     }
 
     public function preEdit($id=null){
-
         return view('profile/edit');
     }
 
@@ -311,4 +312,80 @@ class UsuarioController extends Controller
         }
         return view('auth/login',['msg'=>$msgret] );
      }
+
+     public function addEndereco($id=null){
+         $endereco = new Endereco();
+        if ($id){
+            $endereco = Endereco::find($id);
+        }
+        return view("profile/endereco",['msg'=>null,'obj'=>$endereco]);
+     }
+
+    public function delEndereco($id=null){
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+        try{
+            Endereco::find($id)->delete();
+        }
+        catch (QueryException $exp ){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+        $endereco = new Endereco();
+        return view("profile/edit",['msg'=>null,'obj'=>$endereco]);
+    }
+
+    public function setPrincialEndereco($id=null){
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+        try{
+            $bd = Endereco::find($id);
+            DB::table('enderecos')->where('user_id','=',$bd->user_id)->update(['princial'=>false]);
+            $bd = Endereco::find($id);
+            $bd->princial=True;
+            $bd->save();
+        }
+        catch (QueryException $exp ){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+        $endereco = new Endereco();
+        return view("profile/edit",['msg'=>null,'obj'=>$endereco]);
+    }
+
+
+    public function addEnderecoDo(Request $request){
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+        try {
+            $endereco = new Endereco();
+            if ($request->id_add){
+                $endereco = Endereco::find($request->id_add);
+            }
+
+            $endereco->recebedor = $request->recebedor;
+            $endereco->cep = $request->cep;
+            $endereco->estado = $request->estado;
+            $endereco->cep = $request->cep;
+            $endereco->cidade = $request->cidade;
+            $endereco->bairro = $request->bairro;
+            $endereco->rua = $request->rua;
+            $endereco->numero = $request->numero;
+            $endereco->complemento = $request->complemento;
+            $endereco->informacoes = $request->informacoes;
+            if ($request->principal){
+            $endereco->princial = $request->principal;
+            }else{
+                $endereco->princial=false;
+            }
+
+
+            $endereco->user_id= $request->id;
+            $endereco->save();
+
+        }catch (QueryException $exception){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+
+            dd($exception);
+        }
+
+        return view("profile/edit",['msg'=>$msgret,'obj'=>$endereco]);
+    }
+
+
 }

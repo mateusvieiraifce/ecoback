@@ -67,7 +67,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-navbar">
                         <li class="nav-link">
-                            <a href="{{route('user.preedit')}}" class="nav-item dropdown-item">{{ __('Profile') }}</a>
+                            <a href="{{route('user.preedit')}}" class="nav-item dropdown-item">{{ __('Perfil') }}</a>
                         </li>
                         <li class="nav-link">
                             <form action="{{route('user.delete')}}" id="formremove" method="post">
@@ -78,7 +78,7 @@
                         </li>
                         <li class="dropdown-divider"></li>
                         <li class="nav-link">
-                            <a href="{{route('logout')}}" class="nav-item dropdown-item" >{{ __('Log out') }}</a>
+                            <a href="{{route('logout')}}" class="nav-item dropdown-item" >{{ __('Sair') }}</a>
                         </li>
                     </ul>
                 </li>
