@@ -22,9 +22,9 @@ class UserEnderecos extends Migration
             $table->string('bairro');
             $table->string('rua');
             $table->string('numero');
-            $table->string('complemento');
-            $table->string('tipo');
-            $table->string('informacoes');
+            $table->string('complemento')->nullable();
+            $table->string('tipo')->nullable();
+            $table->string('informacoes')->nullable();
             $table->integer('user_id')->unsigned();
             $table->boolean('princial');
             $table->foreign('user_id')->references('id')->on('users');
