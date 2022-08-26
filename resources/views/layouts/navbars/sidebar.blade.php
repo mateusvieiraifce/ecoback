@@ -33,7 +33,7 @@
                             </a>
                         </li>
                         <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="">
+                            <a href="{{route('advertisement.list')}}">
                                 <i class="tim-icons icon-spaceship"></i>
                                 <p>{{ __('Anúncios') }}</p>
                             </a>

@@ -53,4 +53,9 @@ class Helper
         //$mail->SMTPDebug  = 1;
         $msg = $mail->Send();
     }
+
+    public static function padronizaMonetario($input)
+    {
+        return number_format($input, 2, ',', '.');
+    }
 }
