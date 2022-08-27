@@ -113,7 +113,7 @@ class UsuarioController extends Controller
         $dados =['email' => $request->email,'password' => $request->password];
         if (Auth::attempt($dados, false)) {
             $request->session()->regenerate();
-            return redirect()->intended('home');
+            return redirect()->intended('index');
         } else{
 
             $msg = ['valor'=>'Usuário/Senha inválido','tipo'=>'danger'];
@@ -130,7 +130,7 @@ class UsuarioController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/app');
+        return redirect('/index');
     }
 
     public function registreUser(){
@@ -150,11 +150,11 @@ class UsuarioController extends Controller
                 $dados =['email' => $request->email,'password' => $request->password];
                 if (Auth::attempt($dados, false)) {
                     $request->session()->regenerate();
-                    return redirect()->intended('home');
+                    return redirect()->intended('index');
                 }
             }
         }catch (QueryException $exp){
-            dd($exp);
+
         }
         return view('auth/register',['field'=>'']);
     }
@@ -205,7 +205,7 @@ class UsuarioController extends Controller
             $this->sendEmailCreate($newUser);
             auth()->login($newUser, true);
         }
-        return redirect()->to('/home');
+        return redirect()->to('/index');
     }
 
     private function sendEmailCreate($user){

@@ -13,6 +13,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('frente/index');
+})->name('home.frente');
+
+Route::get('/index', function () {
+    return view('frente/index');
+})->name('index');
+
+Route::get('/produtos', function () {
+    return view('frente/produtos');
+})->name('produtos');
+
+Route::get('/contato', function () {
+    return view('frente/contato');
+})->name('contato');
+
+Route::get('/checkout', function () {
+    return view('frente/shoping');
+})->name('finalizar');
+
+Route::post('/mail',[\App\Http\Controllers\MailController::class,"sendMail"])->name('sendmail');
+
 Route::get("/app",[\App\Http\Controllers\UsuarioController::class,'preLogin'])->name('login');
 Route::get("/registre",[\App\Http\Controllers\UsuarioController::class,'registreUser'])->name('registre');
 Route::post("/registre",[\App\Http\Controllers\UsuarioController::class,'registreUserDo'])->name('registre');
@@ -42,7 +64,7 @@ Route::get('/callback', '\App\Http\Controllers\UsuarioController@handleProviderC
 
 
 
-Route::get('/', function () {
+Route::get('/minhaarea', function () {
     return view('dashboard');
 })->middleware('auth');;
 
