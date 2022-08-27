@@ -28,14 +28,13 @@ class CreateAnuncios extends Migration
             $table->double('quantidade');
             $table->boolean('ativo');
             $table->boolean('destaque');
-            $table->integer('user_id');
-            $table->integer('type_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('type_id');
             $table->timestamps();
             $table->double('altura');
             $table->double('largura');
             $table->double('peso');
-            $table->foreign('type_id')->references('id')->on('type_adv');//
-            $table->foreign('user_id')->references('id')->on('users');//
+
         });
     }
 

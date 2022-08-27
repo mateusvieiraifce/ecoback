@@ -25,9 +25,9 @@ class UserEnderecos extends Migration
             $table->string('complemento')->nullable();
             $table->string('tipo')->nullable();
             $table->string('informacoes')->nullable();
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->boolean('princial');
-            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 

@@ -20,8 +20,8 @@ class CreateColorAdv extends Migration
         });
 
         Schema::table('anuncios', function (Blueprint $table) {
-            $table->integer('color_id');
-            $table->foreign('color_id')->references('id')->on('color_adv');//
+            $table->unsignedBigInteger('color_id')->unsigned();
+
          });
         }
 

@@ -16,9 +16,9 @@ class CreateFilesAnuncios extends Migration
         Schema::create('files_anuncios', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-            $table->integer('anuncio_id');
+            $table->unsignedBigInteger('anuncio_id')->unsigned();
             $table->timestamps();
-            $table->foreign('anuncio_id')->references('id')->on('anuncios');//
+
         });
 
     }
