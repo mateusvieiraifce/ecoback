@@ -58,4 +58,12 @@ class Helper
     {
         return number_format($input, 2, ',', '.');
     }
+
+    public static function parseTextDouble($input)
+    {
+        $output = strlen(trim($input)) == 0 ? 0 : $input;
+        $output = str_replace(".", "", $output);
+        $output = str_replace(",", ".", $output);
+        return (float) $output;
+    }
 }

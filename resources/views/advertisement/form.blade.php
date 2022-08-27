@@ -6,10 +6,9 @@
                 <div class="card-header">
                     <h5 class="title">{{ __('Anúncio') }}</h5>
                 </div>
-                <form method="post" action="" autocomplete="off">
+                <form method="post" action="{{route('advertisement.save')}}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="id" value="{{auth()->user()->id}}">
-                    <input type="hidden" name="id_add" value="{{$obj->id}}">
+                    <input type="hidden" name="id" value="{{$obj->id}}">
 
                     <div class="card-body">
                         <div class="form-group{{ $errors->has('titulo') ? ' has-danger' : '' }}">
@@ -21,6 +20,44 @@
                             <label id="nomecompleto">{{ __('Descrição') }}</label>
                             <input type="text" name="descricao" class="form-control{{ $errors->has('descricao') ? ' is-invalid' : '' }}" placeholder="{{ __('Descrição') }}" value="{{ old('descricao', $obj->descricao) }}" required >
                             @include('alerts.feedback', ['field' => 'descricao'])
+                        </div>
+
+                        <div class="form-group{{ $errors->has('hastag') ? ' has-danger' : '' }}">
+                            <label id="hashtagl">{{ __('Hastags') }}</label>
+                            <input  type="text" name="hashtag" class="form-control{{ $errors->has('hashtag') ? ' is-invalid' : '' }}" placeholder="{{ __('hashtag') }}" value="{{ old('hashtag', $obj->hashtag) }}" required >
+                            @include('alerts.feedback', ['field' => 'hashtag'])
+                        </div>
+
+                        <div class="form-group{{ $errors->has('tipo') ? ' has-danger' : '' }}">
+                            <label id="nomecompleto">{{ __('Tipo') }}</label>
+                            <select name="tipo" class="form-control{{ $errors->has('tipo') ? ' is-invalid' : '' }}">
+                                @if(isset($tipos))
+                                    @foreach($tipos as $tipo)
+                                        <option style="background-color: #1e1e2f" value="{{$tipo->id}}"
+                                        @if(old('tipo', $obj->tipo)==$tipo->id)
+                                            selected
+                                             @endif
+                                        >{{$tipo->descricao}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            @include('alerts.feedback', ['field' => 'tipo'])
+                        </div>
+
+                        <div class="form-group{{ $errors->has('cor') ? ' has-danger' : '' }}">
+                            <label id="corl">{{ __('Cor') }}</label>
+                            <select name="cor" class="form-control{{ $errors->has('cor') ? ' is-invalid' : '' }}">
+                                @if(isset($cores))
+                                    @foreach($cores as $cor)
+                                        <option style="background-color: #1e1e2f" value="{{$cor->id}}"
+                                                @if(old('cor', $cor->tipo)==$tipo->id)
+                                                    selected
+                                            @endif
+                                        >{{$cor->descricao}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            @include('alerts.feedback', ['field' => 'cor'])
                         </div>
 
                         <div class="row">
@@ -64,8 +101,7 @@
                             <input id="foto1" type="text" name="foto1" class="form-control{{ $errors->has('foto1') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto1') }}" value="{{ old('foto1', $obj->foto1)}}" required readonly>
                             @include('alerts.feedback', ['field' => 'foto1'])
 
-                            <input type="file" style="display:none" class="form-control" name="ft1"  size="25" id="arquivo" maxlength="20" accept=".jpg,.png" onchange="showname('arquivo','foto1');"
-                            >
+                            <input type="file" style="display:none" class="form-control" name="fotoum"  size="25" id="arquivo" maxlength="20" accept=".jpg,.png" onchange="showname('arquivo','foto1');">
                             <div style="margin-top: 10px; margin-bottom: -25px">
                                 <input type="button" id="loadFileXml" value="Anexar" onclick="document.getElementById('arquivo').click();" />
                             </div>
@@ -77,7 +113,7 @@
                             <label >{{ __('Foto 2') }}</label>
                             <input id="foto2" type="text" name="foto2" class="form-control{{ $errors->has('foto2') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto2') }}" value="{{ old('foto2', $obj->foto2) }}" required readonly>
                             @include('alerts.feedback', ['field' => 'foto2'])
-                            <input type="file" style="display:none" class="form-control" name="ft1"  size="25" id="foto2i" maxlength="20" accept=".jpg,.png" onchange="showname('foto2i','foto2');"
+                            <input type="file" style="display:none" class="form-control" name="ft2"  size="25" id="foto2i" maxlength="20" accept=".jpg,.png" onchange="showname('foto2i','foto2');"
                             >
                             <div style="margin-top: 10px; margin-bottom: -25px">
                                 <input type="button" id="loadFileXml" value="Anexar" onclick="document.getElementById('foto2i').click();" />

@@ -380,8 +380,6 @@ class UsuarioController extends Controller
 
         }catch (QueryException $exception){
             $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
-
-            dd($exception);
         }
 
         return view("profile/edit",['msg'=>$msgret,'obj'=>$endereco]);

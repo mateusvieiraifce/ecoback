@@ -15,7 +15,7 @@ class CreateTagsAdv extends Migration
     {
         Schema::create('tags_adv', function (Blueprint $table) {
             $table->id();
-            $table->string('descricao')->unique();
+            $table->string('descricao');
             $table->integer('adv_id');
             $table->foreign('adv_id')->references('id')->on('anuncios');//
             $table->timestamps();
