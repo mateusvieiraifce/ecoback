@@ -61,10 +61,16 @@
                         Todos os Produtos
                     </button>
 
+                    <?php
+                    $allTypes = \App\Models\TipoAnuncio::all();
+                    ?>
+                    @foreach($allTypes as $type)
                     <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-                        Artesanato
+                        {{$type->descricao}}
                     </button>
+                    @endforeach
 
+<!--
                     <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
                         Bordados
                     </button>
@@ -72,6 +78,7 @@
                     <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
                         Tecidos
                     </button>
+-->
 
                 </div>
 
