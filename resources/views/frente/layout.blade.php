@@ -292,9 +292,13 @@
 				<ul class="header-cart-wrapitem w-full">
 
                     @foreach($produtos as $prod)
+                    @php
+                    $an = \App\Models\Anuncio::find($prod['id']);
+                    $files = \App\Models\FileAnuncio::where('anuncio_id','=',$an->id)->first();
+                    @endphp
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
-							<img src="/images/produtos/img_17.png" alt="IMG">
+							<img src="{{"/storage/products/".$files->path}}" alt="IMG">
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
@@ -303,7 +307,7 @@
 							</a>
 
 							<span class="header-cart-item-info">
-								{{$prod['id']}} x R$ {{$prod['qtd']}}
+								{{$an->preco}} x R$ {{$prod['qtd']}}
 							</span>
 						</div>
 					</li>

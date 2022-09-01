@@ -184,6 +184,7 @@ class AnuncioController extends Controller
         try{
             $x =  Anuncio::join('type_adv','type_adv.id','=','type_id')->
             join('users','users.id','=','user_id')->where('anuncios.id','=',$id)->first();
+            $x->id = $id;
 
             $tags = TagsAnuncio::where('adv_id','=',$id)->get();
             $saida = "";
