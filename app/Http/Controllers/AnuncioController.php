@@ -149,11 +149,26 @@ class AnuncioController extends Controller
             $tags = TagsAnuncio::where('adv_id','=',$id)->get();
             $saida = "";
             foreach ($tags as $tag){
-                $saida=$saida."#".$tag->descricao;
-
+                $saida=$saida."#".$tag->descrica;
             }
-            $x->hashtag =$saida;
 
+            $files = FileAnuncio::where('anuncio_id','=',$id)->get();
+            if (sizeof($files)>0 && $files[0]){
+                $x->foto1= $files[0]->path;
+            }
+            if (sizeof($files)>1 && $files[1]){
+                $x->foto2= $files[1]->path;
+            }
+            if (sizeof($files)>2 && $files[2]){
+
+                $x->foto3= $files[2]->path;
+            }
+
+            if (sizeof($files)>3 && $files[3]){
+                $x->destaque = $files[3];
+            }
+
+            $x->hashtag =$saida;
 
         }
         catch (QueryException $exp ){

@@ -101,7 +101,7 @@
                             <input id="foto1" type="text" name="foto1" class="form-control{{ $errors->has('foto1') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto1') }}" value="{{ old('foto1', $obj->foto1)}}" required readonly>
                             @include('alerts.feedback', ['field' => 'fotoum'])
 
-                            <input type="file" style="display:none" class="form-control" name="fotoum"  size="25" id="arquivo" maxlength="20" accept=".jpg,.png" onchange="showname('arquivo','foto1');">
+                            <input type="file" style="display:none" class="form-control" name="fotoum"  size="25" id="arquivo" maxlength="20" accept=".jpg,.png" onchange="showname('arquivo','foto1');" >
                             <div style="margin-top: 10px; margin-bottom: -25px">
                                 <input type="button" id="loadFileXml" value="Anexar" onclick="document.getElementById('arquivo').click();" />
                             </div>
