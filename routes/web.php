@@ -57,6 +57,8 @@ Route::get("/profile/update/add/{id}",[\App\Http\Controllers\UsuarioController::
 Route::get("/advertisement/",[\App\Http\Controllers\AnuncioController::class,'list'])->name('advertisement.list')->middleware('auth');;
 Route::get("/advertisement/add",[\App\Http\Controllers\AnuncioController::class,'add'])->name('advertisement.add')->middleware('auth');;
 Route::post("/advertisement/save",[\App\Http\Controllers\AnuncioController::class,'save'])->name('advertisement.save')->middleware('auth');;
+Route::get("/advertisement/delete/{id}",[\App\Http\Controllers\AnuncioController::class,'delete'])->name('advertisement.delete')->middleware('auth');;
+Route::get("/advertisement/edit/{id}",[\App\Http\Controllers\AnuncioController::class,'edit'])->name('advertisement.edit')->middleware('auth');;
 
 
 Route::get('/redirect', '\App\Http\Controllers\UsuarioController@redirectToProvider')->name('google.redi');

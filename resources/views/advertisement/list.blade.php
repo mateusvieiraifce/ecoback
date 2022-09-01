@@ -45,14 +45,14 @@
                                         </td>
 
                                         <td class="td-actions text-left">
-                                            <a href="{{route('user.add.update',$ende->id)}}">
+                                            <a href="{{route('advertisement.edit',$ende->id)}}">
                                                 <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
                                                     <i class="tim-icons icon-pencil"></i>
                                                 </button>
                                             </a>
                                         </td>
                                         <td class="td-actions text-left">
-                                            <a onclick="return confirm('Deseja realmente excluir?') " href="{{route('user.update.del.do',$ende->id)}}">
+                                            <a onclick="return confirm('Deseja realmente excluir?') " href="{{route('advertisement.delete',$ende->id)}}">
                                                 <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
                                                     <i class="tim-icons icon-simple-remove"></i>
                                                 </button>

@@ -96,10 +96,10 @@
 
                         </div>
 
-                        <div class="form-group{{ $errors->has('foto1') ? ' has-danger' : '' }}">
+                        <div class="form-group{{ $errors->has('fotoum') ? ' has-danger' : '' }}">
                                 <label >{{ __('Foto 1') }}</label>
                             <input id="foto1" type="text" name="foto1" class="form-control{{ $errors->has('foto1') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto1') }}" value="{{ old('foto1', $obj->foto1)}}" required readonly>
-                            @include('alerts.feedback', ['field' => 'foto1'])
+                            @include('alerts.feedback', ['field' => 'fotoum'])
 
                             <input type="file" style="display:none" class="form-control" name="fotoum"  size="25" id="arquivo" maxlength="20" accept=".jpg,.png" onchange="showname('arquivo','foto1');">
                             <div style="margin-top: 10px; margin-bottom: -25px">
@@ -109,10 +109,10 @@
 
                         </div>
 
-                        <div class="form-group{{ $errors->has('foto2') ? ' has-danger' : '' }}">
+                        <div class="form-group{{ $errors->has('ft2') ? ' has-danger' : '' }}">
                             <label >{{ __('Foto 2') }}</label>
                             <input id="foto2" type="text" name="foto2" class="form-control{{ $errors->has('foto2') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto2') }}" value="{{ old('foto2', $obj->foto2) }}" required readonly>
-                            @include('alerts.feedback', ['field' => 'foto2'])
+                            @include('alerts.feedback', ['field' => 'ft2'])
                             <input type="file" style="display:none" class="form-control" name="ft2"  size="25" id="foto2i" maxlength="20" accept=".jpg,.png" onchange="showname('foto2i','foto2');"
                             >
                             <div style="margin-top: 10px; margin-bottom: -25px">
@@ -121,10 +121,10 @@
                             <br>
                         </div>
 
-                        <div class="form-group{{ $errors->has('foto3') ? ' has-danger' : '' }}">
+                        <div class="form-group{{ $errors->has('ft3') ? ' has-danger' : '' }}">
                             <label >{{ __('Foto 3') }}</label>
                             <input id="foto3" type="text" name="foto3" class="form-control{{ $errors->has('foto3') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto 3') }}" value="{{ old('foto3', $obj->foto3) }}" required readonly>
-                            @include('alerts.feedback', ['field' => 'foto3'])
+                            @include('alerts.feedback', ['field' => 'ft3'])
 
                             <input type="file" style="display:none" class="form-control" name="ft3"  size="25" id="foto3i" maxlength="20" accept=".jpg,.png" onchange="showname('foto3i','foto3');"
                             >

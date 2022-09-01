@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper;
 use App\Models\Anuncio;
 use App\Models\CorAnuncio;
+use App\Models\Endereco;
 use App\Models\FileAnuncio;
 use App\Models\TagsAnuncio;
 use App\Models\TipoAnuncio;
@@ -44,9 +45,9 @@ class AnuncioController extends Controller
                 'largura' => 'required',
                 'cor' => 'required',
                 'tipo' => 'required',
-                'foto1' => 'required',
-                'foto2' => 'required',
-                'foto3' => 'required',
+                'fotoum' => 'required',
+                'ft2' => 'required',
+                'ft3' => 'required',
                 'hashtag'=>'required',
 
             ]);
@@ -56,6 +57,7 @@ class AnuncioController extends Controller
             $fileTres = $this->saveFile($request,'ft3');
             $fileTres = $this->saveFile($request,'ft3');
             $fileDestak = $this->saveFile($request,'ft4');
+
             $pieces = explode("#", $request->hashtag);
 
             $anuncio = new Anuncio();
@@ -122,5 +124,45 @@ class AnuncioController extends Controller
             return "";
         }
     }
+
+    public function delete($id=null){
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+        try{
+            $x =  Anuncio::find($id);
+            if ($x){
+                $x->delete();
+            }
+        }
+        catch (QueryException $exp ){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+        $endereco = new Endereco();
+        return $this->list($msgret);
+    }
+
+    public function edit($id=null){
+
+        $x =  new Anuncio();
+        try{
+            $x =  Anuncio::find($id);
+
+            $tags = TagsAnuncio::where('adv_id','=',$id)->get();
+            $saida = "";
+            foreach ($tags as $tag){
+                $saida=$saida."#".$tag->descricao;
+
+            }
+            $x->hashtag =$saida;
+
+
+        }
+        catch (QueryException $exp ){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+        $endereco = new Endereco();
+        return view('advertisement/form', ['obj' =>$x, 'tipos' => TipoAnuncio::all(), 'cores' => CorAnuncio::all()]);
+    }
+
+
     //
 }
