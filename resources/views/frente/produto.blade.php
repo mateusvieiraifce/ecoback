@@ -221,7 +221,7 @@
                                         <!-- Review -->
                                         <div class="flex-w flex-t p-b-68">
                                             <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                                                <img src="images/avatar-01.jpg" alt="AVATAR">
+
                                             </div>
 
                                             <div class="size-207">
@@ -302,11 +302,11 @@
 
         <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
 			<span class="stext-107 cl6 p-lr-25">
-				SKU: JAK-01
+				Vendido por: {{$obj->name}}
 			</span>
 
             <span class="stext-107 cl6 p-lr-25">
-				Categories: Jacket, Men
+				Categories: {{$obj->descricao}}
 			</span>
         </div>
     </section>
