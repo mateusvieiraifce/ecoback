@@ -17,6 +17,7 @@
                             <div class="wrap-slick3-dots"></div>
                             <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
+
                             <div class="slick3 gallery-lb">
                                 <div class="item-slick3" data-thumb="{{"/storage/products/".$obj->foto1}}">
                                     <div class="wrap-pic-w pos-relative">
@@ -103,23 +104,16 @@
 
                         <!--  -->
                         <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                            <div class="flex-m bor9 p-r-10 m-r-11">
-                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
+                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Adicionar a lista de desejos">
                                     <i class="zmdi zmdi-favorite"></i>
                                 </a>
-                            </div>
 
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
-                                <i class="fa fa-facebook"></i>
+
+                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Compartilhar pelo Whatsapp">
+                                <i class="fa fa-whatsapp"></i>
                             </a>
 
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
 
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -321,6 +315,13 @@
     function addSesscao(){
         var qtd = document.getElementById('num-product').value;
         var title = "<?php print $obj->id; ?>";
+
+        $.get("/cart/add?produto="+title+"&qtd="+qtd, function(resultado){
+            console.log(resultado);
+        });
+
+      /*
+
         var newOrder = new Object();
         newOrder.produto = title;
         newOrder.qtd = qtd;
@@ -330,7 +331,10 @@
             produtos = [];
         }
         produtos.push(newOrder);
+        aux = JSON.stringify(produtos);
         sessionStorage.setItem('produtos', JSON.stringify(produtos));
+
+
 
 
         /*

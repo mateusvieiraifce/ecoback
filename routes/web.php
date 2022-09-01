@@ -59,7 +59,12 @@ Route::get("/advertisement/add",[\App\Http\Controllers\AnuncioController::class,
 Route::post("/advertisement/save",[\App\Http\Controllers\AnuncioController::class,'save'])->name('advertisement.save')->middleware('auth');;
 Route::get("/advertisement/delete/{id}",[\App\Http\Controllers\AnuncioController::class,'delete'])->name('advertisement.delete')->middleware('auth');;
 Route::get("/advertisement/edit/{id}",[\App\Http\Controllers\AnuncioController::class,'edit'])->name('advertisement.edit')->middleware('auth');;
+
+/*TODO REFACTORY TO FRONT */
 Route::get("/detail/{id}",[\App\Http\Controllers\AnuncioController::class,'produtctDetail'])->name('advertisement.detail');
+Route::get("/cart/add/",[\App\Http\Controllers\AnuncioController::class,'addSession'])->name('advertisement.addsession');
+Route::get("/cart/view/",[\App\Http\Controllers\AnuncioController::class,'viewSession'])->name('advertisement.viewssesion');
+Route::get("/cart/clear/",[\App\Http\Controllers\AnuncioController::class,'clearCarr'])->name('cart.clear');
 
 
 Route::get('/redirect', '\App\Http\Controllers\UsuarioController@redirectToProvider')->name('google.redi');

@@ -106,8 +106,17 @@
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
 							<i class="zmdi zmdi-search"></i>
 						</div>
+                        @php
+                        $nocarrinho = 0 ;
+                        if(session()->has('produtos')){
+                            $produtos =  session('produtos');
+                            $nocarrinho = sizeof($produtos);
+                        }
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
+                        @endphp
+
+
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{$nocarrinho}}">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 
@@ -281,6 +290,8 @@
 
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
+
+                    @foreach($produtos as $prod)
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
 							<img src="/images/produtos/img_17.png" alt="IMG">
@@ -292,26 +303,13 @@
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x R$ 19,00
+								{{$prod['id']}} x R$ {{$prod['qtd']}}
 							</span>
 						</div>
 					</li>
+                    @endforeach
 
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="/images/produtos/img_20.png" alt="IMG">
-						</div>
 
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Boneca
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x R$ 39,00
-							</span>
-						</div>
-					</li>
 
 				</ul>
 
@@ -321,7 +319,7 @@
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping.blade.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+						<a href="{{route('cart.clear')}}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							Limpar
 						</a>
 
@@ -553,7 +551,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		$('.js-addcart-detail').each(function(){
 			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
+				swal(nameProduct, "Adicionado com sucesso").then((result) => {location.reload();});
+
 			});
 		});
 

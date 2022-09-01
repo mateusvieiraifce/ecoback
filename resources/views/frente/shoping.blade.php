@@ -34,6 +34,15 @@
                                     <th class="column-5">Total</th>
                                 </tr>
 
+                                @php
+                                    $nocarrinho = 0 ;
+                                    if(session()->has('produtos')){
+                                        $produtos =  session('produtos');
+                                        $nocarrinho = sizeof($produtos);
+                                    }
+
+                                @endphp
+                                @foreach($produtos as $produto)
                                 <tr class="table_row">
                                     <td class="column-1">
                                         <div class="how-itemcart1">
@@ -57,30 +66,9 @@
                                     </td>
                                     <td class="column-5">R$ 36,00</td>
                                 </tr>
+                                @endforeach
 
-                                <tr class="table_row">
-                                    <td class="column-1">
-                                        <div class="how-itemcart1">
-                                            <img src="images/produtos/img_20.png" alt="IMG">
-                                        </div>
-                                    </td>
-                                    <td class="column-2">Boneca de Tecido</td>
-                                    <td class="column-3">R$ 16,00</td>
-                                    <td class="column-4">
-                                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
 
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="column-5">R$ 16,00</td>
-                                </tr>
                             </table>
                         </div>
 

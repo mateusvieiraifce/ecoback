@@ -217,6 +217,31 @@ class AnuncioController extends Controller
         return view('frente/produto', ['obj' =>$x, 'tipos' => TipoAnuncio::all(), 'cores' => CorAnuncio::all()]);
     }
 
+    public function addSession(Request $request){
+
+        $obj = ['id'=>$_GET['produto'], 'qtd'=>$_GET['qtd']];
+
+        if ($request->session()->has('produtos')) {
+
+            $produtos = session('produtos');
+
+        }else{
+
+            $produtos = array();
+
+        }
+        array_push($produtos,$obj);
+        session(['produtos' => $produtos]);
+        return "ok";
+    }
+
+    public function viewSession(){
+        dd(session('produtos'));
+    }
+    public function clearCarr(){
+        session(['produtos' => array()]);
+        return back();
+    }
 
     //
 }
