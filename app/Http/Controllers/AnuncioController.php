@@ -203,7 +203,7 @@ class AnuncioController extends Controller
             }
 
             if (sizeof($files)>3 && $files[3]){
-                $x->destaque = $files[3];
+                $x->destaque = $files[3]->path;
             }
 
             $x->hashtag =$saida;

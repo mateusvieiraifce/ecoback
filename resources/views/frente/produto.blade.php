@@ -5,6 +5,8 @@
 @section('detail')
     <div style="height: 60px"> </div>
 
+    <div class="bg0 p-t-23 p-b-140">
+        <div class="container">
     <!-- Product Detail -->
     <section class="sec-product-detail bg0 p-t-65 p-b-60">
         <div class="container">
@@ -16,31 +18,31 @@
                             <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                             <div class="slick3 gallery-lb">
-                                <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
+                                <div class="item-slick3" data-thumb="{{"/storage/products/".$obj->foto1}}">
                                     <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
+                                        <img src="{{"/storage/products/".$obj->foto1}}" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{"/storage/products/".$obj->foto1}}">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
                                 </div>
 
-                                <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
+                                <div class="item-slick3" data-thumb="{{"/storage/products/".$obj->foto2}}">
                                     <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
+                                        <img src="{{"/storage/products/".$obj->foto2}}" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{"/storage/products/".$obj->foto2}}">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
                                 </div>
 
-                                <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
+                                <div class="item-slick3" data-thumb="{{"/storage/products/".$obj->foto3}}">
                                     <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
+                                        <img src="{{"/storage/products/".$obj->foto3}}" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{"/storage/products/".$obj->foto3}}">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
@@ -53,55 +55,29 @@
                 <div class="col-md-6 col-lg-5 p-b-30">
                     <div class="p-r-50 p-t-5 p-lr-0-lg">
                         <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                            Lightweight Jacket
+                            {{$obj->titulo}}
                         </h4>
 
                         <span class="mtext-106 cl2">
-							$58.79
+							{{$obj->preco}}
 						</span>
 
                         <p class="stext-102 cl3 p-t-23">
-                            Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
+                            {{$obj->descricao}}
+                        </p>
+
+                        <p class="stext-102 cl3 p-t-23">
+                            Vendido Por: {{$obj->usuario}}
                         </p>
 
                         <!--  -->
                         <div class="p-t-33">
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-203 flex-c-m respon6">
-                                    Size
-                                </div>
 
-                                <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" name="time">
-                                            <option>Choose an option</option>
-                                            <option>Size S</option>
-                                            <option>Size M</option>
-                                            <option>Size L</option>
-                                            <option>Size XL</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-203 flex-c-m respon6">
-                                    Color
-                                </div>
 
-                                <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" name="time">
-                                            <option>Choose an option</option>
-                                            <option>Red</option>
-                                            <option>Blue</option>
-                                            <option>White</option>
-                                            <option>Grey</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                </div>
+
+
                             </div>
 
                             <div class="flex-w flex-r-m p-b-10">
@@ -111,15 +87,15 @@
                                             <i class="fs-16 zmdi zmdi-minus"></i>
                                         </div>
 
-                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1" id="num-product">
 
                                         <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                         </div>
                                     </div>
 
-                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                        Add to cart
+                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" onclick="addSesscao();">
+                                        Adicionar ao Carrinho
                                     </button>
                                 </div>
                             </div>
@@ -338,4 +314,38 @@
 
     <!-- Related Products -->
     <section class="sec-relate-product bg0 p-t-45 p-b-105">
+    </section>
+        </div>
+    </div>
+<script type="application/javascript">
+    function addSesscao(){
+        var qtd = document.getElementById('num-product').value;
+        var title = "<?php print $obj->id; ?>";
+        var newOrder = new Object();
+        newOrder.produto = title;
+        newOrder.qtd = qtd;
+        if (sessionStorage.produtos){
+            produtos= JSON.parse(sessionStorage.getItem('produtos'));
+        }else{
+            produtos = [];
+        }
+        produtos.push(newOrder);
+        sessionStorage.setItem('produtos', JSON.stringify(produtos));
+
+
+        /*
+        var retrievedObject = sessionStorage.getItem('produtos');
+        console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
+        var b = {'produto': title, 'qtd': qtd};
+
+        b = JSON.stringify(b);
+        sessionStorage.setItem('carrinho', b);
+        var c = JSON.parse(sessionStorage.getItem('carrinho'));
+        console.info(c);
+
+        alert("adicionou a seção"+title);*/
+    }
+</script>
 @endsection
+
