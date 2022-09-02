@@ -54,7 +54,11 @@
 						</a>
 
 						<a href="{{route('home')}}" class="flex-c-m trans-04 p-lr-25">
+                            @if(Auth::check())
 							Minha Conta
+                            @else
+                            Entrar
+                            @endif
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
@@ -92,7 +96,7 @@
 							</li>
 
 							<li>
-								<a href="#">Sobre</a>
+								<a href="{{route('home.sobre')}}">Sobre</a>
 							</li>
 
 							<li>
@@ -174,8 +178,12 @@
 							Help & FAQs
 						</a>
 
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Minha Conta
+						<a href="{{route('home')}}" class="flex-c-m p-lr-10 trans-04">
+							@if(Auth::check())
+                            Minha Conta
+                            @else
+                            Login
+                            @endif
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
@@ -207,7 +215,7 @@
 				</li>
 
 				<li>
-					<a href="#">Sobre</a>
+					<a href="{{route('home.sobre')}}">Sobre</a>
 				</li>
 
 				<li>
@@ -290,6 +298,7 @@
 
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
+                    @if(isset($produtos))
 
                     @foreach($produtos as $prod)
                     @php
@@ -313,7 +322,7 @@
 					</li>
                     @endforeach
 
-
+                    @endif
 
 				</ul>
 

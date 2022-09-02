@@ -17,6 +17,12 @@ Route::get('/', function () {
     return view('frente/index');
 })->name('home.frente');
 
+
+Route::get('/sobre', function () {
+    return view('frente/about');
+})->name('home.sobre');
+
+
 Route::get('/index', function () {
     return view('frente/index');
 })->name('index');
