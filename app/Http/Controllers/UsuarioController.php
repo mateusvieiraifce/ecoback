@@ -119,6 +119,9 @@ class UsuarioController extends Controller
             $msg = ['valor'=>'Usuário/Senha inválido','tipo'=>'danger'];
             return view('auth/login',['msg'=>$msg] );
         }
+        if (session()->has('nextview')) {
+            return view(session('nextview'));
+        }
         return view('auth/login');
     }
 
@@ -189,6 +192,7 @@ class UsuarioController extends Controller
         // check if they're an existing user
         $existingUser = User::where('email', $user->email)->first();
         if($existingUser){
+
             auth()->login($existingUser, true);
         } else {
 
@@ -205,7 +209,13 @@ class UsuarioController extends Controller
             $this->sendEmailCreate($newUser);
             auth()->login($newUser, true);
         }
+
+        if (session()->has('nextview')) {
+           // dd(session('nextview'));
+            return view(session('nextview'));
+        } else{
         return redirect()->to('/index');
+        }
     }
 
     private function sendEmailCreate($user){

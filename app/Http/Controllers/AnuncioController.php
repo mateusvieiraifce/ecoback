@@ -236,7 +236,6 @@ class AnuncioController extends Controller
         return "ok";
     }
 
-
     public function addFavorite(Request $request){
 
         $path = $request->getPathInfo();
@@ -278,10 +277,12 @@ class AnuncioController extends Controller
     public function viewSession(){
         dd(session('produtos'));
     }
+
     public function clearCarr(){
         session(['produtos' => array()]);
         return back();
     }
+
 
     //
 }

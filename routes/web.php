@@ -35,9 +35,7 @@ Route::get('/contato', function () {
     return view('frente/contato');
 })->name('contato');
 
-Route::get('/checkout', function () {
-    return view('frente/shoping');
-})->name('finalizar');
+Route::get('/checkout', [\App\Http\Controllers\CheckoutControler::class,"checkout"])->name('finalizar');
 
 Route::post('/mail',[\App\Http\Controllers\MailController::class,"sendMail"])->name('sendmail');
 
@@ -76,6 +74,8 @@ Route::get("/detail/{id}",[\App\Http\Controllers\AnuncioController::class,'produ
 Route::get("/cart/add/",[\App\Http\Controllers\AnuncioController::class,'addSession'])->name('advertisement.addsession');
 Route::get("/cart/view/",[\App\Http\Controllers\AnuncioController::class,'viewSession'])->name('advertisement.viewssesion');
 Route::get("/cart/clear/",[\App\Http\Controllers\AnuncioController::class,'clearCarr'])->name('cart.clear');
+Route::get("/cart/remqnt/{id}",[\App\Http\Controllers\CheckoutControler::class,'removerQntCarrinho'])->name('cart.remqtd');
+Route::get("/cart/addqnt/{id}",[\App\Http\Controllers\CheckoutControler::class,'addQntCarrinho'])->name('cart.addqtd');
 
 
 Route::get('/redirect', '\App\Http\Controllers\UsuarioController@redirectToProvider')->name('google.redi');

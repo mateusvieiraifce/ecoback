@@ -40,51 +40,49 @@
                                         $produtos =  session('produtos');
                                         $nocarrinho = sizeof($produtos);
                                     }
-
+                                    $total = 0;
                                 @endphp
                                 @foreach($produtos as $produto)
-                                <tr class="table_row">
+                                    @php
+                                        $an = \App\Models\Anuncio::find($produto['id']);
+                                        $files = \App\Models\FileAnuncio::where('anuncio_id','=',$an->id)->first();
+                                    @endphp
+
+                                    <tr class="table_row">
                                     <td class="column-1">
                                         <div class="how-itemcart1">
-                                            <img src="/images/produtos/img_17.png" alt="IMG">
+                                            <img src="{{"/storage/products/".$files->path}}" alt="IMG">
                                         </div>
                                     </td>
-                                    <td class="column-2">Bordado a mão </td>
-                                    <td class="column-3">R$ 36.00</td>
+
+                                    <td class="column-2">{{$an->titulo}} </td>
+                                    <td class="column-3">@money($an->preco)</td>
+                                        @php
+                                        $total = $total + $an->preco * $produto['qtd'];
+                                        @endphp
                                     <td class="column-4">
                                         <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
+                                            <div class=" cl8 hov-btn3 trans-04 flex-c-m" style=" width: 45px; height: 100%;">
+                                                <a href="{{route('cart.remqtd',$an->id)}}" class="fs-16 zmdi zmdi-minus"></a>
                                             </div>
 
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1">
+                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="{{$produto['qtd']}}">
 
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
+                                            <div class="cl8 hov-btn3 trans-04 flex-c-m" style=" width: 45px; height: 100%;">
+                                                <a href="{{route('cart.addqtd',$an->id)}}" class="fs-16 zmdi zmdi-plus"></a>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="column-5">R$ 36,00</td>
+                                    <td class="column-5">@money($an->preco * $produto['qtd'])</td>
                                 </tr>
                                 @endforeach
 
+                                <input type="hidden" id="total" name="total" value="{{$total}}">
 
                             </table>
                         </div>
 
-                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                            <div class="flex-w flex-m m-r-20 m-tb-5">
-                                <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Código do Cupom ">
 
-                                <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-                                    Aplicar Cupom
-                                </div>
-                            </div>
-
-                            <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                               Atualizar
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -103,7 +101,7 @@
 
                             <div class="size-209">
 								<span class="mtext-110 cl2">
-									R$79,65
+									@money($total)
 								</span>
                             </div>
                         </div>
@@ -119,35 +117,56 @@
                             <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
                                 <p class="stext-111 cl6 p-t-2"> Por conta do comprador</p>
                                 <div class="p-t-15">
-									<span class="stext-112 cl8">
+                                    <span class="stext-112 cl8">
 										Calcular Frete
 									</span>
+                                    @guest
 
-                                    <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                        <select class="js-select2" name="time">
-                                            <option>Selecione seu País</option>
-                                            <option>BR</option>
+                                    @else
+                                        @php
+                                        $usuario =\Illuminate\Support\Facades\Auth::user();
+                                        $ende = \App\Models\Endereco::where('user_id','=',$usuario->id)->get();
+                                        @endphp
+                                       <br/>
+                                        <select name="enderecos" >
+                                        @foreach($ende as $end)
+                                            <option value="{{$end->id}}">{{$end->recebedor}}</option>
+                                        @endforeach
+
                                         </select>
-                                        <div class="dropDownSelect2"></div>
+                                    @endguest
+
+                                    <div class="bor8 bg0 m-b-22">
+                                        <input @if(!empty($ende)) value="{{$ende[0]->cep}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="CEP" onblur="pesquisacep(this.value);" disabled >
                                     </div>
 
-                                    <div class="bor8 bg0 m-b-12">
-                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="Cidade/Estado">
+
+                                    <div class="bor8 bg0 m-b-22">
+                                        <input @if(!empty($ende)) value="{{$ende[0]->rua}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
                                     </div>
 
                                     <div class="bor8 bg0 m-b-22">
-                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="CEP">
+                                        <input @if(!empty($ende)) value="{{$ende[0]->bairro}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
                                     </div>
 
+
+                                    <div class="bor8 bg0 m-b-22">
+                                        <input @if(!empty($ende)) value="{{$ende[0]->cidade}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
+                                    </div>
+
+                                    @php
+                                    $frete = 10;
+                                    @endphp
                                     <div class="flex-w">
                                         <div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-                                            Atualize o total
+                                            <label id="frete">Total Frete: @if(!empty($ende)) @if($ende[0]->cidade=="Sobral") @money(10) @else  @money(200) @php $frete = 200;@endphp@endif  @endif</label>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="flex-w flex-t p-t-27 p-b-33">
                             <div class="size-208">
@@ -158,18 +177,102 @@
 
                             <div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-									R$79,65
+                                    <label id="final"> @money($total+$frete)</label>
 								</span>
                             </div>
                         </div>
 
+                        @guest
+                            <a class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                                Entrar
+                            </a>
+                        @else
                         <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                             Finalize o Processo
                         </button>
+                        @endguest
                     </div>
                 </div>
             </div>
         </div>
     </form>
+<script>
 
+    function formatMoney(number) {
+        return number.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+           // document.getElementById('endereco').value = (conteudo.logradouro);
+           // document.getElementById('bairro').value = (conteudo.bairro);
+            localidade = (conteudo.localidade);
+            document.getElementById('cidade').value = localidade;
+            frete = 10;
+            if (localidade == "Sobral"){
+                document.getElementById('frete').textContent  = "TOTAL FRETE: R$ 10,00";
+
+            }else{
+                document.getElementById('frete').textContent  = "TOTAL FRETE: R$ 200,00";
+                frete = 200;
+            }
+            total = {{$total}} + frete;
+            document.getElementById('final').textContent  = formatMoney(total);
+            //document.getElementById('uf').value = (conteudo.uf);
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            //limpa_formulário_cep();
+            alert("CEP não encontrado.");
+            ///script.src = 'busca_cep.php?cep=00000001';
+
+        }
+    }
+
+    function pesquisacep(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if (validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+              //  document.getElementById('endereco').value = "...";
+               // document.getElementById('bairro').value = "...";
+                document.getElementById('cidade').value = "...";
+                //document.getElementById('uf').value = "...";
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+
+                ///     script.src = 'busca_cep.php?cep=00000001';
+
+                script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+              //  limpa_formulário_cep();
+                alert("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            //limpa_formulário_cep();
+
+        }
+    };
+</script>
 @endsection

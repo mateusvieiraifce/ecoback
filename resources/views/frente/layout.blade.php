@@ -304,6 +304,9 @@
 			</div>
 
 			<div class="header-cart-content flex-w js-pscroll">
+                @php
+                $total = 0;
+                @endphp
 				<ul class="header-cart-wrapitem w-full">
                     @if(isset($produtos))
 
@@ -323,7 +326,10 @@
 							</a>
 
 							<span class="header-cart-item-info">
-								{{$an->preco}} x R$ {{$prod['qtd']}}
+								{{$prod['qtd']}} X @money($an->preco)
+                                @php
+                                $total = $total + ($an->preco * $prod['qtd']);
+                                @endphp
 							</span>
 						</div>
 					</li>
@@ -335,7 +341,7 @@
 
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
+						Total: @money($total)
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
