@@ -301,7 +301,7 @@
                     <div class="block2">
                         <div class="block2-pic hov-img0" style="width: auto; max-height: 380px;">
                             <?php $pathImage = \App\Models\FileAnuncio::where('anuncio_id','=',$anuncio->id)->where("path","!=","")->first(); ?>
-                            <img src={{"/storage/products/".$pathImage->path}} alt="IMG-PRODUCT" >
+                            <img src={{"/storage/products/".$pathImage->path}} alt="IMG-PRODUCT" style="width: auto; max-height: 380px;" >
 
                             <a href="{{route('advertisement.detail',$anuncio->id)}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                 Ver Detalhes
@@ -310,7 +310,7 @@
 
                         <div class="block2-txt flex-w flex-t p-t-14">
                             <div class="block2-txt-child1 flex-col-l ">
-                                <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                <a href="{{route('advertisement.detail',$anuncio->id)}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                     {{$anuncio->titulo}}
                                 </a>
 
@@ -388,7 +388,7 @@
                                                 </h4>
 
                                                 <span class="mtext-106 cl2">
-								R$ 58.79
+								R$  {{$anuncio->preco}}
 							</span>
 
                                                 <p class="stext-102 cl3 p-t-23">

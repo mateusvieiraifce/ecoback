@@ -17,7 +17,7 @@
         <!-- Icons -->
         <link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
         <!-- CSS -->
-        <link href="/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+        <link href="/assets/css/black-dashboard.css" rel="stylesheet" />
         <link href="/assets/css/theme.css" rel="stylesheet" />
     </head>
     <body class="{{ $class ?? '' }}">

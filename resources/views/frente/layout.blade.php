@@ -375,7 +375,7 @@
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Residuos
+								Resíduos
 							</a>
 						</li>
 
@@ -385,7 +385,7 @@
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Help
+						Ajuda
 					</h4>
 
 					<ul>
@@ -417,7 +417,7 @@
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						GET IN TOUCH
+						Entre em contato
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
@@ -441,7 +441,7 @@
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Newsletter
+						Receba nossas novidades!!
 					</h4>
 
 					<form>
@@ -452,7 +452,7 @@
 
 						<div class="p-t-18">
 							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Subscribe
+								Se inscreva!
 							</button>
 						</div>
 					</form>

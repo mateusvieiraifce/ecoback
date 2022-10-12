@@ -59,7 +59,7 @@
 
                                 <span class="form-check-sign"></span>
                                 {{ __('Eu Aceito') }}
-                                <a href="#">{{ __('termos e condições de uso') }}</a>.
+                                <a href="/docs/termos.pdf">{{ __('termos e condições de uso') }}</a>.
                             </label>
                             @include('alerts.feedback', ['field' => 'aceito'])
                         </div>

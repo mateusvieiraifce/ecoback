@@ -29,7 +29,7 @@
     <div class='cookie-banner' style=''>
         <p>
             Para usar nossa plataforma, você aceita nossa
-            <a href='insert-link'>Política de privacidade</a>
+            <a href='/docs/privacidade.pdf'>Política de privacidade</a>
         </p>
         <button class='close' onclick="$('.cookie-banner').fadeOut();">&times;</button>
     </div>
