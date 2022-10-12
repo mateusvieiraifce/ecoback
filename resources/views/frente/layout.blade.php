@@ -112,9 +112,16 @@
 						</div>
                         @php
                         $nocarrinho = 0 ;
+                        $favoritos = 0 ;
                         if(session()->has('produtos')){
                             $produtos =  session('produtos');
                             $nocarrinho = sizeof($produtos);
+                        }
+
+                        if(session()->has('favoritos')){
+                            $fav =  session('favoritos');
+                            $fav= array_unique($fav);
+                            $favoritos = sizeof($fav);
                         }
 
                         @endphp
@@ -124,7 +131,7 @@
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 
-						<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
+						<a href="{{route('advertisement.listfavorito')}}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="{{$favoritos}}">
 							<i class="zmdi zmdi-favorite-outline"></i>
 						</a>
 					</div>
@@ -541,7 +548,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		$('.js-addwish-b2').each(function(){
 			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
+				swal(nameProduct, "Esse produto foi adicionado na lista de desejos!", "success");
 
 				$(this).addClass('js-addedwish-b2');
 				$(this).off('click');
@@ -556,6 +563,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 				$(this).addClass('js-addedwish-detail');
 				$(this).off('click');
+
 			});
 		});
 

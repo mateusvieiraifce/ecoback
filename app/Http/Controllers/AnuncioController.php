@@ -236,6 +236,45 @@ class AnuncioController extends Controller
         return "ok";
     }
 
+
+    public function addFavorite(Request $request){
+
+        $path = $request->getPathInfo();
+        $result = explode('/',$path);
+        $obj = $result[sizeof($result)-1];
+        if ($request->session()->has('favoritos')) {
+            $fav = session('favoritos');
+        }else{
+            $fav = array();
+        }
+        array_push($fav,$obj);
+        session(['favoritos' => $fav]);
+        return back();
+    }
+
+    public function remFavorite($id){
+
+        if (session()->has('favoritos')) {
+            $fav = session('favoritos');
+            $new = array_diff($fav,[$id]);
+            session(['favoritos' => $new]);
+            //dd($new);
+        }
+
+        return $this->listFavorite();
+    }
+
+    public function listFavorite(){
+        if (session()->has('favoritos')) {
+            $fav = session('favoritos');
+            $lista  = Anuncio::whereIn('id',$fav)->get();
+        } else{
+            $lista = [];
+        }
+
+        return view('frente.favoritos',['anuncios'=>$lista]);
+    }
+
     public function viewSession(){
         dd(session('produtos'));
     }

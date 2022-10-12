@@ -211,13 +211,13 @@
                                                 {{$anuncio->titulo}}
                                             </a>
 
-                                            <span class="stext-105 cl3">
+                                            <span class="stext-105 cl3" style="text-align: right; width: 100%">
 									@money($anuncio->preco)
 								</span>
                                         </div>
 
                                         <div class="block2-txt-child2 flex-r p-t-3">
-                                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                            <a  href="{{route('advertisement.addfavorito',$anuncio->id)}}" class="btn-addwish-b2 dis-block pos-relative" >
                                                 <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
                                                 <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
                                             </a>
@@ -325,7 +325,7 @@
                                                     <!--  -->
                                                     <div class="flex-w flex-m p-l-100 p-t-40 respon7">
                                                         <div class="flex-m bor9 p-r-10 m-r-11">
-                                                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
+                                                            <a href="{{route("home")}}" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
                                                                 <i class="zmdi zmdi-favorite"></i>
                                                             </a>
                                                         </div>
@@ -364,4 +364,12 @@
                 </div>
     </div>
 
+    <script type="application/javascript">
+        function addFavarito(id){
+            $.get("/favorite/add/"+id, function(resultado){
+                console.log(resultado);
+            });
+            location.reload();
+        }
+    </script>
 @endsection

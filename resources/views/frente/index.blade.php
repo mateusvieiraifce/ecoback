@@ -77,7 +77,7 @@
 
                                     <div class="layer-slick1 animated visible-false" data-appear="rotateIn" data-delay="1600">
                                         <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                                            Shop Now
+                                            Compre agora!
                                         </a>
                                     </div>
                                 </div>
@@ -320,7 +320,7 @@
                             </div>
 
                             <div class="block2-txt-child2 flex-r p-t-3">
-                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                <a href="{{route('advertisement.addfavorito',$anuncio->id)}}" class="btn-addwish-b2 dis-block pos-relative">
                                     <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
                                     <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
                                 </a>
