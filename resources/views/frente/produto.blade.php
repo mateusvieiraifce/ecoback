@@ -60,7 +60,7 @@
                         </h4>
 
                         <span class="mtext-106 cl2">
-							{{$obj->preco}}
+							@money($obj->preco)
 						</span>
 
                         <p class="stext-102 cl3 p-t-23">
@@ -68,7 +68,7 @@
                         </p>
 
                         <p class="stext-102 cl3 p-t-23">
-                            Vendido Por: {{$obj->usuario}}
+                            Vendido Por: {{$obj->name}}
                         </p>
 
                         <!--  -->
@@ -125,15 +125,15 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item p-b-10">
-                            <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
+                            <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Descrição Completa</a>
                         </li>
 
                         <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional information</a>
+                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">Informações Adicionais</a>
                         </li>
 
                         <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
+                            <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Revisões</a>
                         </li>
                     </ul>
 
@@ -143,7 +143,7 @@
                         <div class="tab-pane fade show active" id="description" role="tabpanel">
                             <div class="how-pos2 p-lr-15-md">
                                 <p class="stext-102 cl6">
-                                    Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
+                                    {{$obj->descricao}}
                                 </p>
                             </div>
                         </div>
@@ -155,21 +155,21 @@
                                     <ul class="p-lr-28 p-lr-15-sm">
                                         <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
-												Weight
+												Peso
 											</span>
 
                                             <span class="stext-102 cl6 size-206">
-												0.79 kg
+												{{($obj->peso)/1000}} Kg
 											</span>
                                         </li>
 
                                         <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
-												Dimensions
+												Dimensões
 											</span>
 
                                             <span class="stext-102 cl6 size-206">
-												110 x 33 x 100 cm
+												{{$obj->altura}} x {{$obj->largura}}
 											</span>
                                         </li>
 
@@ -189,7 +189,7 @@
 											</span>
 
                                             <span class="stext-102 cl6 size-206">
-												Black, Blue, Grey, Green, Red, White
+												{{$obj->cor}}
 											</span>
                                         </li>
 
@@ -234,7 +234,7 @@
                                                 </div>
 
                                                 <p class="stext-102 cl6">
-                                                    Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+                                                    Ótimo produto
                                                 </p>
                                             </div>
                                         </div>
@@ -242,16 +242,16 @@
                                         <!-- Add review -->
                                         <form class="w-full">
                                             <h5 class="mtext-108 cl2 p-b-7">
-                                                Add a review
+                                                Adicionar Comentários
                                             </h5>
 
                                             <p class="stext-102 cl6">
-                                                Your email address will not be published. Required fields are marked *
+                                                Seu email não será publicado, Os campos marcados com * são obrigatório
                                             </p>
 
                                             <div class="flex-w flex-m p-t-50 p-b-23">
 												<span class="stext-102 cl3 m-r-16">
-													Your Rating
+													Sua Avaliação
 												</span>
 
                                                 <span class="wrap-rating fs-18 cl11 pointer">
@@ -266,12 +266,12 @@
 
                                             <div class="row p-b-25">
                                                 <div class="col-12 p-b-5">
-                                                    <label class="stext-102 cl3" for="review">Your review</label>
+                                                    <label class="stext-102 cl3" for="review">Sua revisão</label>
                                                     <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
                                                 </div>
 
                                                 <div class="col-sm-6 p-b-5">
-                                                    <label class="stext-102 cl3" for="name">Name</label>
+                                                    <label class="stext-102 cl3" for="name">Nome</label>
                                                     <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
                                                 </div>
 
@@ -282,7 +282,7 @@
                                             </div>
 
                                             <button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-                                                Submit
+                                                Enviar
                                             </button>
                                         </form>
                                     </div>

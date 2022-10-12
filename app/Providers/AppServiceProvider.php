@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
         if (env('ambiente')==="remoto") {
             URL::forceScheme('https');
         }
+
+        Blade::directive('money', function ($amount) {
+            return "<?php echo 'R$ ' . number_format($amount, 2,',', '.'); ?>";
+        });
         /*if (app()->environment('remote')) {
 
         }*/
