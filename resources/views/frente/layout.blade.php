@@ -61,13 +61,13 @@
                             @endif
 						</a>
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							PT
+                        @if(Auth::check())
+						<a href="{{route("logout")}}" class="flex-c-m trans-04 p-lr-25">
+							Logout
 						</a>
+                        @endif
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							R$
-						</a>
+
 					</div>
 				</div>
 			</div>

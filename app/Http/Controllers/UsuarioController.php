@@ -104,6 +104,7 @@ class UsuarioController extends Controller
 
     function logar(Request  $request){
 
+
         $credentials = $request->validate([
             'email' => ['required'],
             'password' => ['required'],
@@ -113,16 +114,21 @@ class UsuarioController extends Controller
         $dados =['email' => $request->email,'password' => $request->password];
         if (Auth::attempt($dados, false)) {
             $request->session()->regenerate();
-            return redirect()->intended('index');
+
+            if (session()->has('nextview')) {
+                return view(session('nextview'));
+            }
+            $usuario = Auth::user();
+            $compras = Vendas::where('comprador_id','=',$usuario->id)->orderBy('created_at','desc')->get();
+
+            return redirect()->intended('index',['compras'=>$compras]);
         } else{
 
             $msg = ['valor'=>'Usuário/Senha inválido','tipo'=>'danger'];
             return view('auth/login',['msg'=>$msg] );
         }
-        if (session()->has('nextview')) {
-            return view(session('nextview'));
-        }
-        return view('auth/login');
+
+        //return view('auth/login');
     }
 
     public function logout(Request $request)
@@ -153,6 +159,7 @@ class UsuarioController extends Controller
                 $dados =['email' => $request->email,'password' => $request->password];
                 if (Auth::attempt($dados, false)) {
                     $request->session()->regenerate();
+
                     return redirect()->intended('index');
                 }
             }
@@ -214,6 +221,7 @@ class UsuarioController extends Controller
            //dd(session('nextview'));
             return redirect()->to(session('nextview'));//view(session('nextview'));
         } else{
+
         return redirect()->to('/index');
         }
     }

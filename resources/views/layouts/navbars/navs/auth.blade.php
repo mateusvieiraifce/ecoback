@@ -12,7 +12,11 @@
             <br/>
             <p>
                 <img src="/assets/img/Icone2t.png" style="max-width: 50px; height: auto;"/>
+                @if(\Illuminate\Support\Facades\Auth::user()->tipouser ==='V')
                 <a class="navbar-brand" href="#">{{ $page ?? __('Dashboard') }}</a>
+                @else
+                    <a class="navbar-brand" href="{{route('index')}}">{{ $page ?? __('Continuar comprando') }}</a>
+                @endif
             </p>
 
         </div>
@@ -38,18 +42,7 @@
                         <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item">{{ __('Mike John responded to your email') }}</a>
                         </li>
-                        <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('You have 5 more tasks') }}</a>
-                        </li>
-                        <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('Your friend Michael is in town') }}</a>
-                        </li>
-                        <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('Another notification') }}</a>
-                        </li>
-                        <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('Another one') }}</a>
-                        </li>
+
                     </ul>
                 </li>
                 <li class="dropdown nav-item">
@@ -75,6 +68,10 @@
                                 <input type="hidden" value="{{auth()->user()->id}}" name="id">
                             </form>
                             <a onclick="if (confirm('Deseja realmente excluir?')){getElementById('formremove').submit()}" href="#" class="nav-item dropdown-item">{{ __('Excluir') }}</a>
+                        </li>
+
+                        <li class="nav-link">
+                            <a href="{{route('index')}}" class="nav-item dropdown-item" >{{ __('Continuar comprando') }}</a>
                         </li>
                         <li class="dropdown-divider"></li>
                         <li class="nav-link">

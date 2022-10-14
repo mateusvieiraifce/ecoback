@@ -4,12 +4,14 @@
     <div class="sidebar-wrapper">
 
         <ul class="nav">
+            @if(\Illuminate\Support\Facades\Auth::user()->tipouser ==='V')
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{route('home')}}">
                     <i class="tim-icons icon-chart-pie-36"></i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
+
 
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
@@ -66,6 +68,8 @@
                     </ul>
                 </div>
             </li>
+            @endif
+
             <li>
                 <a data-toggle="collapse" href="#compras" aria-expanded="true">
                     <i class="tim-icons icon-money-coins" ></i>
@@ -75,8 +79,8 @@
 
                 <div class="collapse" id="compras">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'compras') class="active " @endif>
-                            <a href="">
+                        <li @if ($pageSlug == 'compras' ) class="active " @endif>
+                            <a href="{{route('compras.list')}}">
                                 <i class="tim-icons icon-components"></i>
                                 <p>{{ __('Compras') }}</p>
                             </a>
@@ -97,12 +101,14 @@
                 </div>
             </li>
 
+            @if(\Illuminate\Support\Facades\Auth::user()->tipouser ==='V')
             <li @if ($pageSlug == 'icons') class="active " @endif>
                 <a href="">
                     <i class="tim-icons icon-chart-pie-36"></i>
                     <p>{{ __('Faturamento') }}</p>
                 </a>
             </li>
+            @endif
             <li @if ($pageSlug == 'profile') class="active " @endif>
                 <a href="{{route('user.preedit')}}">
                     <i class="tim-icons icon-single-02"></i>

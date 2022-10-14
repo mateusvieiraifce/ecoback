@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -91,8 +92,19 @@ Route::get('/minhaarea', function () {
 })->middleware('auth');;
 
 Route::get('/home', function () {
-    return view('dashboard');
+    $usuario = Auth::user();
+    $compras = \App\Models\Vendas::where('comprador_id','=',$usuario->id)->orderBy('created_at','desc')->get();
+    return view('dashboard',['compras'=>$compras]);
+
 })->name('home')->middleware('auth');;
+
+Route::get('/compras', function () {
+    $usuario = Auth::user();
+    $compras = \App\Models\Vendas::where('comprador_id','=',$usuario->id)->orderBy('created_at','desc')->get();
+    return view('dashboard',['compras'=>$compras]);
+
+})->name('compras.list')->middleware('auth');;
+
 
 Route::get('/users/', function () {
     return view('users/index');
