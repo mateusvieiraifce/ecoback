@@ -211,8 +211,8 @@ class UsuarioController extends Controller
         }
 
         if (session()->has('nextview')) {
-           // dd(session('nextview'));
-            return view(session('nextview'));
+           //dd(session('nextview'));
+            return redirect()->to(session('nextview'));//view(session('nextview'));
         } else{
         return redirect()->to('/index');
         }

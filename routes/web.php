@@ -82,6 +82,9 @@ Route::get('/redirect', '\App\Http\Controllers\UsuarioController@redirectToProvi
 Route::get('/callback', '\App\Http\Controllers\UsuarioController@handleProviderCallback')->name('google.callback');;
 
 
+Route::post("/checkout/create",[\App\Http\Controllers\CheckoutControler::class,'create'])->name('vendas.create')->middleware('auth');;
+Route::get("/checkout/confirmpay/{id}",[\App\Http\Controllers\CheckoutControler::class,'posProcessPagamento'])->name('vendas.payment');
+
 
 Route::get('/minhaarea', function () {
     return view('dashboard');

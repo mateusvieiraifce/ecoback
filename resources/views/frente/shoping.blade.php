@@ -6,20 +6,21 @@
     <!-- breadcrumb -->
     <div class="container">
         <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="../../../../../Downloads/cozastore-master/index.html" class="stext-109 cl8 hov-cl1 trans-04">
+            <a href="{{route('home')}}" class="stext-109 cl8 hov-cl1 trans-04">
                 Home
                 <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
             </a>
 
             <span class="stext-109 cl4">
-				Shoping Cart
+				Carrinho de Compras
 			</span>
         </div>
     </div>
 
 
     <!-- Shoping Cart -->
-    <form class="bg0 p-t-75 p-b-85">
+    <form class="bg0 p-t-75 p-b-85"  method="post" action="{{route('vendas.create')}}">
+        @csrf
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -126,18 +127,18 @@
                                         @php
                                         $usuario =\Illuminate\Support\Facades\Auth::user();
                                         $ende = \App\Models\Endereco::where('user_id','=',$usuario->id)->get();
+
                                         @endphp
                                        <br/>
                                         <select name="enderecos" >
                                         @foreach($ende as $end)
                                             <option value="{{$end->id}}">{{$end->recebedor}}</option>
                                         @endforeach
-
                                         </select>
                                     @endguest
 
                                     <div class="bor8 bg0 m-b-22">
-                                        <input @if(!empty($ende)) value="{{$ende[0]->cep}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="CEP" onblur="pesquisacep(this.value);" disabled >
+                                        <input @if(  !empty($ende) ) value="{{$ende[0]->cep}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="CEP" onblur="pesquisacep(this.value);" disabled >
                                     </div>
 
 
@@ -275,4 +276,5 @@
         }
     };
 </script>
+
 @endsection
