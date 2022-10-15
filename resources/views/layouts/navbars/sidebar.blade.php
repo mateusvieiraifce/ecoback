@@ -91,8 +91,8 @@
                                 <p>{{ __('Comentários') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="">
+                        <li @if ($pageSlug == 'favoritos') class="active " @endif>
+                            <a href="{{route('user.favoritos')}}">
                                 <i class="tim-icons icon-spaceship"></i>
                                 <p>{{ __('Favoritos') }}</p>
                             </a>

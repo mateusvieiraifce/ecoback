@@ -6,6 +6,7 @@ use App\Helper;
 use App\Models\Anuncio;
 use App\Models\Comentarios;
 use App\Models\Endereco;
+use App\Models\Favoritos;
 use App\Models\Language;
 use App\Models\PasswordResets;
 use App\Models\User;
@@ -435,6 +436,15 @@ class UsuarioController extends Controller
             ->select(DB::raw('vendas.*'))
             ->get();
         return view('profile/compras',['compras'=>$comentarios]);
+    }
+    public function listFavoritos(){
+        $id = Auth::user()->id;
+        $fav = Favoritos::join('anuncios','anuncios.id','=','anuncio_id')->where('comprador_id',$id)
+            ->orderby('favoritos.created_at','desc')
+            ->select(DB::raw('*'))
+            ->get();
+        return view('profile/favoritos',['fav'=>$fav]);
+
     }
 
 

@@ -7,6 +7,7 @@ use App\Models\Anuncio;
 use App\Models\Comentarios;
 use App\Models\CorAnuncio;
 use App\Models\Endereco;
+use App\Models\Favoritos;
 use App\Models\FileAnuncio;
 use App\Models\TagsAnuncio;
 use App\Models\TipoAnuncio;
@@ -186,12 +187,16 @@ class AnuncioController extends Controller
         $comentarios = null;
         $msgret = $msg;
         try{
+
             $x =  Anuncio::join('type_adv','type_adv.id','=','type_id')->
-            join('users','users.id','=','user_id')->where('anuncios.id','=',$id)->first();
-            $x->id = $id;
+            join('users','users.id','=','user_id')->where('anuncios.id','=',$id)->orWhere('anuncios.id_anuncio','=',$id)->
+                select(DB::raw('anuncios.*'))->first();
+
+            $id = $x->id;
 
             $comentarios = Comentarios::where('anuncio_id','=',$id)->orderBy('created_at','desc')->get();
             $tags = TagsAnuncio::where('adv_id','=',$id)->get();
+
             $saida = "";
             foreach ($tags as $tag){
                 $saida=$saida."#".$tag->descrica;
@@ -251,6 +256,18 @@ class AnuncioController extends Controller
         }else{
             $fav = array();
         }
+
+        if (Auth::check()){
+
+            $favBD = Favoritos::where('anuncio_id','=',@$obj)
+                ->where('comprador_id','=',Auth::user()->id)->first();
+            if ($favBD==null){
+            $favBD = new Favoritos();
+            }
+            $favBD->anuncio_id = $obj;
+            $favBD->comprador_id = Auth::user()->id;
+            $favBD->save();
+        }
         array_push($fav,$obj);
         session(['favoritos' => $fav]);
         return back();
@@ -265,7 +282,15 @@ class AnuncioController extends Controller
             //dd($new);
         }
 
-        return $this->listFavorite();
+        if (Auth::check()){
+            $favor = Favoritos::where('comprador_id','=',Auth::id())
+                ->where('anuncio_id','=',$id)->first();
+            if ($favor){
+                $favor->delete();
+            }
+        }
+
+        return back();
     }
 
     public function listFavorite(){
@@ -309,6 +334,8 @@ class AnuncioController extends Controller
         session(['msg' => $msgret]);
         return back()->withInput();
     }
+
+
 
     //
 }

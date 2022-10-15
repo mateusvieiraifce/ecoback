@@ -54,6 +54,7 @@ Route::get("/turnvendedor",[\App\Http\Controllers\UsuarioController::class,'turn
 
 Route::get("/user/comentarios",[\App\Http\Controllers\UsuarioController::class,'comentariosComprador'])->name('user.comentarios');
 Route::get("/user/compras",[\App\Http\Controllers\UsuarioController::class,'compras'])->name('user.compras');
+Route::get("/user/favoritos",[\App\Http\Controllers\UsuarioController::class,'listFavoritos'])->name('user.favoritos');
 
 Route::post("/profile/update",[\App\Http\Controllers\UsuarioController::class,'update'])->name('user.update');
 Route::put("/profile/update",[\App\Http\Controllers\UsuarioController::class,'updateCompletar'])->name('user.update.comp');
@@ -74,6 +75,7 @@ Route::get("/advertisement/edit/{id}",[\App\Http\Controllers\AnuncioController::
 Route::get("/favorite/add/{id}",[\App\Http\Controllers\AnuncioController::class,'addFavorite'])->name('advertisement.addfavorito');
 Route::get("/favorite/list",[\App\Http\Controllers\AnuncioController::class,'listFavorite'])->name('advertisement.listfavorito');
 Route::get("/favorite/remove/{id}",[\App\Http\Controllers\AnuncioController::class,'remFavorite'])->name('advertisement.remfavorito');
+
 
 /*TODO REFACTORY TO FRONT */
 Route::get("/detail/{id}",[\App\Http\Controllers\AnuncioController::class,'produtctDetail'])->name('advertisement.detail');

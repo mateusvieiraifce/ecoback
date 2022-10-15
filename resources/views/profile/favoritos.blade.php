@@ -1,10 +1,10 @@
-@extends('layouts.app', ['page' => __('Cometários'), 'pageSlug' => 'comentarios','class'=>'comentarios'])
+@extends('layouts.app', ['page' => __('Compras'), 'pageSlug' => 'favoritos','class'=>'favoritos'])
 @section('content')
     <div class="row">
         <div class="col-lg-15 col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Meus Comentários</h4>
+                    <h4 class="card-title">Meus Favoritos</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -15,31 +15,34 @@
                                     Nº Anúncio
                                 </th>
                                 <th>
-                                    Data
+                                    Decrição
                                 </th>
                                 <th>
-                                    Descrição
+                                    Valor
+                                </th>
+                                <th>
+                                    Remover
                                 </th>
 
                             </tr>
                             </thead>
                             <tbody>
-                            @if(isset($comentarios))
+                            @if(isset($fav))
 
-
-                                @foreach($comentarios as $comp)
+                                @foreach($fav as $obj)
                                     <tr>
                                         <td>
-                                            <a href="{{route('advertisement.detail',$comp->anc)}}">  {{$comp->anc}} </a>
+                                            <a href="{{route('advertisement.detail',$obj->id_anuncio)}}"> {{$obj->id_anuncio}} </a>
                                         </td>
                                         <td>
-                                           @dataformatada($comp->created_at)
+                                            {{$obj->descricao}}
                                         </td>
-
                                         <td>
-                                            {{$comp->descricao}}
+                                            @money($obj->preco)
                                         </td>
-
+                                        <td>
+                                         <a onClick="return confirm('Confirmar exclusão do favorito?');" href="{{route('advertisement.remfavorito',$obj->id)}}">Apagar</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -51,4 +54,5 @@
             </div>
         </div>
     </div>
+
 @endsection
