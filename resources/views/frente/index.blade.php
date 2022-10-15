@@ -315,7 +315,7 @@
                                 </a>
 
                                 <span class="stext-105 cl3">
-									R$ {{$anuncio->preco}}
+									@money($anuncio->preco)
 								</span>
                             </div>
 
@@ -388,8 +388,8 @@
                                                 </h4>
 
                                                 <span class="mtext-106 cl2">
-								@money($anuncio->preco)
-							</span>
+								                @money($anuncio->preco)
+							                    </span>
 
                                                 <p class="stext-102 cl3 p-t-23">
                                                     {{$anuncio->descricao}}
