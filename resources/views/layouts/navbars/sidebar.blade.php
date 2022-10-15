@@ -101,6 +101,16 @@
                 </div>
             </li>
 
+                @if(\Illuminate\Support\Facades\Auth::user()->tipouser !='V')
+                    <li @if ($pageSlug == 'icons') class="active " @endif>
+                        <a href="{{route('user.turnvendedor')}}">
+                            <i class="tim-icons icon-chart-pie-36"></i>
+                            <p>{{ __('Virar Vendedor') }}</p>
+                        </a>
+                    </li>
+                @endif
+
+
             @if(\Illuminate\Support\Facades\Auth::user()->tipouser ==='V')
             <li @if ($pageSlug == 'icons') class="active " @endif>
                 <a href="">

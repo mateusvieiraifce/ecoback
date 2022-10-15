@@ -270,6 +270,7 @@ class UsuarioController extends Controller
 
         return view('profile/edit',['msg'=>$msgret]);
     }
+
     public function  updateCompletar(Request $request){
         $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
 
@@ -367,7 +368,6 @@ class UsuarioController extends Controller
         return view("profile/edit",['msg'=>null,'obj'=>$endereco]);
     }
 
-
     public function addEnderecoDo(Request $request){
         $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
         try {
@@ -401,6 +401,17 @@ class UsuarioController extends Controller
         }
 
         return view("profile/edit",['msg'=>$msgret,'obj'=>$endereco]);
+    }
+
+    public function turnVendedor(){
+        $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $user->tipouser = "V";
+        $user->save();
+        Auth::user()->tipouser= "V";
+        session(['msg' => $msgret]);
+        return back();
     }
 
 
