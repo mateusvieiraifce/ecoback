@@ -28,7 +28,6 @@ class VendasItemVendas extends Migration
             $table->string('txt_status_metodo')->nullable();;
             $table->integer('status_metodo')->nullable();
             $table->unsignedBigInteger('comprador_id');
-
             $table->unsignedBigInteger('endereco_id');
             $table->foreign('comprador_id')->references('id')->on('users')->cascadeOnDelete();;//
             $table->foreign('endereco_id')->references('id')->on('enderecos')->cascadeOnDelete();;//

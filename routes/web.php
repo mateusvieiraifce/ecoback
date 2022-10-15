@@ -72,6 +72,8 @@ Route::get("/favorite/remove/{id}",[\App\Http\Controllers\AnuncioController::cla
 
 /*TODO REFACTORY TO FRONT */
 Route::get("/detail/{id}",[\App\Http\Controllers\AnuncioController::class,'produtctDetail'])->name('advertisement.detail');
+Route::post("/comentario/add/",[\App\Http\Controllers\AnuncioController::class,'addComentario'])->name('advertisement.comentario.add');
+
 Route::get("/cart/add/",[\App\Http\Controllers\AnuncioController::class,'addSession'])->name('advertisement.addsession');
 Route::get("/cart/view/",[\App\Http\Controllers\AnuncioController::class,'viewSession'])->name('advertisement.viewssesion');
 Route::get("/cart/clear/",[\App\Http\Controllers\AnuncioController::class,'clearCarr'])->name('cart.clear');

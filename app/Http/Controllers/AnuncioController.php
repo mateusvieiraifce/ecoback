@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Helper;
 use App\Models\Anuncio;
+use App\Models\Comentarios;
 use App\Models\CorAnuncio;
 use App\Models\Endereco;
 use App\Models\FileAnuncio;
 use App\Models\TagsAnuncio;
 use App\Models\TipoAnuncio;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -100,7 +102,7 @@ class AnuncioController extends Controller
         } catch (QueryException $exception) {
             $msgret = ['valor' => "Erro ao executar a operação", 'tipo' => 'danger'];
 
-            dd($exception);
+          //  dd($exception);
         }
         return $this->list($msgret);
 
@@ -178,14 +180,17 @@ class AnuncioController extends Controller
         return view('advertisement/form', ['obj' =>$x, 'tipos' => TipoAnuncio::all(), 'cores' => CorAnuncio::all()]);
     }
 
-    public function produtctDetail($id=null){
+    public function produtctDetail($id=null, $msg=null){
 
         $x =  new Anuncio();
+        $comentarios = null;
+        $msgret = $msg;
         try{
             $x =  Anuncio::join('type_adv','type_adv.id','=','type_id')->
             join('users','users.id','=','user_id')->where('anuncios.id','=',$id)->first();
             $x->id = $id;
 
+            $comentarios = Comentarios::where('anuncio_id','=',$id)->orderBy('created_at','desc')->get();
             $tags = TagsAnuncio::where('adv_id','=',$id)->get();
             $saida = "";
             foreach ($tags as $tag){
@@ -214,8 +219,8 @@ class AnuncioController extends Controller
         catch (QueryException $exp ){
             $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
         }
-        $endereco = new Endereco();
-        return view('frente/produto', ['obj' =>$x, 'tipos' => TipoAnuncio::all(), 'cores' => CorAnuncio::all()]);
+
+        return view('frente/produto', ['obj' =>$x, 'tipos' => TipoAnuncio::all(), 'cores' => CorAnuncio::all(), 'comentarios'=>$comentarios,'msg'=>$msg]);
     }
 
     public function addSession(Request $request){
@@ -283,6 +288,26 @@ class AnuncioController extends Controller
         return back();
     }
 
+    public function  addComentario(Request $request){
+        $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
+        try{
+            $comentario = new Comentarios();
+            $comentario->anuncio_id = $request->anuncio_id;
+            $comentario->nome = $request->name;
+            $comentario->email = $request->email;
+            $usuario = User::where('email','=',$request->email)->first();
+            if (isset($usuario)){
+                $comentario->comprador_id = $usuario->id;
+            }
+            $comentario->pontos = $request->rating;
+            $comentario->descricao = $request->review;
+            $comentario->save();
+
+        }catch (QueryException $exception) {
+            $msgret = ['valor' => "Erro ao executar a operação", 'tipo' => 'danger'];
+        }
+        return back()->withInput(['msg'=>$msgret]);
+    }
 
     //
 }

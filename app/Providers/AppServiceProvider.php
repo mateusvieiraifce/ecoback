@@ -32,6 +32,11 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('money', function ($amount) {
             return "<?php echo 'R$ ' . number_format($amount, 2,',', '.'); ?>";
         });
+
+        Blade::directive('dataformatada', function ($timestamp) {
+            return "<?php echo   date('d/m/Y H:i:s', strtotime($timestamp)); ?>";
+        });
+
         /*if (app()->environment('remote')) {
 
         }*/

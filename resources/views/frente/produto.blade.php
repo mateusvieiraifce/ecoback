@@ -104,15 +104,9 @@
 
                         <!--  -->
                         <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Adicionar a lista de desejos">
+                                <a href="{{route('advertisement.addfavorito',$obj->id)}}" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Adicionar a lista de desejos">
                                     <i class="zmdi zmdi-favorite"></i>
                                 </a>
-
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Compartilhar pelo Whatsapp">
-                                <i class="fa fa-whatsapp"></i>
-                            </a>
-
 
                         </div>
                     </div>
@@ -209,38 +203,14 @@
 
                         <!-- - -->
                         <div class="tab-pane fade" id="reviews" role="tabpanel">
+                            <!-- Add review -->
+
                             <div class="row">
                                 <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                                     <div class="p-b-30 m-lr-15-sm">
-                                        <!-- Review -->
-                                        <div class="flex-w flex-t p-b-68">
-                                            <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-
-                                            </div>
-
-                                            <div class="size-207">
-                                                <div class="flex-w flex-sb-m p-b-17">
-													<span class="mtext-107 cl2 p-r-20">
-														Ariana Grande
-													</span>
-
-                                                    <span class="fs-18 cl11">
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star-half"></i>
-													</span>
-                                                </div>
-
-                                                <p class="stext-102 cl6">
-                                                    Ótimo produto
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <!-- Add review -->
-                                        <form class="w-full">
+                                        <form class="w-full" action="{{route('advertisement.comentario.add')}}" method="post">
+                                            <input type="hidden" name="anuncio_id" value="{{$obj->id}}" required>
+                                            @csrf
                                             <h5 class="mtext-108 cl2 p-b-7">
                                                 Adicionar Comentários
                                             </h5>
@@ -255,29 +225,30 @@
 												</span>
 
                                                 <span class="wrap-rating fs-18 cl11 pointer">
+
 													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
 													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
 													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
 													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
 													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<input class="dis-none" type="number" name="rating">
+													<input class="dis-none" type="number" name="rating" required>
 												</span>
                                             </div>
 
                                             <div class="row p-b-25">
                                                 <div class="col-12 p-b-5">
                                                     <label class="stext-102 cl3" for="review">Sua revisão</label>
-                                                    <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
+                                                    <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review" required></textarea>
                                                 </div>
 
                                                 <div class="col-sm-6 p-b-5">
                                                     <label class="stext-102 cl3" for="name">Nome</label>
-                                                    <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
+                                                    <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name" required>
                                                 </div>
 
                                                 <div class="col-sm-6 p-b-5">
                                                     <label class="stext-102 cl3" for="email">Email</label>
-                                                    <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email">
+                                                    <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="email" name="email" required>
                                                 </div>
                                             </div>
 
@@ -285,6 +256,46 @@
                                                 Enviar
                                             </button>
                                         </form>
+                                        <!-- Review -->
+                                        <div class="flex-w flex-t p-b-68">
+                                            <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+
+                                            </div>
+
+                                            <div class="size-207">
+                                                @if(isset($comentarios))
+                                                    @foreach($comentarios as $comentario)
+                                                <div class="flex-w flex-sb-m p-b-17">
+													<span class="mtext-107 cl2 p-r-20">
+														{{$comentario->nome}} em @dataformatada($comentario->created_at)
+													</span>
+
+                                                    @php
+                                                    $estrelas = $comentario->pontos;
+
+                                                    @endphp
+
+                                                    <span class="fs-18 cl11">
+                                                    @if($estrelas>0)
+													@foreach(range(1,$estrelas) as $i)
+														<i class="zmdi zmdi-star"></i>
+                                                    @endforeach
+                                                        @else
+                                                            <i class="zmdi zmdi-star"></i>
+                                                        @endif
+
+													</span>
+                                                </div>
+
+                                                <p class="stext-102 cl6">
+                                                    {{$comentario->descricao}}
+                                                </p>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
