@@ -11,9 +11,7 @@
                 <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
             </a>
 
-            <span class="stext-109 cl4">
-				Carrinho de Compras
-			</span>
+
         </div>
     </div>
 
