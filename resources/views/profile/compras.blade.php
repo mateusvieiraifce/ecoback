@@ -38,7 +38,7 @@
                                             {{$comp->id_venda}}
                                         </td>
                                         <td>
-                                            {{$comp->created_at}}
+                                            @dataformatada($comp->created_at)
                                         </td>
                                         <td>
                                             @money($comp->valor)
