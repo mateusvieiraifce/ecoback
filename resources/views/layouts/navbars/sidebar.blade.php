@@ -80,15 +80,15 @@
                 <div class="collapse" id="compras">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'compras' ) class="active " @endif>
-                            <a href="{{route('compras.list')}}">
+                            <a href="{{route('user.compras')}}">
                                 <i class="tim-icons icon-components"></i>
                                 <p>{{ __('Compras') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="">
+                        <li @if ($pageSlug == 'comentarios') class="active " @endif>
+                            <a href="{{route('user.comentarios')}}">
                                 <i class="tim-icons icon-alert-circle-exc"></i>
-                                <p>{{ __('Perguntas') }}</p>
+                                <p>{{ __('Comentários') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'users') class="active " @endif>

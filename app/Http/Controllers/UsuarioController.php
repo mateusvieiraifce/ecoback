@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
+use App\Models\Anuncio;
+use App\Models\Comentarios;
 use App\Models\Endereco;
 use App\Models\Language;
 use App\Models\PasswordResets;
 use App\Models\User;
+use App\Models\Vendas;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -412,6 +415,26 @@ class UsuarioController extends Controller
         Auth::user()->tipouser= "V";
         session(['msg' => $msgret]);
         return back();
+    }
+
+
+    public function comentariosComprador(){
+        $id = Auth::user()->id;
+        $comentarios = Comentarios::join('anuncios','anuncios.id','=','comentarios.anuncio_id')
+            -> where('comprador_id',$id)
+            ->orderby('comentarios.created_at','desc')
+            ->select(DB::raw('comentarios.*'),DB::raw('anuncios.id_anuncio as anc'))
+            ->get();
+        return view('profile/perguntas',['comentarios'=>$comentarios]);
+    }
+
+    public function compras(){
+        $id = Auth::user()->id;
+        $comentarios = Vendas::where('comprador_id',$id)
+            ->orderby('created_at','desc')
+            ->select(DB::raw('vendas.*'))
+            ->get();
+        return view('profile/compras',['compras'=>$comentarios]);
     }
 
 
