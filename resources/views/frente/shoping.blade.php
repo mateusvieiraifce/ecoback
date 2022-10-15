@@ -43,6 +43,7 @@
                                     }
                                     $total = 0;
                                 @endphp
+                                @if(isset($produtos))
                                 @foreach($produtos as $produto)
                                     @php
                                         $an = \App\Models\Anuncio::find($produto['id']);
@@ -79,6 +80,7 @@
                                 @endforeach
 
                                 <input type="hidden" id="total" name="total" value="{{$total}}">
+                                @endif
 
                             </table>
                         </div>
@@ -137,10 +139,12 @@
                                         </select>
                                     @endguest
 
+
+                                    @auth
+                                    @if(sizeof($ende)>0)
                                     <div class="bor8 bg0 m-b-22">
                                         <input @if(  !empty($ende) ) value="{{$ende[0]->cep}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="CEP" onblur="pesquisacep(this.value);" disabled >
                                     </div>
-
 
                                     <div class="bor8 bg0 m-b-22">
                                         <input @if(!empty($ende)) value="{{$ende[0]->rua}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
@@ -150,20 +154,22 @@
                                         <input @if(!empty($ende)) value="{{$ende[0]->bairro}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
                                     </div>
 
-
                                     <div class="bor8 bg0 m-b-22">
                                         <input @if(!empty($ende)) value="{{$ende[0]->cidade}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
                                     </div>
 
-                                    @php
-                                    $frete = 10;
-                                    @endphp
+                                            @php
+                                                $frete = 10;
+                                            @endphp
+
+
                                     <div class="flex-w">
                                         <div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
                                             <label id="frete">Total Frete: @if(!empty($ende)) @if($ende[0]->cidade=="Sobral") @money(10) @else  @money(200) @php $frete = 200;@endphp@endif  @endif</label>
                                         </div>
                                     </div>
-
+                                        @endif
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -178,7 +184,12 @@
 
                             <div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-                                    <label id="final"> @money($total+$frete)</label>
+                                    @if(isset($frete))
+                                        <label id="final"> @money($total+$frete)</label>
+                                    @else
+                                        <label id="final"> Crie e defina um endereço como principal</label>
+
+                                    @endif
 								</span>
                             </div>
                         </div>
