@@ -231,6 +231,14 @@
 			</ul>
 		</div>
 
+        @if(session()->has('msg'))
+            @php
+            $msg = session('msg');
+            session()->forget('msg');
+            @endphp
+
+        @endif
+
 
         @if(isset($msg))
 
@@ -252,7 +260,7 @@
 
                         }, {
                             type: color,
-                            timer: 8000,
+                            timer: 2000,
                             placement: {
                                 from: from,
                                 align: align
@@ -271,6 +279,8 @@
             </script>
 
         @endif
+
+
 		<!-- Modal Search -->
 		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
 			<div class="container-search-header">

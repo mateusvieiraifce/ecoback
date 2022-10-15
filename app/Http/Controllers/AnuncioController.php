@@ -306,7 +306,8 @@ class AnuncioController extends Controller
         }catch (QueryException $exception) {
             $msgret = ['valor' => "Erro ao executar a operação", 'tipo' => 'danger'];
         }
-        return back()->withInput(['msg'=>$msgret]);
+        session(['msg' => $msgret]);
+        return back()->withInput();
     }
 
     //
