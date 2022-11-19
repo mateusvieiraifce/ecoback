@@ -68,6 +68,14 @@ Route::get("/profile/update/add/{id}",[\App\Http\Controllers\UsuarioController::
 Route::get("/advertisement/",[\App\Http\Controllers\AnuncioController::class,'list'])->name('advertisement.list')->middleware('auth');;
 Route::get("/advertisement/add",[\App\Http\Controllers\AnuncioController::class,'add'])->name('advertisement.add')->middleware('auth');;
 Route::post("/advertisement/save",[\App\Http\Controllers\AnuncioController::class,'save'])->name('advertisement.save')->middleware('auth');;
+Route::post("/advertisement/preco",[\App\Http\Controllers\AnuncioController::class,'passo2'])->name('advertisement.preco')->middleware('auth');;
+Route::get("/advertisement/preco/{id}",[\App\Http\Controllers\AnuncioController::class,'passo1'])->name('advertisement.back')->middleware('auth');;
+Route::get("/advertisement/precoback/{id}",[\App\Http\Controllers\AnuncioController::class,'passo2back'])->name('advertisement.back.fotos')->middleware('auth');;
+Route::any("/advertisement/fotos",[\App\Http\Controllers\AnuncioController::class,'passo3'])->name('advertisement.fotos')->middleware('auth');;
+Route::any("/advertisement/fotos/{id}",[\App\Http\Controllers\AnuncioController::class,'passoFotos'])->name('advertisement.passo.fotos')->middleware('auth');;
+Route::any("/advertisement/finalizar/",[\App\Http\Controllers\AnuncioController::class,'finalizar'])->name('advertisement.finalizar')->middleware('auth');;
+
+
 Route::get("/advertisement/delete/{id}",[\App\Http\Controllers\AnuncioController::class,'delete'])->name('advertisement.delete')->middleware('auth');;
 Route::get("/advertisement/edit/{id}",[\App\Http\Controllers\AnuncioController::class,'edit'])->name('advertisement.edit')->middleware('auth');;
 

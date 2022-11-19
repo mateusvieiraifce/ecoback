@@ -25,7 +25,7 @@
                                     <td>Qtd</td>
                                     <td>Preço (R$) </td>
                                     <td>Editar</td>
-                                    <td>Excluir</td>
+                                    <td>Desativar</td>
                                     <td>Destacar</td>
                                 </tr>
 
@@ -52,7 +52,7 @@
                                             </a>
                                         </td>
                                         <td class="td-actions text-left">
-                                            <a onclick="return confirm('Deseja realmente excluir?') " href="{{route('advertisement.delete',$ende->id)}}">
+                                            <a onclick="return confirm('Deseja realmente desativar?') " href="{{route('advertisement.delete',$ende->id)}}">
                                                 <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
                                                     <i class="tim-icons icon-simple-remove"></i>
                                                 </button>
@@ -60,7 +60,7 @@
                                         </td>
 
                                         <td class="td-actions text-left">
-                                            <a href="{{route('user.update.end.pri',$ende->id)}}">
+                                            <a href="">
                                                 <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
                                                     <i class="tim-icons icon-heart-2"></i>
                                                 </button>

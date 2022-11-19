@@ -293,7 +293,9 @@
 
             <div class="row isotope-grid">
 
-                <?php $anuncios = \App\Models\Anuncio::all(); ?>
+                <?php $anuncios = \App\Models\Anuncio::where('ativo','=','1')->get();
+
+                ?>
 
                 @foreach($anuncios as $anuncio)
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$anuncio->type_id}}">
