@@ -60,7 +60,7 @@
                                         </td>
 
                                         <td class="td-actions text-left">
-                                            <a href="">
+                                            <a href="{{route('advertisement.destacar',$ende->id)}}">
                                                 <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
                                                     <i class="tim-icons icon-heart-2"></i>
                                                 </button>

@@ -68,7 +68,7 @@
                     <div class="row">
                         <div class="form-group{{ $errors->has('qtd') ? ' has-danger' : '' }}  col-md-3 ">
                             <label >{{ __('Quantidade') }}</label>
-                            <input style="text-align: right" id="qtd" type="text" name="qtd" class="form-control{{ $errors->has('qtd') ? ' is-invalid' : '' }}" placeholder="{{ __('Qtd') }}" value="{{ old('preco', $obj->preco) }}" required >
+                            <input style="text-align: right" id="qtd" type="text" name="qtd" class="form-control{{ $errors->has('qtd') ? ' is-invalid' : '' }}" placeholder="{{ __('Qtd') }}" value="{{ old('qtd', $obj->quantidade) }}" required >
                             @include('alerts.feedback', ['field' => 'qtd'])
                         </div>
 
@@ -81,7 +81,7 @@
 
                         <div class="form-group{{ $errors->has('largura') ? ' has-danger' : '' }}  col-md-3 ">
                             <label >{{ __('Lagura(cm)') }}</label>
-                            <input style="text-align: right" id="largura" type="text" name="largura" class="form-control{{ $errors->has('largura') ? ' is-invalid' : '' }}" placeholder="{{ __('largura') }}" value="{{ old('largura', $obj->preco) }}" required >
+                            <input style="text-align: right" id="largura" type="text" name="largura" class="form-control{{ $errors->has('largura') ? ' is-invalid' : '' }}" placeholder="{{ __('largura') }}" value="{{ old('largura', $obj->largura) }}" required >
                             @include('alerts.feedback', ['field' => 'largura'])
                         </div>
 
@@ -122,6 +122,7 @@
     <script>
         function calculaPrecos(){
             var preco = $("#preco").val();
+            preco =  preco.toString().replace('.','');
             var prec = preco.toString().replace(',','.');
             var comnoval = {{env('COMISSAO_NORMAL')}};
             var destaque= {{env('COMISSAO_DESTAQUE')}}

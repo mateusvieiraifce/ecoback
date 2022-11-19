@@ -15,6 +15,7 @@ use App\Models\User;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -23,6 +24,33 @@ use Illuminate\Support\Facades\Validator;
 class AnuncioController extends Controller
 {
 
+    function destacar($id){
+        $anuncios = Anuncio::find($id);
+
+        return view('advertisement/destacaradv', ['obj' => $anuncios]);
+    }
+    function destacarDo(Request $request){
+        $anuncio = Anuncio::find($request->id);
+        $validator = Validator::make($request->all(), [
+            'fotoum' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect(route('advertisement.destacar',$request->id))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+
+        $fileUm = $this->saveFile($request,'fotoum');
+        FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileUm,'destaque'=>true]);
+        $anuncio->destaque = true;
+        $anuncio->save();
+        $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
+        return $this->list($msgret);
+    }
     function  list($msg = null)
     {
         $anuncios = Anuncio::where('user_id','=',Auth::user()->id)->orderBy('updated_at','desc')->get();
@@ -37,6 +65,7 @@ class AnuncioController extends Controller
 
 
     function passo1($id){
+
         $obj = Anuncio::find($id);
         if (!$obj){
             $obj = new Anuncio();
@@ -63,7 +92,7 @@ class AnuncioController extends Controller
                 $saida="#".$tag->descricao." ".$saida;
             }
             $this->calculaValores($obj);
-
+            $obj->preco = number_format($obj->preco, 2, ',', '.');
             $obj->hashtag = $saida;
 
         }
@@ -82,32 +111,26 @@ class AnuncioController extends Controller
         ]);
 
 
-
+        $anuncio = new Anuncio();
       //  $pieces = explode("#", $request->hashtag);
 
-        $anuncio = new Anuncio();
 
 
-        $anuncio->descricao = $request->descricao;
-        $anuncio->titulo = $request->titulo;
-        $anuncio->user_id = Auth::user()->id;
         if ($request->id){
             $anuncio = Anuncio::find($request->id);
-
+            $anuncio->descricao = $request->descricao;
+            $anuncio->titulo = $request->titulo;
+            $anuncio->user_id = Auth::user()->id;
+            $anuncio->material = $request->material;
+            $anuncio->save();
            // $anuncio->id = $request->id;
-        }
-        if (!$is_page_refreshed){
+        }else {
             $anuncio->id_anuncio = uniqid(date('HisYmd'));
             $anuncio->descricaod= $request->descricaod;
             $anuncio->material = $request->material;
-            DB::connection()->beginTransaction();
+
             $anuncio->save();
-            /*foreach ($pieces as $piece){
-                if ($piece!=""){
-                    TagsAnuncio::create(['descricao'=>$piece,'adv_id'=>$anuncio->id]);
-                }
-             }*/
-            DB::connection()->commit();
+
         }
         $this->calculaValores($anuncio);
         $tags = TagsAnuncio::where('adv_id','=',$anuncio->id)->get();
@@ -132,7 +155,6 @@ class AnuncioController extends Controller
         $method = $request->method();
 
         if ($method == 'GET'){
-            dd($request->id);
             $anuncio = Anuncio::find($request->id);
             return view('advertisement/formfotos',['id'=>$anuncio->id_anuncio, 'obj'=>$anuncio]);
         }
@@ -142,7 +164,8 @@ class AnuncioController extends Controller
             'largura' => 'required',
             'cor' => 'required',
             'tipo' => 'required',
-            'hashtag'=>'required'
+            'hashtag'=>'required',
+            'qtd'=>'required'
 
         ]);
 
@@ -223,9 +246,7 @@ class AnuncioController extends Controller
         $anuncio->destaque =$fileDestak!="";
 
         try{
-            if ($anuncio->destaque){
-                FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileDestak]);
-            }
+
         DB::connection()->beginTransaction();
         FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileUm]);
         FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileDois]);
@@ -409,7 +430,7 @@ class AnuncioController extends Controller
                 $saida=$saida."#".$tag->descrica;
             }
 
-            $files = FileAnuncio::where('anuncio_id','=',$id)->get();
+            $files = FileAnuncio::where('anuncio_id','=',$id)->orderBy('updated_at','desc')->get();
             if (sizeof($files)>0 && $files[0]){
                 $x->foto1= $files[0]->path;
             }

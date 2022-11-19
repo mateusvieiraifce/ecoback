@@ -74,6 +74,8 @@ Route::get("/advertisement/precoback/{id}",[\App\Http\Controllers\AnuncioControl
 Route::any("/advertisement/fotos",[\App\Http\Controllers\AnuncioController::class,'passo3'])->name('advertisement.fotos')->middleware('auth');;
 Route::any("/advertisement/fotos/{id}",[\App\Http\Controllers\AnuncioController::class,'passoFotos'])->name('advertisement.passo.fotos')->middleware('auth');;
 Route::any("/advertisement/finalizar/",[\App\Http\Controllers\AnuncioController::class,'finalizar'])->name('advertisement.finalizar')->middleware('auth');;
+Route::get("/advertisement/destacar/{id}",[\App\Http\Controllers\AnuncioController::class,'destacar'])->name('advertisement.destacar')->middleware('auth');;
+Route::post("/advertisement/destacar/{id}",[\App\Http\Controllers\AnuncioController::class,'destacarDo'])->name('advertisement.destacar.do')->middleware('auth');;
 
 
 Route::get("/advertisement/delete/{id}",[\App\Http\Controllers\AnuncioController::class,'delete'])->name('advertisement.delete')->middleware('auth');;

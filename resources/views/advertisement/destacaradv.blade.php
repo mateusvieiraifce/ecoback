@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{ __('Anúncio') }}</h5>
-                    <form autocomplete="off" enctype="multipart/form-data" method="post" action="{{route('advertisement.finalizar', $obj->id)}}" >
+                    <form autocomplete="off" enctype="multipart/form-data" method="post" action="{{route('advertisement.destacar.do', $obj->id)}}" >
                         <input type="hidden" name="id" value="{{$obj->id}}">
                         @csrf
 
@@ -14,7 +14,7 @@
                             <input id='foto4' type="text" name="destaque" class="form-control{{ $errors->has('destaque') ? ' is-invalid' : '' }}" placeholder="{{ __('Destaque') }}" value="{{ old('destaque', $obj->destaque) }}"  readonly >
                             @include('alerts.feedback', ['field' => 'complemento'])
 
-                            <input type="file" style="display:none" class="form-control" name="ft4"  size="25" id="foto4i" maxlength="20" accept=".jpg,.png" onchange="showname('foto4i','foto4');"
+                            <input type="file" style="display:none" class="form-control" name="fotoum"  size="25" id="foto4i" maxlength="20" accept=".jpg,.png" onchange="showname('foto4i','foto4');"
                             >
                             <div style="margin-top: 10px; margin-bottom: -25px">
                                 <input type="button" id="loadFileXml" value="Anexar" onclick="document.getElementById('foto4i').click();" />
@@ -24,9 +24,7 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{route('advertisement.back.fotos', $obj->id)}}" class="btn btn-fill btn-primary">{{ __('Voltar') }}</a>
                             <button type="submit" class="btn btn-fill btn-primary">{{ __('Finalizar') }}</button>
-
 
 
                         </div>
@@ -36,6 +34,17 @@
         </div>
     </div>
 
+    <script>
+
+        function showname(id, ret) {
+            var name = document.getElementById(id);
+            document.getElementById(ret).value =  name.files.item(0).name;
+            //alert('Selected file: ' + name.files.item(0).name);
+            /*alert('Selected file: ' + name.files.item(0).size);
+            alert('Selected file: ' + name.files.item(0).type);*/
+
+        }
+    </script>
     <script src="/assets/js/functions.js">
 
     </script>

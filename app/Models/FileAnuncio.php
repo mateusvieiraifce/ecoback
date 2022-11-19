@@ -9,7 +9,7 @@ class FileAnuncio extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'path','anuncio_id'
+        'path','anuncio_id','destaque'
     ];
     protected $table='files_anuncios';
 }
