@@ -24,6 +24,7 @@
                                     <td>Título</td>
                                     <td>Qtd</td>
                                     <td>Preço (R$) </td>
+                                    <td>Situção</td>
                                     <td>Editar</td>
                                     <td>Desativar</td>
                                     <td>Destacar</td>
@@ -42,6 +43,14 @@
 
                                         <td>
                                             <p class="title">{{\App\Helper::padronizaMonetario($ende->preco)}}</p>
+                                        </td>
+
+                                        <td style="max-width: 200px;">
+                                            @if($ende->ativo)
+                                            <p class="title">Ativo</p>
+                                            @else
+                                                <p class="title">Inativo</p>
+                                            @endif
                                         </td>
 
                                         <td class="td-actions text-left">

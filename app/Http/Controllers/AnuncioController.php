@@ -33,6 +33,8 @@ class AnuncioController extends Controller
         $anuncio = Anuncio::find($request->id);
         $validator = Validator::make($request->all(), [
             'fotoum' => 'required',
+            'titulo' => 'required|between :5,15',
+            'subtitulo' => 'required|between :5,15',
         ]);
 
 
@@ -43,10 +45,12 @@ class AnuncioController extends Controller
         }
 
 
-
+        FileAnuncio::where('anuncio_id','=',$request->id)->where('destaque',true)->delete();
         $fileUm = $this->saveFile($request,'fotoum');
         FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileUm,'destaque'=>true]);
         $anuncio->destaque = true;
+        $anuncio->titulo_destaque= $request->titulo;
+        $anuncio->subtitulo = $request->subtitulo;
         $anuncio->save();
         $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
         return $this->list($msgret);
@@ -248,9 +252,9 @@ class AnuncioController extends Controller
         try{
 
         DB::connection()->beginTransaction();
-        FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileUm]);
-        FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileDois]);
-        FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileTres]);
+        FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileUm,'destaque'=>false]);
+        FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileDois,'destaque'=>false]);
+        FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileTres,'destaque'=>false]);
         $anuncio->ativo = '1';
         $anuncio->save();
         DB::connection()->commit();

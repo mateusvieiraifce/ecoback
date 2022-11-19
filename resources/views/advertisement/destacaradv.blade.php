@@ -9,6 +9,7 @@
                         <input type="hidden" name="id" value="{{$obj->id}}">
                         @csrf
 
+                        <div class="card-body">
                         <div class="form-group{{ $errors->has('destaque') ? ' has-danger' : '' }}">
                             <label >{{ __('Destaque') }}</label>
                             <input id='foto4' type="text" name="destaque" class="form-control{{ $errors->has('destaque') ? ' is-invalid' : '' }}" placeholder="{{ __('Destaque') }}" value="{{ old('destaque', $obj->destaque) }}"  readonly >
@@ -21,6 +22,18 @@
                             </div>
                             <br>
 
+                        </div>
+
+                            <div class="form-group{{ $errors->has('titulo_destaque') ? ' has-danger' : '' }}">
+                                <label id="nomecompleto">{{ __('Título') }}</label>
+                                <input type="text" name="titulo" class="form-control{{ $errors->has('titulo') ? ' is-invalid' : '' }}" placeholder="{{ __('Título') }}" value="{{ old('titulo', $obj->titulo_destaque) }}" required maxlength="15">
+                                @include('alerts.feedback', ['field' => 'titulo'])
+                            </div>
+                            <div class="form-group{{ $errors->has('subtitulo') ? ' has-danger' : '' }}">
+                                <label id="nomecompleto">{{ __('Subtítulo') }}</label>
+                                <input type="text" name="subtitulo" class="form-control{{ $errors->has('subtitulo') ? ' is-invalid' : '' }}" placeholder="{{ __('Subtítulo') }}" value="{{ old('subtitulo', $obj->subtitulo) }}" required maxlength="15">
+                                @include('alerts.feedback', ['field' => 'descricao'])
+                            </div>
                         </div>
 
                         <div class="card-footer">
