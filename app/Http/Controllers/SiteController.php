@@ -16,9 +16,9 @@ class SiteController extends Controller
         $allTypes = \App\Models\TipoAnuncio::all();
         $cores = \App\Models\CorAnuncio::all();
         $tags = \App\Models\TagsAnuncio::all();
-        $anuncios = \App\Models\Anuncio::where('ativo','=','1')->limit(2)->get();
+        $anuncios = \App\Models\Anuncio::where('ativo','=','1')->limit(8)->get();
         $filtro = new Anuncio();
-        $filtro->page = 2;
+        $filtro->page = 8;
         return view('frente/index',['allDestaque'=>$allDestaque,'allTypes'=>$allTypes,'cores'=>$cores,'tags'=>$tags,'anuncios'=>$anuncios,'filtro'=>$filtro,'preco'=>-1]);
     }
 
