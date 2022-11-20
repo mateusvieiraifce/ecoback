@@ -24,9 +24,13 @@ Route::get('/sobre', function () {
 })->name('home.sobre');
 
 
-Route::get('/index', function () {
+/*Route::get('/index', function () {
     return view('frente/index');
-})->name('index');
+})->name('index');*/
+
+Route::get('/index', [\App\Http\Controllers\SiteController::class,"index"])->name('index');
+Route::get('/search', [\App\Http\Controllers\SiteController::class,"search"])->name('search');
+
 
 Route::get('/produtos', function () {
     return view('frente/produtos');

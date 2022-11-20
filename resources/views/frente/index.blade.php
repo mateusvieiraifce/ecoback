@@ -7,6 +7,7 @@
     <!-- Banner -->
 
 
+
     <div class="sec-banner bg0 p-t-80 p-b-50">
         <div class="container">
             <section class="section-slide">
@@ -37,11 +38,6 @@
                             </div>
                         </div>
 
-                        <?php
-                        $allDestaque = \App\Models\FileAnuncio::join('anuncios','anuncios.id','=','files_anuncios.anuncio_id')
-                            ->where('files_anuncios.destaque',true)->where('anuncios.ativo',true)->get();
-
-                        ?>
                         @foreach($allDestaque as $type)
 
                         <div class="item-slick1" style="background-image: url({{"/storage/products/".$type->path}});">
@@ -97,24 +93,11 @@
                         Todos os Produtos
                     </button>
 
-                    <?php
-                    $allTypes = \App\Models\TipoAnuncio::all();
-                    ?>
                     @foreach($allTypes as $type)
                     <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter="{{".".$type->id}}">
                         {{$type->descricao}}
                     </button>
                     @endforeach
-
-<!--
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-                        Bordados
-                    </button>
-
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-                        Tecidos
-                    </button>
--->
 
                 </div>
 
@@ -134,13 +117,24 @@
 
                 <!-- Search product -->
                 <div class="dis-none panel-search w-full p-t-10 p-b-15">
+                    <section class="filtrobusca">
+                        <form method="get" action="{{route('search')}}" name="pesquisa">
+
                     <div class="bor8 dis-flex p-l-15">
-                        <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-                            <i class="zmdi zmdi-search"></i>
+                        <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" type="submit">
+                            <i class="zmdi zmdi-search" ></i>
                         </button>
 
-                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"  placeholder="Search" name="descricao" value="{{$filtro->descricao}}">
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="hidden"  placeholder="Search" name="preco" id="preco" value="{{$preco}}">
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="hidden"  placeholder="Search" name="cor" id="cor" value="{{$filtro->cor}}">
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="hidden"  placeholder="Search" name="tag" id="tag" value="{{$filtro->tag}}">
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="hidden"  placeholder="Search" name="ord" id="ordenado" value="{{$filtro->ord}}">
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="hidden"  placeholder="Search" name="page" id="pagina" value="{{$filtro->pag}}">
                     </div>
+
+                        </form>
+                    </section>
                 </div>
 
                 <!-- Filter -->
@@ -153,37 +147,26 @@
 
                             <ul>
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class="filter-link stext-106 trans-04 @if ($filtro->ord==1)filter-link-active @else filter-link @endif" onclick="setOrdenado(1)">
                                         Padrão
                                     </a>
                                 </li>
 
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Popularidade
-                                    </a>
-                                </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Média
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
+                                    <a href="#" class="filter-link stext-106 trans-04 @if ($filtro->ord==4)filter-link-active @else filter-link @endif " onclick="setOrdenado(4)">
                                         Novidade
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class="filter-link stext-106 trans-04 @if ($filtro->ord==5)filter-link-active @else filter-link @endif" onclick="setOrdenado(5)">
                                         Preço: Mais barato para mais caro
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class="filter-link stext-106 trans-04 @if ($filtro->ord==6)filter-link-active @else filter-link @endif " onclick="setOrdenado(6)">
                                         Preço: Mais caro para mais barato
                                     </a>
                                 </li>
@@ -197,37 +180,38 @@
 
                             <ul>
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
+
+                                    <a href="#filtrobusca" class="filter-link stext-106 trans-04  filter-link-@if ($preco==-1)active @endif" onclick="setPreco(-1);" >
                                         Todos
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class="stext-106 trans-04  @if ($preco==10)filter-link-active @else filter-link @endif " onclick="setPreco(10);">
                                         R$ 0.00 - R$ 10.00
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class="stext-106 trans-04 @if ($preco==50)filter-link-active @else filter-link @endif" onclick="setPreco(50);">
                                         R$ 10.00 - R$ 50.00
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class="stext-106 trans-04 @if ($preco==100) filter-link-active @else filter-link @endif" onclick="setPreco(100);">
                                         R$ 50,00 - R$ 100,00
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class="stext-106 trans-04 @if ($preco==150)filter-link-active @else filter-link @endif" onclick="setPreco(150);">
                                         R$ 100,00 - R$ 150,00
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class="stext-106 trans-04 @if ($preco==10000)filter-link-active @else filter-link @endif" onclick="setPreco(160);">
                                         R$ 150,00+
                                     </a>
                                 </li>
@@ -240,7 +224,7 @@
                             </div>
 
                             <ul>
-                                <?php $cores = \App\Models\CorAnuncio::all() ?>
+
 
                                 @foreach($cores as $cor)
                                 <li class="p-b-6">
@@ -248,7 +232,7 @@
 										<i class="zmdi zmdi-circle"></i>
 									</span>
 
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="#" class=" stext-106 trans-04 @if($cor->id==$filtro->cor) filter-link-active @else filter-link @endif" onclick="return setCor('{{$cor->id}}')"  >
                                         {{$cor->descricao}}
                                     </a>
                                 </li>
@@ -262,10 +246,10 @@
                                 Tags
                             </div>
                             <div class="flex-w p-t-4 m-r--5">
-                                <?php $tags = \App\Models\TagsAnuncio::all();?>
+
                                 @foreach($tags as $tag)
 
-                                <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+                                <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag trans-04 m-r-5 m-b-5 " onclick="setTag('{{$tag->descricao}}')">
                                     {{$tag->descricao}}
                                 </a>
                                 @endforeach
@@ -277,11 +261,8 @@
                 </div>
             </div>
 
+
             <div class="row isotope-grid">
-
-                <?php $anuncios = \App\Models\Anuncio::where('ativo','=','1')->get();
-
-                ?>
 
                 @foreach($anuncios as $anuncio)
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$anuncio->type_id}}">
@@ -451,13 +432,37 @@
 
             <!-- Load more -->
             <div class="flex-c-m flex-w w-full p-t-45">
-                <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+                <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" onclick="setPage({{$filtro->page}})">
                     Carregar mais
                 </a>
             </div>
         </div>
     </section>
 
+    <script>
+        function setCor(filtro){
+            document.getElementById('cor').value = filtro;
+            document.forms['pesquisa'].submit();
+        }
+        function setTag(filtro){
+            document.getElementById('tag').value = filtro;
+            document.forms['pesquisa'].submit();
+        }
 
+        function setPreco(filtro){
+            document.getElementById('preco').value = filtro;
+            document.forms['pesquisa'].submit();
+        }
+        function setOrdenado(filtro){
+            document.getElementById('ordenado').value = filtro;
+            document.forms['pesquisa'].submit();
+        }
+        function setPage(filtro){
+            novap = parseInt(filtro) + 8;
+            document.getElementById('pagina').value = novap;
+
+            document.forms['pesquisa'].submit();
+        }
+    </script>
 
 @endsection

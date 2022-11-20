@@ -192,6 +192,7 @@ class AnuncioController extends Controller
         $anuncio->largura = Helper::parseTextDouble($request->largura);
         $anuncio->peso = Helper::parseTextDouble($request->peso);
         $anuncio->color_id = intval($request->cor);
+        $anuncio->hashtag = $request->hashtag;
         $anuncio->save();
         TagsAnuncio::where('adv_id','=',$anuncio->id)->delete();
         foreach ($pieces as $piece){
