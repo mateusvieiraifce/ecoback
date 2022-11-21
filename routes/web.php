@@ -31,12 +31,13 @@ Route::get('/sobre', function () {
 Route::any('/', [\App\Http\Controllers\SiteController::class,"index"]);
 Route::any('/index', [\App\Http\Controllers\SiteController::class,"index"])->name('index');
 Route::get('/search', [\App\Http\Controllers\SiteController::class,"search"])->name('search');
+Route::get('/produtos', [\App\Http\Controllers\SiteController::class,"produtos"])->name('produtos');
 
-
+/*
 Route::get('/produtos', function () {
     return view('frente/produtos');
 })->name('produtos');
-
+*/
 Route::get('/contato', function () {
     return view('frente/contato');
 })->name('contato');

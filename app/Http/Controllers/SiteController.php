@@ -22,8 +22,23 @@ class SiteController extends Controller
         return view('frente/index',['allDestaque'=>$allDestaque,'allTypes'=>$allTypes,'cores'=>$cores,'tags'=>$tags,'anuncios'=>$anuncios,'filtro'=>$filtro,'preco'=>-1]);
     }
 
-    function  search(Request $request){
+    function  produtos(){
 
+        $allDestaque = \App\Models\FileAnuncio::join('anuncios','anuncios.id','=','files_anuncios.anuncio_id')
+            ->where('files_anuncios.destaque',true)->where('anuncios.ativo',true)->get();
+        $allTypes = \App\Models\TipoAnuncio::all();
+        $cores = \App\Models\CorAnuncio::all();
+        $tags = \App\Models\TagsAnuncio::all();
+        $anuncios = \App\Models\Anuncio::where('ativo','=','1')->limit(8)->get();
+        $filtro = new Anuncio();
+        $filtro->page = 8;
+        return view('frente/produtos',['allDestaque'=>$allDestaque,'allTypes'=>$allTypes,'cores'=>$cores,'tags'=>$tags,'anuncios'=>$anuncios,'filtro'=>$filtro,'preco'=>-1]);
+    }
+
+    function  pesquisa(Request $request){
+
+    }
+    function  search(Request $request){
 
         $inicio = -1;
         $fim = -1;
@@ -70,7 +85,9 @@ class SiteController extends Controller
 
         }
         if (isset($request->cor)){
+            if ($request->cor != -1) {
             $anuncios= $anuncios->where('color_id','=',$request->cor);
+            }
         }
 
         if ($request->tag){
@@ -106,7 +123,13 @@ class SiteController extends Controller
         }else{
             $pag = $request->page;
         }
-        return view('frente/index',['allDestaque'=>$allDestaque,'allTypes'=>$allTypes,'cores'=>$cores,'tags'=>$tags,
+        $return = 'frente/index';
+
+        if (isset($request->origem)){
+           // dd('aqui');
+            $return = "frente/produtos";
+        }
+        return view($return,['allDestaque'=>$allDestaque,'allTypes'=>$allTypes,'cores'=>$cores,'tags'=>$tags,
             'anuncios'=>$anuncios->limit($pag)->get(), 'filtro'=>$filtro,'preco'=>$fim]);
     }
 

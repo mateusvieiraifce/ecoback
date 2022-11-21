@@ -22,18 +22,7 @@
 
                 <div class="collapse" id="laravel-examples">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'resumo') class="active " @endif>
-                            <a href="">
-                                <i class="tim-icons icon-components"></i>
-                                <p>{{ __('Resumo') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="">
-                                <i class="tim-icons icon-alert-circle-exc"></i>
-                                <p>{{ __('Novidades') }}</p>
-                            </a>
-                        </li>
+                        
                         <li @if ($pageSlug == 'users') class="active " @endif>
                             <a href="{{route('advertisement.list')}}">
                                 <i class="tim-icons icon-spaceship"></i>

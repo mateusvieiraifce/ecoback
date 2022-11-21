@@ -225,6 +225,15 @@
 
                             <ul>
 
+                                <li class="p-b-6">
+									<span class="fs-15 lh-12 m-r-6" >
+										<i class="zmdi zmdi-circle"></i>
+									</span>
+
+                                    <a href="#" class=" stext-106 trans-04 @if($filtro->cor==-1) filter-link-active @else filter-link @endif" onclick="return setCor('-1')"  >
+                                        Todas
+                                    </a>
+                                </li>
 
                                 @foreach($cores as $cor)
                                 <li class="p-b-6">
