@@ -467,7 +467,11 @@
             document.forms['pesquisa'].submit();
         }
         function setPage(filtro){
+
             novap = parseInt(filtro) + 8;
+            if ('NaN'==filtro.toString()){
+                novap = 8;
+            }
             document.getElementById('pagina').value = novap;
 
             document.forms['pesquisa'].submit();

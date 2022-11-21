@@ -119,7 +119,7 @@ class SiteController extends Controller
         }
 
         if (!isset($request->page)){
-            $pag = 2;
+            $pag = 8;
         }else{
             $pag = $request->page;
         }
