@@ -491,13 +491,15 @@ class AnuncioController extends Controller
         try{
 
             $x =  Anuncio::join('type_adv','type_adv.id','=','type_id')->
-            join('users','users.id','=','user_id')->where('anuncios.id','=',$id)->orWhere('anuncios.id_anuncio','=',$id)->
+            join('users','users.id','=','user_id')->where('anuncios.id','=',$id)
+                ->orWhere('anuncios.id_anuncio','=',$id)->
                 select(DB::raw('anuncios.*'))->first();
 
             $id = $x->id;
 
             $comentarios = Comentarios::where('anuncio_id','=',$id)->orderBy('created_at','desc')->get();
             $tags = TagsAnuncio::where('adv_id','=',$id)->get();
+
 
             $saida = "";
             foreach ($tags as $tag){
@@ -521,6 +523,20 @@ class AnuncioController extends Controller
             }
 
             $x->hashtag =$saida;
+            if ($x->color_id){
+                $cor = CorAnuncio::find($x->color_id);
+                $x->cor = $cor->descricao;
+            }
+
+            $sizes = TamanhoAnuncio::join('tamanhos', 'tamanhos.id','=','tamanho_id')
+                -> where('adv_id','=',$x->id)->groupBy('descricao')->select('descricao')->get();
+            $tamanhos = "";
+            foreach ($sizes as $size){
+                $tamanhos= $size->descricao.', '.$tamanhos;
+            }
+            $tamanhos = substr($tamanhos, 0, strlen($tamanhos)-2);
+
+            $x->tamanhos = $tamanhos;
 
         }
         catch (QueryException $exp ){

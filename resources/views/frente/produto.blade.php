@@ -137,7 +137,7 @@
                         <div class="tab-pane fade show active" id="description" role="tabpanel">
                             <div class="how-pos2 p-lr-15-md">
                                 <p class="stext-102 cl6">
-                                    {{$obj->descricao}}
+                                    {{$obj->descricaod}}
                                 </p>
                             </div>
                         </div>
@@ -163,17 +163,17 @@
 											</span>
 
                                             <span class="stext-102 cl6 size-206">
-												{{$obj->altura}} x {{$obj->largura}}
+												{{$obj->altura}} cm x {{$obj->largura}} cm
 											</span>
                                         </li>
 
                                         <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
-												Materials
+												Materiais
 											</span>
 
                                             <span class="stext-102 cl6 size-206">
-												60% cotton
+												{{$obj->material}}
 											</span>
                                         </li>
 
@@ -189,11 +189,11 @@
 
                                         <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
-												Size
+												Tamanho
 											</span>
 
                                             <span class="stext-102 cl6 size-206">
-												XL, L, M, S
+												{{$obj->tamanhos}}
 											</span>
                                         </li>
                                     </ul>
