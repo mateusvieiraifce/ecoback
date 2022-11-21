@@ -23,7 +23,8 @@
                                 <tr>
                                     <td>Título</td>
                                     <td>Qtd</td>
-                                    <td>Preço (R$) </td>
+                                    <td style="text-align: right">Preço de Venda(R$) </td>
+                                    <td style="text-align: right">Qnt Receberei (R$) </td>
                                     <td>Situção</td>
                                     <td>Editar</td>
                                     <td>Desativar</td>
@@ -41,8 +42,20 @@
                                             <p class="title">{{\App\Helper::padronizaMonetario($ende->quantidade)}}</p>
                                         </td>
 
-                                        <td>
+                                        <td style="text-align: right">
                                             <p class="title">{{\App\Helper::padronizaMonetario($ende->preco)}}</p>
+                                        </td>
+                                        <?php
+                                        $comissao = env('COMISSAO_NORMAL');
+                                        if ($ende->destaque){
+                                            $comissao = env('COMISSAO_DESTAQUE');
+                                        }
+                                        $valor = $ende->preco * $comissao;
+
+
+                                        ?>
+                                        <td style="text-align: right">
+                                            <p class="title">{{\App\Helper::padronizaMonetario($valor)}}</p>
                                         </td>
 
                                         <td style="max-width: 200px;">

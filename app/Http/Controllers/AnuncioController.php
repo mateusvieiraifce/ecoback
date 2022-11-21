@@ -59,7 +59,10 @@ class AnuncioController extends Controller
     }
     function  list($msg = null)
     {
-        $anuncios = Anuncio::where('user_id','=',Auth::user()->id)->orderBy('updated_at','desc')->get();
+        $anuncios = Anuncio::leftJoin('tamanhos_adv','anuncios.id','tamanhos_adv.adv_id')
+            ->where('user_id','=',Auth::user()->id)->select(DB::raw('destaque, anuncios.id, titulo, sum(tamanhos_adv.qtd_id) as quantidade, preco, ativo'))
+            ->groupBy('anuncios.id','titulo','preco','ativo','destaque')
+            ->orderBy('anuncios.ativo','desc')->orderBy('anuncios.updated_at','desc')->get();
         return view('advertisement/list', ['anuncios' => $anuncios, 'msg' => $msg]);
     }
 
