@@ -132,7 +132,9 @@ class AnuncioController extends Controller
             $anuncio->id_anuncio = uniqid(date('HisYmd'));
             $anuncio->descricaod= $request->descricaod;
             $anuncio->material = $request->material;
-
+            $anuncio->titulo = $request->titulo;
+            $anuncio->descricao = $request->descricao;
+            $anuncio->user_id = Auth::user()->id;
             $anuncio->save();
 
         }

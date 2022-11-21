@@ -14,9 +14,12 @@ class AnuncioCamposAdd extends Migration
     public function up()
     {
         Schema::table('anuncios', function (Blueprint $table) {
-            $table->string('descricao_completa')->nullable();
-            $table->string('materiais')->nullable();
-            $table->string('tamanho')->nullable();
+            $table->string('descricaod')->nullable();
+            $table->string('material')->nullable();
+            $table->string('titulo_destaque')->nullable();
+            $table->string('subtitulo')->nullable();
+            $table->string('hashtag')->nullable();
+            $table->unsignedBigInteger('tamanho')->nullable();
         });
     }
 
@@ -27,9 +30,10 @@ class AnuncioCamposAdd extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('descricao_completa');
-            $table->dropColumn('materiais');
+        Schema::table('anuncios', function (Blueprint $table) {
+            $table->dropColumn('titulo_destaque');
+            $table->dropColumn('subtitulo');
+            $table->dropColumn('hashtag');
             $table->dropColumn('tamanho');
         });
     }

@@ -13,9 +13,9 @@ class AddForeg extends Migration
      */
     public function up()
     {
-        Schema::table('anuncios', function (Blueprint $table) {
-            $table->foreign('type_id')->references('id')->on('type_adv')->cascadeOnDelete();//
-            $table->foreign('user_id')->references('id')->on('users');//
+      /*  Schema::table('anuncios', function (Blueprint $table) {
+          //  $table->foreign('type_id')->references('id')->on('type_adv')->cascadeOnDelete();//
+           // $table->foreign('user_id')->references('id')->on('users');//
         });
 
         Schema::table('files_anuncios', function (Blueprint $table) {
@@ -32,7 +32,7 @@ class AddForeg extends Migration
 
         Schema::table('enderecos', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();;//
-        });
+        });*/
 
 
     }

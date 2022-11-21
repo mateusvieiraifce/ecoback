@@ -24,16 +24,16 @@ class CreateAnuncios extends Migration
             $table->uuid('id_anuncio');
             $table->string('titulo');
             $table->string('descricao');
-            $table->double('preco');
-            $table->double('quantidade');
-            $table->boolean('ativo');
-            $table->boolean('destaque');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('type_id');
+            $table->double('preco')->nullable()->default(0);
+            $table->double('quantidade')->nullable()->default(0);
+            $table->boolean('ativo')->nullable();
+            $table->boolean('destaque')->nullable()->default(false);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('type_id')->nullable();
             $table->timestamps();
-            $table->double('altura');
-            $table->double('largura');
-            $table->double('peso');
+            $table->double('altura')->nullable()->default(0);;
+            $table->double('largura')->nullable()->default(0);;
+            $table->double('peso')->nullable()->default(0);;
 
         });
     }

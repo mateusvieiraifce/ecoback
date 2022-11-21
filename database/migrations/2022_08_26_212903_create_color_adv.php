@@ -20,7 +20,7 @@ class CreateColorAdv extends Migration
         });
 
         Schema::table('anuncios', function (Blueprint $table) {
-            $table->unsignedBigInteger('color_id')->unsigned();
+            $table->unsignedBigInteger('color_id')->unsigned()->nullable();
 
          });
         }

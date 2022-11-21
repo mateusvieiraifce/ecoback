@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('frente/index');
 })->name('home.frente');
-
+*/
 
 Route::get('/sobre', function () {
     return view('frente/about');
@@ -28,7 +28,8 @@ Route::get('/sobre', function () {
     return view('frente/index');
 })->name('index');*/
 
-Route::get('/index', [\App\Http\Controllers\SiteController::class,"index"])->name('index');
+Route::any('/', [\App\Http\Controllers\SiteController::class,"index"]);
+Route::any('/index', [\App\Http\Controllers\SiteController::class,"index"])->name('index');
 Route::get('/search', [\App\Http\Controllers\SiteController::class,"search"])->name('search');
 
 

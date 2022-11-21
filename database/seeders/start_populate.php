@@ -24,7 +24,7 @@ class start_populate extends Seeder
             'descricao' => 'Tecidos',
         ]);
         DB::table('type_adv')->insert([
-            'descricao' => 'Frete',
+            'descricao' => 'Roupas de Bebê',
         ]);
 
 
