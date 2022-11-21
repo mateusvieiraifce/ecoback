@@ -10,6 +10,8 @@ use App\Models\Endereco;
 use App\Models\Favoritos;
 use App\Models\FileAnuncio;
 use App\Models\TagsAnuncio;
+use App\Models\Tamanho;
+use App\Models\TamanhoAnuncio;
 use App\Models\TipoAnuncio;
 use App\Models\User;
 
@@ -155,6 +157,7 @@ class AnuncioController extends Controller
 
         return view('advertisement/formfotos',['id'=>$anuncio->id_anuncio, 'obj'=>$anuncio]);
     }
+
     function passo3(Request $request){
 
 
@@ -212,8 +215,63 @@ class AnuncioController extends Controller
 
     }
 
+    function tamanho($id){
+        $anuncio = Anuncio::find($id);
+        $tamanhos = TamanhoAnuncio::join('tamanhos','tamanhos.id','=','tamanhos_adv.tamanho_id')->where('adv_id','=',$id)->select(['qtd_id','descricao',
+            'tamanhos_adv.id', 'tamanhos_adv.adv_id'])->get();
+     //   dd($tamanhos);
+        return view('advertisement/formtamanho',['obj' =>$anuncio,'tamanhos'=>Tamanho::all(),'anuncios'=>$tamanhos]);
+    }
 
-    function finalizar(Request  $request){
+    function deleteTamanho($id){
+        $tamanho =  TamanhoAnuncio::find($id);
+        if ($tamanho){
+            $anuncioId = $tamanho->adv_id;
+            $tamanho->delete();
+            return $this->tamanho($anuncioId);}
+        return $this->list();
+    }
+    function editTamanho($id){
+        $tanuncio = TamanhoAnuncio::find($id);
+        $anuncio = Anuncio::find($tanuncio->adv_id);
+        $tamanhos = TamanhoAnuncio::join('tamanhos','tamanhos.id','=','tamanhos_adv.tamanho_id')->where('adv_id','=',$anuncio->id)->select(['qtd_id','descricao','tamanhos_adv.id'])->get();
+        $anuncio->quantidade =$tanuncio->qtd_id;
+        $anuncio->tamanho= $tanuncio->tamanho;
+        $anuncio->idtamanho = $tanuncio->id;
+        return view('advertisement/formtamanho',['obj' =>$anuncio,'tamanhos'=>Tamanho::all(),'anuncios'=>$tamanhos]);
+    }
+    function tamanhoAdd(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'quantidade' => 'required',
+            'tamanho' => 'required',
+        ]);
+
+        //dd($validator->errors());
+
+        if ($validator->fails()) {
+            return redirect(route('advertisement.tamanho',$request->id))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $anuncio = Anuncio::find($request->id);
+
+        $tamanhos = new TamanhoAnuncio();
+        if ($request->idtamanho){
+            $tamanhos = TamanhoAnuncio::find($request->idtamanho);
+        }
+        $tamanhos->tamanho_id = $request->tamanho;
+        $tamanhos->qtd_id = $request->quantidade;
+        $tamanhos->adv_id  = $anuncio->id;
+        $tamanhos->save();
+
+        $tamanhos = TamanhoAnuncio::join('tamanhos','tamanhos.id','=','tamanhos_adv.tamanho_id')->where('adv_id','=',$request->id)->select(['qtd_id','descricao','tamanhos_adv.id'])->get();
+        //   dd($tamanhos);
+        return view('advertisement/formtamanho',['obj' =>$anuncio,'tamanhos'=>Tamanho::all(),'anuncios'=>$tamanhos]);
+    }
+
+    function addFotos(Request  $request){
 
 
         $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
@@ -266,8 +324,14 @@ class AnuncioController extends Controller
             dd($exception);
             $msgret = ['valor' => "Erro ao executar a operação", 'tipo' => 'danger'];
         }
-        return $this->list($msgret);
+
+        if ($anuncio->type_id != 4){
+            TamanhoAnuncio::create(['adv_id'=>$anuncio->id,'qtd_id'=>$anuncio->quantidade, 'tamanho_id'=>Tamanho::all()->first()->id]);
+            return $this->list($msgret);
+        }
+        return $this->tamanho($anuncio->id);
     }
+
     function save(Request $request)
     {
 
@@ -569,8 +633,6 @@ class AnuncioController extends Controller
         session(['msg' => $msgret]);
         return back()->withInput();
     }
-
-
 
     //
 }

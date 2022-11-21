@@ -51,9 +51,7 @@
 
                         <div class="card-footer">
                             <a href="{{route('advertisement.back.fotos', $obj->id)}}" class="btn btn-fill btn-primary">{{ __('Voltar') }}</a>
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Finalizar') }}</button>
-
-
+                            <button type="submit" class="btn btn-fill btn-primary">@if($obj->type_id == 4) {{ __('Próximo') }} @else {{ __('Finalizar') }} @endif </button>
 
                         </div>
                     </form>

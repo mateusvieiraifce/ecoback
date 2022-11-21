@@ -78,9 +78,14 @@ Route::get("/advertisement/preco/{id}",[\App\Http\Controllers\AnuncioController:
 Route::get("/advertisement/precoback/{id}",[\App\Http\Controllers\AnuncioController::class,'passo2back'])->name('advertisement.back.fotos')->middleware('auth');;
 Route::any("/advertisement/fotos",[\App\Http\Controllers\AnuncioController::class,'passo3'])->name('advertisement.fotos')->middleware('auth');;
 Route::any("/advertisement/fotos/{id}",[\App\Http\Controllers\AnuncioController::class,'passoFotos'])->name('advertisement.passo.fotos')->middleware('auth');;
-Route::any("/advertisement/finalizar/",[\App\Http\Controllers\AnuncioController::class,'finalizar'])->name('advertisement.finalizar')->middleware('auth');;
+Route::any("/advertisement/finalizar/",[\App\Http\Controllers\AnuncioController::class,'addFotos'])->name('advertisement.finalizar')->middleware('auth');;
 Route::get("/advertisement/destacar/{id}",[\App\Http\Controllers\AnuncioController::class,'destacar'])->name('advertisement.destacar')->middleware('auth');;
 Route::post("/advertisement/destacar/{id}",[\App\Http\Controllers\AnuncioController::class,'destacarDo'])->name('advertisement.destacar.do')->middleware('auth');;
+Route::get("/advertisement/tamanho/{id}",[\App\Http\Controllers\AnuncioController::class,'tamanho'])->name('advertisement.tamanho')->middleware('auth');;
+Route::post("/advertisement/tamanho/add/{id}",[\App\Http\Controllers\AnuncioController::class,'tamanhoAdd'])->name('advertisement.tamanho.add')->middleware('auth');;
+Route::get("/advertisement/tamanho/del/{id}",[\App\Http\Controllers\AnuncioController::class,'deleteTamanho'])->name('advertisement.tamanho.del')->middleware('auth');;
+Route::get("/advertisement/tamanho/edit/{id}",[\App\Http\Controllers\AnuncioController::class,'editTamanho'])->name('advertisement.tamanho.edit')->middleware('auth');;
+
 
 
 Route::get("/advertisement/delete/{id}",[\App\Http\Controllers\AnuncioController::class,'delete'])->name('advertisement.delete')->middleware('auth');;
