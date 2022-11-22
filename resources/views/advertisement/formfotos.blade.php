@@ -13,7 +13,7 @@
                         <input id="foto1" type="text" name="foto1" class="form-control{{ $errors->has('foto1') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto1') }}" value="{{ old('foto1', $obj->foto1)}}" required readonly>
                         @include('alerts.feedback', ['field' => 'fotoum'])
 
-                        <input type="file" style="display:none" class="form-control" name="fotoum"  size="25" id="arquivo" maxlength="20" accept=".jpg,.png" onchange="showname('arquivo','foto1');" >
+                        <input type="file" style="display:none" class="form-control" name="fotoum"  size="25" id="arquivo" maxlength="20" accept="image/*" onchange="showname('arquivo','foto1');" >
                         <div style="margin-top: 10px; margin-bottom: -25px">
                             <input type="button" id="loadFileXml" value="Anexar" onclick="document.getElementById('arquivo').click();" />
                         </div>
@@ -25,7 +25,7 @@
                         <label >{{ __('Foto 2') }}</label>
                         <input id="foto2" type="text" name="foto2" class="form-control{{ $errors->has('foto2') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto2') }}" value="{{ old('foto2', $obj->foto2) }}" required readonly>
                         @include('alerts.feedback', ['field' => 'ft2'])
-                        <input type="file" style="display:none" class="form-control" name="ft2"  size="25" id="foto2i" maxlength="20" accept=".jpg,.png" onchange="showname('foto2i','foto2');"
+                        <input type="file" style="display:none" class="form-control" name="ft2"  size="25" id="foto2i" maxlength="20" accept="image/*" onchange="showname('foto2i','foto2');"
                         >
                         <div style="margin-top: 10px; margin-bottom: -25px">
                             <input type="button" id="loadFileXml" value="Anexar" onclick="document.getElementById('foto2i').click();" />
@@ -38,7 +38,7 @@
                         <input id="foto3" type="text" name="foto3" class="form-control{{ $errors->has('foto3') ? ' is-invalid' : '' }}" placeholder="{{ __('Foto 3') }}" value="{{ old('foto3', $obj->foto3) }}" required readonly>
                         @include('alerts.feedback', ['field' => 'ft3'])
 
-                        <input type="file" style="display:none" class="form-control" name="ft3"  size="25" id="foto3i" maxlength="20" accept=".jpg,.png" onchange="showname('foto3i','foto3');"
+                        <input type="file" style="display:none" class="form-control" name="ft3"  size="25" id="foto3i" maxlength="20" accept="image/*" onchange="showname('foto3i','foto3');"
                         >
                         <div style="margin-top: 10px; margin-bottom: -25px">
                             <input type="button" id="loadFileXml" value="Anexar" onclick="document.getElementById('foto3i').click();" />
