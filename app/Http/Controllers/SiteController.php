@@ -29,7 +29,7 @@ class SiteController extends Controller
             ->where('files_anuncios.destaque',true)->where('anuncios.ativo',true)->get();
         $allTypes = \App\Models\TipoAnuncio::all();
         $cores = \App\Models\CorAnuncio::all();
-        $tags = \App\Models\TagsAnuncio::all();
+        $tags = \App\Models\TagsAnuncio::select(DB::raw("count(id) as n, replace(descricao,' ','') as descricao"))->groupBy('descricao')->orderBy('n')->limit(15)->get();
         $anuncios = \App\Models\Anuncio::where('ativo','=','1')->limit(8)->get();
         $filtro = new Anuncio();
         $filtro->page = 8;
