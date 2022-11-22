@@ -26,7 +26,7 @@
                                     <td style="text-align: right">Preço de Venda(R$) </td>
                                     <td style="text-align: right">Qnt Receberei (R$) </td>
                                     <td>Situção</td>
-                                    <!--<td>Editar</td> -->
+                                    <td>Editar</td>
                                     <td>Desativar</td>
                                     <td>Destacar</td>
                                 </tr>
