@@ -159,7 +159,7 @@
 
                                         <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
-												Dimensões
+												Dimensões da Embalagem
 											</span>
 
                                             <span class="stext-102 cl6 size-206">
