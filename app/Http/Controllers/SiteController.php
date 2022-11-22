@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anuncio;
 use App\Models\TagsAnuncio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
