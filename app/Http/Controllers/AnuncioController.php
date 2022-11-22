@@ -274,8 +274,10 @@ class AnuncioController extends Controller
         return view('advertisement/formtamanho',['obj' =>$anuncio,'tamanhos'=>Tamanho::all(),'anuncios'=>$tamanhos]);
     }
 
-    function finalizar(){
-      //  dd('aqui');
+    function finalizar($id){
+        $anuncio = Anuncio::find($id);
+        $anuncio->ativo = true;
+        $anuncio->save();
         $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
         return $this->list($msgret);
     }
@@ -325,7 +327,7 @@ class AnuncioController extends Controller
         FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileUm,'destaque'=>false]);
         FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileDois,'destaque'=>false]);
         FileAnuncio::create(['anuncio_id'=>$anuncio->id,'path'=>$fileTres,'destaque'=>false]);
-        $anuncio->ativo = '1';
+
         $anuncio->save();
         DB::connection()->commit();
         }
@@ -499,7 +501,7 @@ class AnuncioController extends Controller
             $x =  Anuncio::join('type_adv','type_adv.id','=','type_id')->
             join('users','users.id','=','user_id')->where('anuncios.id','=',$id)
                 ->orWhere('anuncios.id_anuncio','=',$id)->
-                select(DB::raw('anuncios.*'))->first();
+                select(DB::raw('anuncios.*'),'users.name','type_adv.descricao as categoria')->first();
 
             $id = $x->id;
 

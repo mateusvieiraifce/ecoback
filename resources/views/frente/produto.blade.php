@@ -311,7 +311,7 @@
 			</span>
 
             <span class="stext-107 cl6 p-lr-25">
-				Categories: {{$obj->descricao}}
+				Categoria: {{$obj->categoria}}
 			</span>
         </div>
     </section>

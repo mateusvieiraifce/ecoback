@@ -84,7 +84,7 @@
 
                     </form>
                     <div class="card-footer">
-                        <a href="{{route('advertisement.tamanho.finalizar')}}" type="submit" class="btn btn-fill btn-primary">{{ __('Finalizar') }}</a>
+                        <a href="{{route('advertisement.tamanho.finalizar', $obj->id)}}" type="submit" class="btn btn-fill btn-primary">{{ __('Finalizar') }}</a>
 
                     </div>
 
