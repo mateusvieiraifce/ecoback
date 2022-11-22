@@ -86,6 +86,7 @@ Route::get("/advertisement/tamanho/{id}",[\App\Http\Controllers\AnuncioControlle
 Route::post("/advertisement/tamanho/add/{id}",[\App\Http\Controllers\AnuncioController::class,'tamanhoAdd'])->name('advertisement.tamanho.add')->middleware('auth');;
 Route::get("/advertisement/tamanho/del/{id}",[\App\Http\Controllers\AnuncioController::class,'deleteTamanho'])->name('advertisement.tamanho.del')->middleware('auth');;
 Route::get("/advertisement/tamanho/edit/{id}",[\App\Http\Controllers\AnuncioController::class,'editTamanho'])->name('advertisement.tamanho.edit')->middleware('auth');;
+Route::get("/advertisement/fim/",[\App\Http\Controllers\AnuncioController::class,'finalizar'])->name('advertisement.tamanho.finalizar')->middleware('auth');;
 
 
 

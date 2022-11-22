@@ -14,7 +14,7 @@
 
                             <div class="form-group{{ $errors->has('quantidade') ? ' has-danger' : '' }}">
                                 <label id="qtd">{{ __('Quantidade') }}</label>
-                                <input type="text" name="quantidade" class="form-control{{ $errors->has('quantidade') ? ' is-invalid' : '' }}" placeholder="{{ __('quantidade') }}" value="{{ old('quantidade') }}" required maxlength="15">
+                                <input type="text" name="quantidade" class="form-control{{ $errors->has('quantidade') ? ' is-invalid' : '' }}" placeholder="{{ __('quantidade') }}" value="{{ old('quantidade') }}"  maxlength="15">
                                 @include('alerts.feedback', ['field' => 'titulo'])
                             </div>
                             <div class="form-group{{ $errors->has('tamanho') ? ' has-danger' : '' }}">
@@ -82,12 +82,12 @@
                             </div>
                         </div>
 
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Finalizar') }}</button>
-
-
-                        </div>
                     </form>
+                    <div class="card-footer">
+                        <a href="{{route('advertisement.tamanho.finalizar')}}" type="submit" class="btn btn-fill btn-primary">{{ __('Finalizar') }}</a>
+
+                    </div>
+
                 </div>
             </div>
         </div>

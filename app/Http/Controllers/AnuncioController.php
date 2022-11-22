@@ -274,6 +274,12 @@ class AnuncioController extends Controller
         return view('advertisement/formtamanho',['obj' =>$anuncio,'tamanhos'=>Tamanho::all(),'anuncios'=>$tamanhos]);
     }
 
+    function finalizar(){
+      //  dd('aqui');
+        $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
+        return $this->list($msgret);
+    }
+
     function addFotos(Request  $request){
 
 
