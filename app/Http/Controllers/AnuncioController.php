@@ -341,6 +341,7 @@ class AnuncioController extends Controller
 
         if ($anuncio->type_id != 4){
             TamanhoAnuncio::create(['adv_id'=>$anuncio->id,'qtd_id'=>$anuncio->quantidade, 'tamanho_id'=>Tamanho::all()->first()->id]);
+            $anuncio->ativo = true;
             return $this->list($msgret);
         }
         return $this->tamanho($anuncio->id);

@@ -107,6 +107,11 @@
                         <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
                         Filtro
                     </div>
+                    <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 " onclick="limpar()">
+                        <a href="#" class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-check-all" ></a>
+                        <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+                        Limpar
+                    </div>
 
                     <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
                         <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
@@ -125,7 +130,7 @@
                             <i class="zmdi zmdi-search" ></i>
                         </button>
 
-                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"  placeholder="Search" name="descricao" value="{{$filtro->descricao}}">
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"  placeholder="Título" name="descricao" value="{{$filtro->descricao}}">
                         <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="hidden"  placeholder="Search" name="preco" id="preco" value="{{$preco}}">
                         <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="hidden"  placeholder="Search" name="cor" id="cor" value="{{$filtro->cor}}">
                         <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="hidden"  placeholder="Search" name="tag" id="tag" value="{{$filtro->tag}}">
@@ -449,6 +454,15 @@
     </section>
 
     <script>
+        function limpar(){
+
+            document.getElementById('cor').value = '-1';
+            document.getElementById('tag').value = '';
+            document.getElementById('preco').value = "-1";
+            document.getElementById('ordenado').value = "-1";
+            document.forms['pesquisa'].submit();
+
+        }
         function setCor(filtro){
             document.getElementById('cor').value = filtro;
             document.forms['pesquisa'].submit();

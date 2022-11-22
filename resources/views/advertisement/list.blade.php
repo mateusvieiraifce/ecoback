@@ -66,7 +66,7 @@
                                             @endif
                                         </td>
 
-                                        <!--
+
                                         <td class="td-actions text-left">
                                             <a href="{{route('advertisement.edit',$ende->id)}}">
                                                 <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
@@ -74,7 +74,7 @@
                                                 </button>
                                             </a>
                                         </td>
-                                        -->
+
                                         <td class="td-actions text-left">
                                             <a onclick="return confirm('Deseja realmente desativar?') " href="{{route('advertisement.delete',$ende->id)}}">
                                                 <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
