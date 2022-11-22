@@ -517,7 +517,7 @@ class AnuncioController extends Controller
                 $saida=$saida."#".$tag->descrica;
             }
 
-            $files = FileAnuncio::where('anuncio_id','=',$id)->orderBy('updated_at','desc')->get();
+            $files = FileAnuncio::where('anuncio_id','=',$id)->where("destaque",false)->orderBy('updated_at','desc')->get();
             if (sizeof($files)>0 && $files[0]){
                 $x->foto1= $files[0]->path;
             }
