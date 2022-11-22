@@ -276,8 +276,10 @@ class AnuncioController extends Controller
 
     function finalizar($id){
         $anuncio = Anuncio::find($id);
-        $anuncio->ativo = true;
-        $anuncio->save();
+        if ($anuncio) {
+            $anuncio->ativo = true;
+            $anuncio->save();
+        }
         $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
         return $this->list($msgret);
     }
