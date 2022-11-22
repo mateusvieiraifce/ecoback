@@ -279,8 +279,9 @@ class AnuncioController extends Controller
         if ($anuncio) {
             $anuncio->ativo = true;
             $anuncio->save();
+            $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
         }
-        $msgret = ['valor' => "Operação realizada com sucesso!", 'tipo' => 'success'];
+
         return $this->list($msgret);
     }
 
