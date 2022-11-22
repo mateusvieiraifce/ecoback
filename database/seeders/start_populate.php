@@ -27,13 +27,20 @@ class start_populate extends Seeder
             'descricao' => 'Roupas de Bebê',
         ]);
 
-
         DB::table('color_adv')->insert([
             'descricao' => 'preto','cod'=>'#222'
         ]);
 
         DB::table('color_adv')->insert([
             'descricao' => 'azul','cod'=>'#4272d7'
+        ]);
+
+        DB::table('color_adv')->insert([
+            'descricao' => 'rosa','cod'=>'#ffcbdb'
+        ]);
+
+        DB::table('color_adv')->insert([
+            'descricao' => 'colorido','cod'=>'#9370DB'
         ]);
 
         DB::table('color_adv')->insert([
