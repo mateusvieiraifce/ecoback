@@ -95,10 +95,20 @@ class CheckoutControler extends Controller
         return back();
     }
 
+
     public function create(Request $request)
     {
         $msg = "Não há produtos na carrinho de compras para finalizar o pedido!";
+        $endereco =  Endereco::find($request->enderecos);
+        if (!$endereco){
+            return back()->withInput();
+        }
+        if ($endereco->cidade != "Sobral"){
+            return back()->withInput();
+        }
+
         //TODO VALIDAR
+
 
         try {
             if (session()->has('produtos')) {

@@ -114,6 +114,7 @@ Route::get('/redirect', '\App\Http\Controllers\UsuarioController@redirectToProvi
 Route::get('/callback', '\App\Http\Controllers\UsuarioController@handleProviderCallback')->name('google.callback');;
 
 
+
 Route::post("/checkout/create",[\App\Http\Controllers\CheckoutControler::class,'create'])->name('vendas.create')->middleware('auth');;
 Route::get("/checkout/address",[\App\Http\Controllers\CheckoutControler::class,'addEndereco'])->name('vendas.adr.create')->middleware('auth');;
 Route::post("/checkout/address/save",[\App\Http\Controllers\CheckoutControler::class,'saveEndereco'])->name('vendas.adr.save')->middleware('auth');;

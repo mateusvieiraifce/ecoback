@@ -500,6 +500,7 @@ class AnuncioController extends Controller
         $x =  new Anuncio();
         $comentarios = null;
         $msgret = $msg;
+        $sizes = [];
         try{
 
             $x =  Anuncio::join('type_adv','type_adv.id','=','type_id')->
@@ -541,7 +542,7 @@ class AnuncioController extends Controller
             }
 
             $sizes = TamanhoAnuncio::join('tamanhos', 'tamanhos.id','=','tamanho_id')
-                -> where('adv_id','=',$x->id)->groupBy('descricao')->select('descricao')->get();
+                -> where('adv_id','=',$x->id)->groupBy('descricao')->groupBy('tamanhos.id')->select('descricao','tamanhos.id')->get();
             $tamanhos = "";
             foreach ($sizes as $size){
                 $tamanhos= $size->descricao.', '.$tamanhos;
@@ -553,14 +554,16 @@ class AnuncioController extends Controller
         }
         catch (QueryException $exp ){
             $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+            dd($exp->getMessage());
         }
 
-        return view('frente/produto', ['obj' =>$x, 'tipos' => TipoAnuncio::all(), 'cores' => CorAnuncio::all(), 'comentarios'=>$comentarios,'msg'=>$msg]);
+        return view('frente/produto', ['obj' =>$x, 'tipos' => TipoAnuncio::all(), 'cores' => CorAnuncio::all(), 'comentarios'=>$comentarios,'msg'=>$msg,'tamanhos'=>$sizes]);
     }
 
     public function addSession(Request $request){
 
-        $obj = ['id'=>$_GET['produto'], 'qtd'=>$_GET['qtd']];
+        $obj = ['id'=>$_GET['produto'], 'qtd'=>$_GET['qtd'], 'tamanho'=>$_GET['t']];
+
 
         if ($request->session()->has('produtos')) {
 
@@ -573,7 +576,7 @@ class AnuncioController extends Controller
         }
         array_push($produtos,$obj);
         session(['produtos' => $produtos]);
-        return "ok";
+        return 'ok';
     }
 
     public function addFavorite(Request $request){

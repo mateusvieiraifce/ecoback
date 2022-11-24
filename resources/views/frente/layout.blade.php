@@ -321,6 +321,7 @@
                     @if(isset($produtos))
 
                     @foreach($produtos as $prod)
+
                     @php
                     $an = \App\Models\Anuncio::find($prod['id']);
                     $files = \App\Models\FileAnuncio::where('anuncio_id','=',$an->id)->first();
@@ -332,7 +333,12 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Bordado
+								@php
+                                $descricao = $an->descricao;
+                                $tam = \App\Models\Tamanho::find($prod['tamanho'])->descricao;
+
+                                @endphp
+                                {{$descricao}} - Tamanho -  {{$tam}}
 							</a>
 
 							<span class="header-cart-item-info">

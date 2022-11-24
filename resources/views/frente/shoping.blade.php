@@ -46,6 +46,7 @@
                                     @php
                                         $an = \App\Models\Anuncio::find($produto['id']);
                                         $files = \App\Models\FileAnuncio::where('anuncio_id','=',$an->id)->first();
+                                        $tam = \App\Models\Tamanho::find($produto['tamanho']);
                                     @endphp
 
                                     <tr class="table_row">
@@ -55,7 +56,7 @@
                                         </div>
                                     </td>
 
-                                    <td class="column-2">{{$an->titulo}} </td>
+                                    <td class="column-2">{{$an->titulo}} - Tamanho - {{$tam->descricao}} </td>
                                     <td class="column-3">@money($an->preco)</td>
                                         @php
                                         $total = $total + $an->preco * $produto['qtd'];
@@ -217,7 +218,7 @@
                             </a>
                         @else
                             @if(isset($frete))
-                        <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" id="finalizar">
                             Finalize o Processo
                         </button>
                             @endif
@@ -254,6 +255,7 @@
                     document.getElementById('bairro').setAttribute('value', get.bairro);
                     document.getElementById('cidade').setAttribute('value', get.cidade);
                     document.getElementById('uf').setAttribute('value', get.estado);
+                    document.getElementById('finalizar').disabled = false;
                 } else{
                     alert('Indisponível para essa região!');
                     document.getElementById('cep').setAttribute('value', '');
@@ -261,6 +263,7 @@
                     document.getElementById('bairro').setAttribute('value', '');
                     document.getElementById('cidade').setAttribute('value', '');
                     document.getElementById('uf').setAttribute('value', '');
+                    document.getElementById('finalizar').disabled = true;
 
                 }
                /* $('#cep').value = get.cep;*/

@@ -70,7 +70,18 @@
                         <p class="stext-102 cl3 p-t-23">
                             Vendido Por: {{$obj->name}}
                         </p>
+                        <br>
+                        <p>
 
+                            <label> Tamanho </label>
+                            <select name="tamanho" style="width: 100px;" id="tamanho">
+                                @foreach($tamanhos as $size)
+                                    <option value="{{$size->id}}">{{$size->descricao}}</option>
+                                @endforeach
+                            </select>
+                            <br/>
+
+                        </p>
                         <!--  -->
                         <div class="p-t-33">
 
@@ -93,11 +104,16 @@
                                         <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                         </div>
+
+
                                     </div>
+                                    <br />
 
                                     <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" onclick="addSesscao();">
                                         Adicionar ao Carrinho
                                     </button>
+
+
                                 </div>
                             </div>
                         </div>
@@ -325,9 +341,11 @@
 <script type="application/javascript">
     function addSesscao(){
         var qtd = document.getElementById('num-product').value;
+        var tm = document.getElementById('tamanho').value;
+        console.log(tm);
         var title = "<?php print $obj->id; ?>";
 
-        $.get("/cart/add?produto="+title+"&qtd="+qtd, function(resultado){
+        $.get("/cart/add?produto="+title+"&qtd="+qtd+"&t="+tm, function(resultado){
             console.log(resultado);
         });
 
