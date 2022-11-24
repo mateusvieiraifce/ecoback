@@ -137,7 +137,7 @@
                                             </a>
                                         @else
                                         <br/>
-                                        <select name="enderecos" >
+                                        <select name="enderecos"  onchange="selecionaAdd();" id="endereco_mateus">
                                         @foreach($ende as $end)
                                             <option value="{{$end->id}}">{{$end->recebedor}}</option>
                                         @endforeach
@@ -149,20 +149,24 @@
                                     @auth
                                     @if(sizeof($ende)>0)
                                     <div class="bor8 bg0 m-b-22">
-                                        <input @if(  !empty($ende) ) value="{{$ende[0]->cep}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="CEP" onblur="pesquisacep(this.value);" disabled >
+                                        <input @if(  !empty($ende) ) value="{{$ende[0]->cep}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="CEP" onblur="pesquisacep(this.value);" disabled id="cep" >
                                     </div>
 
                                     <div class="bor8 bg0 m-b-22">
-                                        <input @if(!empty($ende)) value="{{$ende[0]->rua}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
+                                        <input @if(!empty($ende)) value="{{$ende[0]->rua}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Rua" id="rua" disabled>
                                     </div>
 
                                     <div class="bor8 bg0 m-b-22">
-                                        <input @if(!empty($ende)) value="{{$ende[0]->bairro}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
+                                        <input @if(!empty($ende)) value="{{$ende[0]->bairro}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Bairro" id="bairro" disabled>
                                     </div>
+
 
                                     <div class="bor8 bg0 m-b-22">
                                         <input @if(!empty($ende)) value="{{$ende[0]->cidade}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="cidade" placeholder="Cidade" id="cidade" disabled>
                                     </div>
+                                            <div class="bor8 bg0 m-b-22">
+                                                <input @if(!empty($ende)) value="{{$ende[0]->estado}}" @endif class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="estado" placeholder="UF" id="uf" disabled>
+                                            </div>
 
                                             @php
                                                 $frete = 10;
@@ -225,6 +229,45 @@
     </form>
 <script>
 
+    function selecionaAdd(){
+
+        var id =$('#endereco_mateus').val();
+
+
+        var script = document.createElement('script');
+
+        //Sincroniza com o callback.
+
+        ///     script.src = 'busca_cep.php?cep=00000001';
+
+        path = "{{route('vendas.endereco')}}"+"/"+id;
+        qtd = "{{session('fretes')}}";
+
+        fetch(path)
+            .then(data => {
+                return data.json();
+            })
+            .then(get => {
+                if (get.cidade=='Sobral') {
+                    document.getElementById('cep').setAttribute('value', get.cep);
+                    document.getElementById('rua').setAttribute('value', get.rua);
+                    document.getElementById('bairro').setAttribute('value', get.bairro);
+                    document.getElementById('cidade').setAttribute('value', get.cidade);
+                    document.getElementById('uf').setAttribute('value', get.estado);
+                } else{
+                    alert('Indisponível para essa região!');
+                    document.getElementById('cep').setAttribute('value', '');
+                    document.getElementById('rua').setAttribute('value', '');
+                    document.getElementById('bairro').setAttribute('value', '');
+                    document.getElementById('cidade').setAttribute('value', '');
+                    document.getElementById('uf').setAttribute('value', '');
+
+                }
+               /* $('#cep').value = get.cep;*/
+                /*console.log(get.cep);*/
+            });
+
+    }
     function formatMoney(number) {
         return number.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }

@@ -119,7 +119,7 @@ Route::get("/checkout/address",[\App\Http\Controllers\CheckoutControler::class,'
 Route::post("/checkout/address/save",[\App\Http\Controllers\CheckoutControler::class,'saveEndereco'])->name('vendas.adr.save')->middleware('auth');;
 
 Route::get("/checkout/confirmpay/{id}",[\App\Http\Controllers\CheckoutControler::class,'posProcessPagamento'])->name('vendas.payment');
-
+Route::get("/checkout/useraddress/{id?}",[\App\Http\Controllers\UsuarioController::class,'findAdress'])->name('vendas.endereco')->middleware('auth');;
 
 Route::get('/minhaarea', function () {
     return view('dashboard');

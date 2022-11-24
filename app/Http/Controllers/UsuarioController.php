@@ -22,6 +22,9 @@ use Laravel\Socialite\Facades\Socialite;
 
 class UsuarioController extends Controller
 {
+    function  findAdress($id=0){
+        return Endereco::find($id);
+    }
     function preLogin(){
         return view('auth/login',['pageSlug'=>'']);
     }

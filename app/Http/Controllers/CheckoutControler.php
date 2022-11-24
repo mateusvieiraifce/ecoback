@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 
 class CheckoutControler extends Controller
 {
+
+
+
     function checkout()
     {
 
