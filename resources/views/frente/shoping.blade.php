@@ -180,6 +180,7 @@
                                             $fretes =  session('fretes');
                                             ?>
                                             <label id="frete">Total Frete: @if(!empty($ende)) @if($ende[0]->cidade=="Sobral") @money($fretes*10) @else  Indisponível @php $frete = 200;@endphp@endif  @endif</label>
+                                        <input type="hidden" name="frete" value="{{$fretes*10}}">
                                         </div>
                                     </div>
                                         @endif

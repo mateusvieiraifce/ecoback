@@ -129,6 +129,7 @@ class CheckoutControler extends Controller
                 $venda = new Vendas();
                 $venda->id_venda = uniqid(date('HisYmd'));
                 $frete = $request->frete;
+
                 $venda->total = $total + $frete;
                 $venda->valor = $total;
                 $venda->comprador_id = Auth::user()->id;
@@ -140,7 +141,7 @@ class CheckoutControler extends Controller
                 }
                 DB::connection()->commit();
                 $msg = 'Sua compra está sendo processada, em breve você receberá um email com a confirmação dos seus dados! EcoModa Agradece a preferência';
-                $this->clearCarr();
+               // $this->clearCarr();
                 return $this->processaPagSeguro($venda);
                 //
             }
@@ -206,6 +207,7 @@ class CheckoutControler extends Controller
         $pessoa = User::find($venda_realizada->comprador_id);
         $endereco = Endereco::find($venda_realizada->endereco_id);
 
+       // dd($venda_realizada->total);
         $dados_venda = array(
             'codigo' => "venda_{$venda_realizada->id}",
             'valor' => $venda_realizada->total,
