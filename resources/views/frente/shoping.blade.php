@@ -119,8 +119,9 @@
                                 <p class="stext-111 cl6 p-t-2"> Por conta do comprador</p>
                                 <div class="p-t-15">
                                     <span class="stext-112 cl8">
-										Calcular Frete
+										Local de Entrega:
 									</span>
+                                    <a href="{{route('vendas.adr.create')}}"> Novo </a>
                                     @guest
 
                                     @else
@@ -128,13 +129,20 @@
                                         $usuario =\Illuminate\Support\Facades\Auth::user();
                                         $ende = \App\Models\Endereco::where('user_id','=',$usuario->id)->get();
 
+
                                         @endphp
-                                       <br/>
+                                       @if(sizeof($ende)==0)
+                                            <a href="{{route('vendas.adr.create')}}" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                                                Adicionar Endereço
+                                            </a>
+                                        @else
+                                        <br/>
                                         <select name="enderecos" >
                                         @foreach($ende as $end)
                                             <option value="{{$end->id}}">{{$end->recebedor}}</option>
                                         @endforeach
                                         </select>
+                                        @endif
                                     @endguest
 
 
@@ -163,7 +171,10 @@
 
                                     <div class="flex-w">
                                         <div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-                                            <label id="frete">Total Frete: @if(!empty($ende)) @if($ende[0]->cidade=="Sobral") @money(10) @else  @money(200) @php $frete = 200;@endphp@endif  @endif</label>
+                                            <?php
+                                            $fretes =  session('fretes');
+                                            ?>
+                                            <label id="frete">Total Frete: @if(!empty($ende)) @if($ende[0]->cidade=="Sobral") @money($fretes*10) @else  Indisponível @php $frete = 200;@endphp@endif  @endif</label>
                                         </div>
                                     </div>
                                         @endif
@@ -183,7 +194,11 @@
                             <div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
                                     @if(isset($frete))
-                                        <label id="final"> @money($total+$frete)</label>
+                                        @if($frete==10)
+                                        <label id="final"> @money($total+($frete*$fretes))</label>
+                                        @else
+                                            <label id="final"> Indisponível</label>
+                                        @endif
                                     @else
                                         <label id="final"> Crie e defina um endereço como principal</label>
 
@@ -197,9 +212,11 @@
                                 Entrar
                             </a>
                         @else
+                            @if(isset($frete))
                         <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                             Finalize o Processo
                         </button>
+                            @endif
                         @endguest
                     </div>
                 </div>

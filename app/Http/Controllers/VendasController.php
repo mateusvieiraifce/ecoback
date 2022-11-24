@@ -8,5 +8,6 @@ use Illuminate\Http\Request;
 class VendasController extends Controller
 {
 
+
     //
 }

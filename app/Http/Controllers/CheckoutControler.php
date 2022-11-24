@@ -18,7 +18,20 @@ class CheckoutControler extends Controller
     function checkout()
     {
 
-        if (Auth::check()) {
+        if (Auth::check())
+        {
+            $produtos = session('produtos');
+            $saida = [];
+            foreach ($produtos as $pd) {
+                array_push($saida, $pd['id']);
+            }
+
+            $frete = Anuncio::whereIn('id',$saida)->select(DB::raw('sum(10) as t, id'))->groupBy('id')->get();
+            $total = 0;
+            foreach ($frete as $anc){
+                $total=$total+1;
+            }
+            session(['fretes' => $total]);
             return view('frente/shoping');
         } else {
 
@@ -198,6 +211,46 @@ class CheckoutControler extends Controller
         $link_de_pagamento = $PagSeguro->generatePaymentLink($dados_venda, $url_retorno);
         return redirect($link_de_pagamento);
    }
+
+    public function addEndereco(Request $request){
+
+        return view('frente/freteshop',['obj'=>new Endereco(),'total'=>10]);
+    }
+    public function saveEndereco(Request $request){
+
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+        try {
+            $endereco = new Endereco();
+            if ($request->id_add){
+                $endereco = Endereco::find($request->id_add);
+            }
+
+            $endereco->recebedor = $request->recebedor;
+            $endereco->cep = $request->cep;
+            $endereco->estado = $request->estado;
+            $endereco->cep = $request->cep;
+            $endereco->cidade = $request->cidade;
+            $endereco->bairro = $request->bairro;
+            $endereco->rua = $request->rua;
+            $endereco->numero = $request->numero;
+            $endereco->complemento = $request->complemento;
+            $endereco->informacoes = $request->informacoes;
+            if ($request->principal){
+                $endereco->princial = $request->principal;
+            }else{
+                $endereco->princial=false;
+            }
+
+
+            $endereco->user_id= $request->id;
+            $endereco->save();
+
+        }catch (QueryException $exception){
+            $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
+        }
+
+        return redirect(route('finalizar',['msg'=>$msgret]));
+    }
 
     //
 }

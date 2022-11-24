@@ -120,7 +120,8 @@ class UsuarioController extends Controller
             $request->session()->regenerate();
 
             if (session()->has('nextview')) {
-                return view(session('nextview'));
+                //dd(session('nextview'));
+                return redirect(session('nextview'));
             }
             $usuario = Auth::user();
             $compras = Vendas::where('comprador_id','=',$usuario->id)->orderBy('created_at','desc')->get();
