@@ -22,7 +22,7 @@
 
                 <div class="collapse" id="laravel-examples">
                     <ul class="nav pl-4">
-                        
+
                         <li @if ($pageSlug == 'users') class="active " @endif>
                             <a href="{{route('advertisement.list')}}">
                                 <i class="tim-icons icon-spaceship"></i>
@@ -31,17 +31,18 @@
                         </li>
 
                         <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="">
+                            <a href="#">
                                 <i class="tim-icons icon-chat-33"></i>
                                 <p>{{ __('Perguntas') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="">
+                            <a href="{{route('sales.list')}}">
                                 <i class="tim-icons icon-coins"></i>
                                 <p>{{ __('Vendas') }}</p>
                             </a>
                         </li>
+                        <!--
                         <li @if ($pageSlug == 'users') class="active " @endif>
                             <a href="">
                                 <i class="tim-icons icon-chart-bar-32"></i>
@@ -54,6 +55,7 @@
                                 <p>{{ __('Reputação') }}</p>
                             </a>
                         </li>
+                        -->
                     </ul>
                 </div>
             </li>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper;
 use App\Helpers\PagSeguro;
 use App\Models\Anuncio;
 use App\Models\Endereco;
 use App\Models\ItensVenda;
+use App\Models\TamanhoVenda;
 use App\Models\User;
 use App\Models\Vendas;
 use Illuminate\Database\QueryException;
@@ -114,17 +116,22 @@ class CheckoutControler extends Controller
             if (session()->has('produtos')) {
                 $produtos = session('produtos');
                 $saida = array();
+                $saidat = array();
                 $total = 0;
                 foreach ($produtos as $pd) {
                     $anc = Anuncio::find($pd['id']);
                     $item = new ItensVenda();
                     $item->quantidade = $pd['qtd'];
+                    //$item->tamanho = $pd['tamanho'];
                     $item->preco_item = $anc->preco;
                     $item->anuncio_id = $anc->id;
                     $item->vendedor_id = $anc->user_id;
                     $total = $total + ($item->quantidade * $item->preco_item);
+                    $item->tamanho = $pd['tamanho'];
                     array_push($saida, $item);
+
                 }
+
                 DB::connection()->beginTransaction();
                 $venda = new Vendas();
                 $venda->id_venda = uniqid(date('HisYmd'));
@@ -139,7 +146,10 @@ class CheckoutControler extends Controller
                     $iten->venda_id = $venda->id;
                     $iten->save();
                 }
+
+
                 DB::connection()->commit();
+
                 $msg = 'Sua compra está sendo processada, em breve você receberá um email com a confirmação dos seus dados! EcoModa Agradece a preferência';
                // $this->clearCarr();
                 return $this->processaPagSeguro($venda);
@@ -152,7 +162,7 @@ class CheckoutControler extends Controller
 
         } catch (QueryException $exception) {
             $msgret = ['valor' => "Erro ao executar a operação", 'tipo' => 'danger'];
-            dd($exception);
+            //dd($exception);
         }
 
         return view('frente.msg', ['msg_compra' => $msg]);
@@ -224,6 +234,17 @@ class CheckoutControler extends Controller
         $url_retorno = route('vendas.payment',$venda_realizada->id);;//env('local')"/pagamento_sucesso.php?venda={$venda_realizada->id}";
       //  dd($url_retorno);
         $link_de_pagamento = $PagSeguro->generatePaymentLink($dados_venda, $url_retorno);
+        $assunto = " Pedido n°".$venda_realizada->id_venda;
+        $msg = 'Recebemos seu pedido n° '.$venda_realizada->id_venda.', no valor de '.$venda_realizada->total
+            . "para mais detalhes acesse <a href='#'>aqui </a> ";
+        /* enviando email para o cliente*/
+        Helper::sendEmail($assunto,$msg,$pessoa->email);
+
+
+        $itens = ItensVenda::join('anuncios','anuncios.id','=','itens_vendas.anuncio_id')
+            ->join('users','users.id','=','anuncios.user_id')
+            ->where('venda_id','=',$venda_realizada->id)->get();
+
         return redirect($link_de_pagamento);
    }
 

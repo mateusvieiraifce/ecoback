@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ItensVenda extends Model
+class TamanhoVenda extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'quantidade','preco_item','anuncio_id','venda_id','vendedor_id','tamanho'
+        'adv_id','venda_id','qtd_id','tamanho_id'
     ];
-    protected $table='itens_vendas';
-    public $timestamps=false;
+    protected $table='tamanhos_venda';
 }

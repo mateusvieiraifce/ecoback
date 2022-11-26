@@ -122,6 +122,12 @@ Route::post("/checkout/address/save",[\App\Http\Controllers\CheckoutControler::c
 Route::get("/checkout/confirmpay/{id}",[\App\Http\Controllers\CheckoutControler::class,'posProcessPagamento'])->name('vendas.payment');
 Route::get("/checkout/useraddress/{id?}",[\App\Http\Controllers\UsuarioController::class,'findAdress'])->name('vendas.endereco')->middleware('auth');;
 
+
+Route::get("/sales/list",[\App\Http\Controllers\VendasController::class,'list'])->name('sales.list')->middleware('auth');;
+Route::get("/sales/send/{id}",[\App\Http\Controllers\VendasController::class,'send'])->name('sales.send')->middleware('auth');;
+Route::post("/sales/send/do/{id}",[\App\Http\Controllers\VendasController::class,'sendDo'])->name('sales.send.do')->middleware('auth');;
+
+
 Route::get('/minhaarea', function () {
     return view('dashboard');
 })->middleware('auth');;
