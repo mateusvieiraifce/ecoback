@@ -151,7 +151,7 @@ class CheckoutControler extends Controller
                 DB::connection()->commit();
 
                 $msg = 'Sua compra está sendo processada, em breve você receberá um email com a confirmação dos seus dados! EcoModa Agradece a preferência';
-               // $this->clearCarr();
+                $this->clearCarr();
                 return $this->processaPagSeguro($venda);
                 //
             }
