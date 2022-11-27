@@ -17,6 +17,7 @@ class VendasController extends Controller
         $lista = ItensVenda::join('anuncios','anuncios.id','=','itens_vendas.anuncio_id')
             ->join('tamanhos','tamanhos.id','=','itens_vendas.tamanho')
             ->join('vendas','vendas.id','=','itens_vendas.venda_id')->where('vendedor_id','=',Auth::user()->id)
+            ->orderBy('vendas.created_at','desc')
             ->select(['destaque','itens_vendas.id', 'titulo','itens_vendas.quantidade','preco_item','tamanhos.descricao','data_pago','data_envio'])->get();
 
         return view("sales/lista",['anuncios'=>$lista,'msg'=>$msg]);
