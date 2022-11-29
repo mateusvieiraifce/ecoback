@@ -126,6 +126,7 @@ Route::get("/checkout/useraddress/{id?}",[\App\Http\Controllers\UsuarioControlle
 Route::get("/sales/list",[\App\Http\Controllers\VendasController::class,'list'])->name('sales.list')->middleware('auth');;
 Route::get("/sales/send/{id}",[\App\Http\Controllers\VendasController::class,'send'])->name('sales.send')->middleware('auth');;
 Route::post("/sales/send/do/{id}",[\App\Http\Controllers\VendasController::class,'sendDo'])->name('sales.send.do')->middleware('auth');;
+Route::get("/send/mail",[\App\Http\Controllers\MailController::class,'sendMenssagem'])->name('sales.send.do');
 
 
 Route::get('/minhaarea', function () {

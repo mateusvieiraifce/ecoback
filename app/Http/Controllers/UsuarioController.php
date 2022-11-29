@@ -221,7 +221,9 @@ class UsuarioController extends Controller
             $newUser->type=2;
             $newUser->password=bcrypt('123456');
             $newUser->save();
+
             $this->sendEmailCreate($newUser);
+
             auth()->login($newUser, true);
         }
 
@@ -236,9 +238,9 @@ class UsuarioController extends Controller
 
     private function sendEmailCreate($user){
         $msgemail = "Seja Bem Vindo a plataforma Ecomoda, ".$user->name.
-            ", esperamos contruibuir com sua jornada positivamente!<br>  acessse http://ecoback.herokuapp.com/ ".
-            "Atenciosamente, Ecomoda. ";
-        Helper::sendEmail("Bem vindo a Plataforma Ecomoda",$msgemail,$user->email);
+            ", esperamos contruibuir com sua jornada positivamente!<br>  acessse:  ". env('URL').
+            " <br/>Atenciosamente, Ecomoda. ";
+        Helper::sendEmail("Bem vindo a Plataforma Ecomoda",$msgemail,$user->email, $user->name);
     }
 
     public function redirectToProvider()
