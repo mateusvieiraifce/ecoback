@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper;
 use App\Models\Anuncio;
 use App\Models\ItensVenda;
+use App\Models\Notificacoes;
+use App\Models\User;
 use App\Models\Vendas;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
@@ -44,8 +47,30 @@ class VendasController extends Controller
         $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
         try{
         $anu = ItensVenda::find($id);
+
+        $venda = Vendas::find($anu->venda_id);
+        $anuncio = Anuncio::find($anu->anuncio_id);
+
+        $comprador = User::find($venda->comprador_id);
+
         $anu->data_envio = $date = date('Y-m-d H:i:s');
         $anu->save();
+        $descricao = "O item " . $anuncio->titulo . ' do seu pedido '. $venda->id_venda .' foi enviado ';
+
+
+        $notificaoComprador = new Notificacoes();
+
+
+        $notificaoComprador->descricao = $descricao;
+        $notificaoComprador->id_user = $venda->comprador_id;
+        $notificaoComprador->id_venda = $id;
+        $notificaoComprador->id_anuncio = $anu->anuncio_id;
+        $notificaoComprador->save();
+
+        Helper::sendEmail("Produtos enviados",$descricao,$comprador->email, $comprador->name,
+             );
+
+
         }catch (QueryException $exception){
             $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];
         }

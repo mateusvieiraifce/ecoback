@@ -8,6 +8,7 @@ use App\Models\Comentarios;
 use App\Models\Endereco;
 use App\Models\Favoritos;
 use App\Models\Language;
+use App\Models\Notificacoes;
 use App\Models\PasswordResets;
 use App\Models\User;
 use App\Models\Vendas;
@@ -452,6 +453,30 @@ class UsuarioController extends Controller
         return view('profile/favoritos',['fav'=>$fav]);
 
     }
+
+
+    public function listNotificacoes($msg = null){
+        $id = Auth::user()->id;
+        $fav = Notificacoes::join('anuncios','notificacoes.id_anuncio','=','anuncios.id')
+            ->where('id_user','=',$id)->select(['notificacoes.descricao','anuncios.id_anuncio as anc','notificacoes.id'
+                ,'anuncios.id as id_anuncio','notificacoes.created_at','notificacoes.data_leitura'])
+            ->get();
+        return view('profile/notificacoes',['comentarios'=>$fav, 'msg'=>$msg]);
+
+    }
+    public function lerNotificacoes($id){
+        $not = Notificacoes::find($id);
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+        $not->data_leitura = $date;
+        $not->save();
+        $msgret = ['valor'=>"Operação realizada com sucesso!",'tipo'=>'success'];
+        return $this->listNotificacoes($msgret);
+
+    }
+
+
+
 
 
 }

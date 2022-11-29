@@ -61,6 +61,8 @@ Route::get("/turnvendedor",[\App\Http\Controllers\UsuarioController::class,'turn
 Route::get("/user/comentarios",[\App\Http\Controllers\UsuarioController::class,'comentariosComprador'])->name('user.comentarios');
 Route::get("/user/compras",[\App\Http\Controllers\UsuarioController::class,'compras'])->name('user.compras');
 Route::get("/user/favoritos",[\App\Http\Controllers\UsuarioController::class,'listFavoritos'])->name('user.favoritos');
+Route::get("/user/notificacoes",[\App\Http\Controllers\UsuarioController::class,'listNotificacoes'])->name('user.notificacoes');
+Route::get("/user/notificacao/{id}",[\App\Http\Controllers\UsuarioController::class,'lerNotificacoes'])->name('user.notificacoes.ler');
 
 Route::post("/profile/update",[\App\Http\Controllers\UsuarioController::class,'update'])->name('user.update');
 Route::put("/profile/update",[\App\Http\Controllers\UsuarioController::class,'updateCompletar'])->name('user.update.comp');
@@ -105,7 +107,7 @@ Route::post("/comentario/add/",[\App\Http\Controllers\AnuncioController::class,'
 
 Route::get("/cart/add/",[\App\Http\Controllers\AnuncioController::class,'addSession'])->name('advertisement.addsession');
 Route::get("/cart/view/",[\App\Http\Controllers\AnuncioController::class,'viewSession'])->name('advertisement.viewssesion');
-Route::get("/cart/clear/",[\App\Http\Controllers\AnuncioController::class,'clearCarr'])->name('cart.clear');
+Route::any("/cart/clear/",[\App\Http\Controllers\AnuncioController::class,'clearCarr'])->name('cart.clear');
 Route::get("/cart/remqnt/{id}",[\App\Http\Controllers\CheckoutControler::class,'removerQntCarrinho'])->name('cart.remqtd');
 Route::get("/cart/addqnt/{id}",[\App\Http\Controllers\CheckoutControler::class,'addQntCarrinho'])->name('cart.addqtd');
 
@@ -126,7 +128,7 @@ Route::get("/checkout/useraddress/{id?}",[\App\Http\Controllers\UsuarioControlle
 Route::get("/sales/list",[\App\Http\Controllers\VendasController::class,'list'])->name('sales.list')->middleware('auth');;
 Route::get("/sales/send/{id}",[\App\Http\Controllers\VendasController::class,'send'])->name('sales.send')->middleware('auth');;
 Route::post("/sales/send/do/{id}",[\App\Http\Controllers\VendasController::class,'sendDo'])->name('sales.send.do')->middleware('auth');;
-Route::get("/send/mail",[\App\Http\Controllers\MailController::class,'sendMenssagem'])->name('sales.send.do');
+Route::get("/send/mail",[\App\Http\Controllers\MailController::class,'sendMenssagem'])->name('sales.send.do.email');
 
 
 Route::get('/minhaarea', function () {

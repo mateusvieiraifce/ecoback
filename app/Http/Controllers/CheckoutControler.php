@@ -7,6 +7,7 @@ use App\Helpers\PagSeguro;
 use App\Models\Anuncio;
 use App\Models\Endereco;
 use App\Models\ItensVenda;
+use App\Models\Notificacoes;
 use App\Models\TamanhoVenda;
 use App\Models\User;
 use App\Models\Vendas;
@@ -114,6 +115,7 @@ class CheckoutControler extends Controller
 
         try {
             if (session()->has('produtos')) {
+
                 $produtos = session('produtos');
                 $saida = array();
                 $saidat = array();
@@ -132,6 +134,7 @@ class CheckoutControler extends Controller
 
                 }
 
+
                 DB::connection()->beginTransaction();
                 $venda = new Vendas();
                 $venda->id_venda = uniqid(date('HisYmd'));
@@ -142,15 +145,33 @@ class CheckoutControler extends Controller
                 $venda->comprador_id = Auth::user()->id;
                 $venda->endereco_id = $request->enderecos;
                 $venda->save();
+
                 foreach ($saida as $iten) {
                     $iten->venda_id = $venda->id;
                     $iten->save();
+
+                    $notificaoComprador = new Notificacoes();
+                    $notificaoComprador->descricao = 'Estamos aguardando seu pagamento, após a conclusão seu produto será separado e enviado';
+                    $notificaoComprador->id_user = $venda->comprador_id;
+                    $notificaoComprador->id_venda = $venda->id;
+                    $notificaoComprador->id_anuncio = $iten->anuncio_id;
+                    $notificaoComprador->save();
+
+                 //   dd('salvou a notificacao');
+                    $notificaovendedor = new Notificacoes();
+                    $notificaovendedor->descricao = 'Um produto seu foi comprado, estamos aguardando o pagamento para que você possa envia-lo';
+                    $notificaovendedor->id_user = $iten->vendedor_id;
+                    $notificaovendedor->id_anuncio = $iten->anuncio_id;
+                    $notificaovendedor->save();
+
                 }
 
 
                 DB::connection()->commit();
 
                 $msg = 'Sua compra está sendo processada, em breve você receberá um email com a confirmação dos seus dados! EcoModa Agradece a preferência';
+
+
                 $this->clearCarr();
                 return $this->processaPagSeguro($venda);
                 //
@@ -162,7 +183,7 @@ class CheckoutControler extends Controller
 
         } catch (QueryException $exception) {
             $msgret = ['valor' => "Erro ao executar a operação", 'tipo' => 'danger'];
-            //dd($exception);
+            dd($exception);
         }
 
         return view('frente.msg', ['msg_compra' => $msg]);

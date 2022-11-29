@@ -32,6 +32,15 @@
                         <span class="d-lg-none d-md-block">{{ __('Search') }}</span>
                     </button>
                 </li>
+                <?php
+                $notifcatio = \App\Models\Notificacoes::where('id_user','=',auth()->user()->id)
+                    ->whereNull('data_leitura')->get()->count();
+                $texto = 'Você tem ' . $notifcatio ." notificações";
+                ?>
+                @if ($notifcatio>0)
+                    @if ($notifcatio==1)
+                       <?php $texto = 'Você tem ' . $notifcatio ." notificação"; ?>
+                    @endif
                 <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <div class="notification d-none d-lg-block d-xl-block"></div>
@@ -40,11 +49,15 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('Mike John responded to your email') }}</a>
+
+
+                            <a href="{{route('user.notificacoes')}}" class="nav-item dropdown-item">{{$texto}}</a>
+
                         </li>
 
                     </ul>
                 </li>
+                @endif
                 <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <div class="photo">

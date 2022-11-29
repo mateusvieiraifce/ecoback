@@ -70,11 +70,11 @@ class Helper
         );
         try {
             $response = $sendgrid->send($email);
-             print $response->statusCode() . "\n";
+          /*   print $response->statusCode() . "\n";
              print_r($response->headers());
              print $response->body() . "\n";
             print('enviou o email');
-            dd('aqui');
+            dd('aqui');*/
         }
         catch (Exception $e) {
             dd($e->getMessage() );
