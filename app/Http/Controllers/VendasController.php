@@ -33,7 +33,7 @@ class VendasController extends Controller
             ->join('tamanhos','tamanhos.id','=','itens_vendas.tamanho')
             ->join('vendas','vendas.id','=','itens_vendas.venda_id')
             ->join('enderecos','enderecos.id','=','vendas.endereco_id')
-            ->join('users','users.id','=','anuncios.user_id')->where('vendedor_id','=',Auth::user()->id)->where('itens_vendas.id','=',$id)
+            ->join('users','users.id','=','vendas.comprador_id')->where('vendedor_id','=',Auth::user()->id)->where('itens_vendas.id','=',$id)
             ->select(['destaque','itens_vendas.id as id', 'titulo',
                 'itens_vendas.quantidade','preco_item'
                 ,'tamanhos.descricao','data_pago','enderecos.rua','enderecos.bairro','enderecos.cidade','enderecos.cep', 'users.name','data_envio'])->first();
@@ -67,9 +67,7 @@ class VendasController extends Controller
         $notificaoComprador->id_anuncio = $anu->anuncio_id;
         $notificaoComprador->save();
 
-        Helper::sendEmail("Produtos enviados",$descricao,$comprador->email, $comprador->name,
-             );
-
+        Helper::sendEmail("Produtos enviados",$descricao,$comprador->email, $comprador->name);
 
         }catch (QueryException $exception){
             $msgret = ['valor'=>"Erro ao executar a operação",'tipo'=>'danger'];

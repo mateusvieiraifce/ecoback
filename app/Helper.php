@@ -52,7 +52,7 @@ class Helper
         $rodape = '</p> <br />
 				<font style="display:block; text-align: center; margin: 30px auto 0 auto; position: relative" color"#000000">
                     Esta mensagem foi enviada de um endereço de e-mail que apenas envia mensagens.<br>
-                    Para obter mais informações sobre sua conta, envie e-mail para: ecomodasobral@gmail.com
+                    Para obter mais informações sobre sua conta, envie e-mail para: '.env("EMAIL_ADMIN").'
                     <br /><br />
                     &copy; ' . date('Y') . ' Todos os direitos reservados Ecomoda
                 </font><br />
