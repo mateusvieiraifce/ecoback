@@ -41,7 +41,7 @@
                                             @dataformatada($comp->created_at)
                                         </td>
                                         <td>
-                                            @money($comp->valor)
+                                            @money($comp->total)
                                         </td>
                                         <td>
                                             {{$comp->txt_status_pagseguro}}
