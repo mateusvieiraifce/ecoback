@@ -57,7 +57,7 @@
                                         </td>
 
                                         <td style="max-width: 200px;">
-                                            @if($ende->data_pago)
+                                            @if($ende->data_pagamento)
                                                 <p class="title">Pago</p>
                                             @else
                                                 <p class="title">Aguardando pagamento</p>
