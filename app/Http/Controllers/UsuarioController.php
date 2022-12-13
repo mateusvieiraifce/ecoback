@@ -460,6 +460,7 @@ class UsuarioController extends Controller
         $fav = Notificacoes::join('anuncios','notificacoes.id_anuncio','=','anuncios.id')
             ->where('id_user','=',$id)->select(['notificacoes.descricao','anuncios.id_anuncio as anc','notificacoes.id'
                 ,'anuncios.id as id_anuncio','notificacoes.created_at','notificacoes.data_leitura'])
+            ->orderBy('created_at','desc')
             ->get();
         return view('profile/notificacoes',['comentarios'=>$fav, 'msg'=>$msg]);
 

@@ -123,6 +123,7 @@ Route::post("/checkout/address/save",[\App\Http\Controllers\CheckoutControler::c
 
 Route::get("/checkout/confirmpay/{id}",[\App\Http\Controllers\CheckoutControler::class,'posProcessPagamento'])->name('vendas.payment');
 Route::get("/checkout/useraddress/{id?}",[\App\Http\Controllers\UsuarioController::class,'findAdress'])->name('vendas.endereco')->middleware('auth');;
+Route::any("/checkout/confirmpay",[\App\Http\Controllers\CheckoutControler::class,'returnPagSeguro'])->name('vendas.payment.return');
 
 
 Route::get("/sales/list",[\App\Http\Controllers\VendasController::class,'list'])->name('sales.list')->middleware('auth');;

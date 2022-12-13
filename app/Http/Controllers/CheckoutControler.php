@@ -194,6 +194,82 @@ class CheckoutControler extends Controller
         return back();
     }
 
+    public function returnPagSeguro(Request $request){
+
+        $msg = 'Seu pagamento ainda não foi confirmado! EcoModa Agradece a preferência';
+        if ($request->has('transaction_id')){
+            $transactionid=$request->input('transaction_id');
+            $vend= Vendas::whereNull('transaction_pag_seguro')->get();
+
+
+            foreach ($vend as $v){
+
+                $tid =  $this->posWProcessPagamento($v->id);
+                $transactionidp = Vendas::find($v->id)->transaction_pag_seguro;
+                if ($tid== null || $transactionidp ==null ){
+                    continue;
+                }
+
+                if ($tid==$transactionidp){
+                    $msg = 'Seu pagamento foi confirmado, em breve lhe enviaremos seu produto! EcoModa Agradece a preferência';
+                    $itens = ItensVenda::where('venda_id','=',$v->id)->get();
+                    foreach ($itens as $i){
+                        $an = Anuncio::find($i->anuncio_id);
+                        $not = new Notificacoes();
+                        //dd($v);
+                        $not->descricao= "Seu produto do pedido:".$v->id_venda ." Teve o pagamento confirmado, envio ao comprador!";
+                        $not->id_user = $an->user_id;
+                        $not->id_anuncio = $an->id;
+                        $not->id_venda= $v->id;
+                        $not->save();
+                        $us = User::find($not->id_user);
+                        Helper::sendEmail("Confirmação de Pagamento do Pedido: " .$v->id_venda,
+                            "O pagamento do pedido: ".$v->id_venda." foi confimado pela operadora envie  o produto!",$us->email );
+                    }
+                    break;
+                }
+            }
+        }
+
+        return view('frente.msg', ['msg_compra' => $msg]);
+    }
+    public function posWProcessPagamento($id){
+        $PagSeguro = new PagSeguro();
+        $response = $PagSeguro->getByReference("venda_{$id}");
+        $venda = Vendas::find($id);
+
+        if (isset($response->status)) {
+            if ($response->status != $venda->status_pagseguro) {
+                $texto_status = $PagSeguro->getStatusText($response->status);
+                $texto_metodo = $PagSeguro->getPaymentMethodText($response->paymentMethod->type);
+                $taxa = $response->feeAmount;
+                $valor_liquido = $response->netAmount;
+
+                if (isset($venda->data_pagamento) && !is_null($venda->data_pagamento)) {
+                    $data_pagamento = $venda->data_pagamento;
+                    $pagamento_identificado = true;
+                } elseif ($response->status == 3 || $response->status == 4) {
+                    $data_pagamento = date('Y-m-d');
+                    $pagamento_identificado = true;
+                }
+
+                $venda->transaction_pag_seguro=$response->code;
+                $venda->status_pagseguro=$response->status;
+                $venda->txt_status_pagseguro=$texto_status;
+                $venda->status_metodo=$response->paymentMethod->type;
+                $venda->txt_status_metodo=$texto_metodo;
+                $venda->taxa_operadora = $taxa;
+                $venda->valor_liquido=$valor_liquido;
+                $venda->data_pagamento= $data_pagamento;
+                $venda->save();
+
+                return $venda->transaction_pag_seguro;
+                //$venda->setStatusPagSeguro($response->code, $response->status, $id_venda, $texto_status, $response->paymentMethod->type, $texto_metodo, $data_pagamento, $taxa, $valor_liquido);
+                //$venda_row = $venda->getByChave($id_venda);
+            }
+        }
+    }
+
     public function posProcessPagamento($id){
         $PagSeguro = new PagSeguro();
         $response = $PagSeguro->getByReference("venda_{$id}");
@@ -231,6 +307,7 @@ class CheckoutControler extends Controller
         $msg = 'Seu pagamento foi confirmado, em breve lhe enviaremos seu produto! EcoModa Agradece a preferência';
         return view('frente.msg', ['msg_compra' => $msg]);
     }
+
     public function processaPagSeguro($venda_realizada){
         $PagSeguro = new PagSeguro();
         $descricao_venda_pagseguro = "ITEMS COMPRADOS NA ECOMODA";

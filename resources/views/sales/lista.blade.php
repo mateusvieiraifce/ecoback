@@ -14,6 +14,7 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
+                                    <td>Id</td>
                                     <td>Título</td>
                                     <td>Qtd</td>
                                     <td>Tamanho</td>
@@ -26,6 +27,9 @@
                                 @foreach($anuncios as $ende)
                                     <tr style="height: 20px">
 
+                                        <td style="max-width: 200px;">
+                                            <p class="title">{{$ende->id_venda}}</p>
+                                        </td>
                                         <td style="max-width: 200px;">
                                             <p class="title">{{$ende->titulo}}</p>
                                         </td>
