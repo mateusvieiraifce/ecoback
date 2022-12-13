@@ -73,7 +73,7 @@
 
 
                                         <td class="td-actions text-left">
-                                            @if($ende->data_pago && !$ende->data_envio)
+                                            @if($ende->data_pagamento && !$ende->data_envio)
                                             <a href="{{route('sales.send',$ende->id)}}">
                                                 <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">
                                                     <i class="tim-icons icon-send"></i>
