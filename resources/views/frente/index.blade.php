@@ -285,7 +285,9 @@
                         <div class="block2-pic hov-img0" style="width: auto; max-height: 380px;">
                             <?php $pathImage = \App\Models\FileAnuncio::where('anuncio_id','=',$anuncio->id)->where("path","!=","")->where('destaque',false)->orderby('updated_at','desc')->
                             orderBy('id','asc')->first(); ?>
-                            <img src={{"/storage/products/".$pathImage->path}} alt="IMG-PRODUCT" style="width: auto; max-height: 380px;" >
+                            @if ($pathImage)
+                                <img src={{"/storage/products/".$pathImage->path}} alt="IMG-PRODUCT" style="width: auto; max-height: 380px;" >
+                            @endif
 
                             <a href="{{route('advertisement.detail',$anuncio->id_anuncio)}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                 Ver Detalhes
